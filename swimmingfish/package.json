@@ -14,6 +14,21 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "eslint": "^4.5.0",
+    "eslint-plugin-react": "^7.3.0",
     "firebase": "^4.3.0"
+  },
+  "eslintConfig": {
+    "plugins": [
+      "react"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true,
+        "modules": true
+      }
+    }
   }
 }

@@ -16,7 +16,9 @@ class App extends Component {
   }
 
   render() {
-    return <Assignments/>
+    return (
+      <Assignments/>
+    );
   }
 }
 export default App;

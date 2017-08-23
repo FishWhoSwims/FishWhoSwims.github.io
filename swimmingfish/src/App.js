@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
 import './App.css';
-import firebase from './firebase.js';
 
 class App extends Component {
   constructor() {
     super();
-    this.items = firebase.database().ref('/items');
     this.state = {
-
+      assignments: [
+        {
+          text: "Senior Design Mini Project Web",
+          link: "https://github.com/SwimmingFishSeniorDesign/SwimmingFishWeb"
+        }
+      ]
     };
   }
 
   render() {
+    let assignments = this.state.assignments.map((assignment) => {
+      return (
+            <h1>
+              <a href={assignment.link}>{assignment.text}</a>
+            </h1>
+      )
+    });
     return (
-      <h1> hello world </h1>
+      <div>
+        {assignments}
+      </div>
     );
   }
 }

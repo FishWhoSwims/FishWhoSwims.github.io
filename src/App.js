@@ -1,24 +1,29 @@
-import React, { Component } from 'react'
-import Assignments from './Assignments/Assignments.js'
-import './App.css'
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import Course from './Course/Course.js';
+
+const DummyCourses = ['EMIS 3301', 'KNW Sucks'];
+
+const ClassList = DummyCourses.map((course) => {
+  return (
+    <Course name={course}/>
+  )
+});
 
 class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      assignments: [
-        {
-          text: 'Senior Design Mini Project Web',
-          link: 'https://github.com/SwimmingFishSeniorDesign/SwimmingFishWeb'
-        }
-      ]
-    }
-  }
-
   render() {
-    return (
-      <Assignments/>
-    )
+    return   (
+      <div>
+        <MuiThemeProvider>
+          <AppBar
+          title="Swimming Fish" />
+          {ClassList}
+        </MuiThemeProvider>
+      </div>
+    );
   }
 }
+
 export default App

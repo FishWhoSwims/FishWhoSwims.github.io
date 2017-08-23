@@ -28,14 +28,8 @@ module.exports = {
       'react/jsx-uses-react': 2
   },
   'globals': {
-      // Collections
       'Persons': true,
       'Modules': true,
-
-      // More stuff
-      // [...]
-
-      // Packages
       'lodash': true,
       'i18n': true,
       'moment': true,

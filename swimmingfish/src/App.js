@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Assignments from './Assignments/Assignments.js';
 import './App.css';
 
 class App extends Component {
@@ -15,18 +16,7 @@ class App extends Component {
   }
 
   render() {
-    let assignments = this.state.assignments.map((assignment) => {
-      return (
-            <h1>
-              <a href={assignment.link}>{assignment.text}</a>
-            </h1>
-      )
-    });
-    return (
-      <div>
-        {assignments}
-      </div>
-    );
+    return <Assignments/>
   }
 }
 export default App;

@@ -1,16 +1,18 @@
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import Course from './Course/Course.js';
+import React, {Component} from 'react'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import AppBar from 'material-ui/AppBar'
+import Course from './Course/Course.js'
 
-const DummyCourses = ['EMIS 3301', 'KNW Sucks'];
+const DummyCourses = ['EMIS 3301', 'KNW Sucks']
 
 const ClassList = DummyCourses.map((course) => {
   return (
-    <Course name={course}/>
+    <MuiThemeProvider>
+      <Course name={course}/>
+    </MuiThemeProvider>
+
   )
-});
+})
 
 class App extends Component {
   render() {
@@ -18,11 +20,11 @@ class App extends Component {
       <div>
         <MuiThemeProvider>
           <AppBar
-          title="Swimming Fish" />
-          {ClassList}
+            title="Swimming Fish" />
         </MuiThemeProvider>
+        {ClassList}
       </div>
-    );
+    )
   }
 }
 

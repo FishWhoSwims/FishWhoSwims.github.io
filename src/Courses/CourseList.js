@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import {GridList} from 'material-ui/GridList';
+import {GridList} from 'material-ui/GridList'
 
 import Course from './Course.js'
 
@@ -23,23 +23,23 @@ class CourseList extends Component {
   render() {
     const ClassCells = DummyCourses.map((course) => {
       return (
-          <Course name={course} icon="img/swimmingfish.jpeg"/>
+        <Course name={course} icon="img/swimmingfish.jpeg"/>
       )
-    });
+    })
     return (
       <div style={styles.root}>
-      <MuiThemeProvider>
-        <GridList
-          cellHeight={180}
-          style={styles.gridList}
-        >
-          {ClassCells}
-        </GridList>
-      </MuiThemeProvider>
+        <MuiThemeProvider>
+          <GridList
+            cellHeight={180}
+            style={styles.gridList}
+          >
+            {ClassCells}
+          </GridList>
+        </MuiThemeProvider>
       </div>
-    );
+    )
   }
 }
 
 
-export default CourseList;
+export default CourseList

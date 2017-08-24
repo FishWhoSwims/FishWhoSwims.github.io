@@ -10,18 +10,18 @@ class App extends Component {
 
   render() {
     return   (
-    <main>
-    <MuiThemeProvider>
-      <AppBar
-        title="Swimming Fish" />
-    </MuiThemeProvider>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path='/' component={SignIn}/>
-        <Route path='/courses' component={CourseList}/>
-      </Switch>
-    </BrowserRouter>
-    </main>
+      <main>
+        <MuiThemeProvider>
+          <AppBar
+            title="Swimming Fish" />
+        </MuiThemeProvider>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path='/' component={SignIn}/>
+            <Route path='/courses' component={CourseList}/>
+          </Switch>
+        </BrowserRouter>
+      </main>
     )
   }
 }

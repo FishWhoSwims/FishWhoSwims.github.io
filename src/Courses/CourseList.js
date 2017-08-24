@@ -43,16 +43,16 @@ class CourseList extends Component {
     return (
       <div>
 
-      <div style={styles.root}>
-        <MuiThemeProvider>
-          <GridList
-            cellHeight={300}
-            style={styles.gridList}
-          >
-            {ClassCells}
-          </GridList>
-        </MuiThemeProvider>
-      </div>
+        <div style={styles.root}>
+          <MuiThemeProvider>
+            <GridList
+              cellHeight={300}
+              style={styles.gridList}
+            >
+              {ClassCells}
+            </GridList>
+          </MuiThemeProvider>
+        </div>
       </div>
     )
   }

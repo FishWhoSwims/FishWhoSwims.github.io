@@ -3,10 +3,23 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {GridList} from 'material-ui/GridList'
 
 import Course from './Course.js'
-import './CourseList.css';
 
+
+import './CourseList.css';
 const DummyCourses = ['EMIS 3301', 'KNW 1333', 'CSE 3921', 'MATH 2222']
 
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    padding: 5,
+    width: 500,
+    overflowY: 'auto'
+  }
+};
 
 let courseNumber = 0;
 class CourseList extends Component {
@@ -31,11 +44,11 @@ class CourseList extends Component {
     });
 
     return (
-      <div class='grid-root'>
+      <div style={styles.root}>
         <MuiThemeProvider>
           <GridList
             cellHeight={300}
-            class='gridList'
+            style={styles.gridList}
           >
             {ClassCells}
           </GridList>

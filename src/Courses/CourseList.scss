@@ -1,0 +1,11 @@
+.gridRoot {
+  display: 'flex';
+  flexWrap: 'wrap';
+  justifyContent: 'space-around';
+}
+
+.gridList {
+  padding: 5;
+  width: 500;
+  overflowY: 'auto';
+}

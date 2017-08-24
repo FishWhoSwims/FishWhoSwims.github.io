@@ -7,11 +7,11 @@ const courseStyle = {
 
 class Course extends Component {
   constructor() {
-    super();
+    super()
   }
 
   openModal() {
-    alert("Show courses here");
+    alert('Show courses here')
   }
 
   render() {

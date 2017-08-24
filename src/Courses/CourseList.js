@@ -17,18 +17,18 @@ const styles = {
   }
 }
 
-let courseNumber = 0;
+let courseNumber = 0
 
 class CourseList extends Component {
   render() {
     const ClassCells = DummyCourses.map((course) => {
       return (
         <Course
-        name={course}
-        icon="img/swimmingfish.jpeg"
-        key={courseNumber++}/>
+          name={course}
+          icon="img/swimmingfish.jpeg"
+          key={courseNumber++}/>
       )
-    });
+    })
 
     return (
       <div style={styles.root}>

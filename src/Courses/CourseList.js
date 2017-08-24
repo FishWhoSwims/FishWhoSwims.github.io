@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {GridList} from 'material-ui/GridList'
 import Course from './Course.js'
+import mobile from '../util/mobile.js';
+
 const DummyCourses = ['EMIS 3301', 'KNW 1333', 'CSE 3921', 'MATH 2222']
 
 const styles = {
@@ -44,6 +46,7 @@ class CourseList extends Component {
         <MuiThemeProvider>
           <GridList
             cellHeight={300}
+            cols={mobile ? 1 : 2}
             style={styles.gridList}
           >
             {ClassCells}

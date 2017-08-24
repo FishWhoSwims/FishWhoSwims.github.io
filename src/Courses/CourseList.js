@@ -12,23 +12,33 @@ const styles = {
     justifyContent: 'space-around',
   },
   gridList: {
+    padding: 5,
     width: 500,
-    overflowY: 'auto',
+    overflowY: 'auto'
   }
-}
+};
 
-let courseNumber = 0
-
+let courseNumber = 0;
 class CourseList extends Component {
+
+  constructor () {
+    super();
+    this.state = {
+      courses: DummyCourses
+    }
+    // TODO: fetch courses
+
+  }
+
   render() {
-    const ClassCells = DummyCourses.map((course) => {
+    const ClassCells = this.state.courses.map((course) => {
       return (
         <Course
           name={course}
           icon="img/swimmingfish.jpeg"
           key={courseNumber++}/>
       )
-    })
+    });
 
     return (
       <div style={styles.root}>
@@ -41,7 +51,7 @@ class CourseList extends Component {
           </GridList>
         </MuiThemeProvider>
       </div>
-    )
+    );
   }
 }
 

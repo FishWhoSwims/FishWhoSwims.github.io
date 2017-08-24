@@ -8,10 +8,16 @@ const courseStyle = {
 class Course extends Component {
   constructor() {
     super()
+    // Fetch assignments
+    this.assignments = [
+      'Dummy Assignment 1',
+      'Dummy Assignment 2'
+    ];
   }
 
   openModal() {
-    alert('Show courses here')
+    // Really we should be display a modal
+    alert(this.assignments);
   }
 
   render() {
@@ -20,7 +26,7 @@ class Course extends Component {
         key={this.props.name}
         title={this.props.name}
         style={courseStyle}
-        onClick={this.openModal}
+        onClick={this.openModal.bind(this)}
       >
         <img src={this.props.icon} alt='Course'/>
       </GridTile>

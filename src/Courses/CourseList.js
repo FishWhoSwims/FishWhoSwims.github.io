@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import {GridList} from 'material-ui/GridList'
-import Course from './Course.js'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import React, {Component} from 'react';
+import {GridList} from 'material-ui/GridList';
+import Course from './Course.js';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-const DummyCourses = ['EMIS 3301', 'KNW 1333', 'CSE 3921', 'MATH 2222']
+const DummyCourses = ['EMIS 3301', 'KNW 1333', 'CSE 3921', 'MATH 2222'];
 
 const styles = {
   root: {
@@ -16,16 +16,16 @@ const styles = {
     width: 500,
     overflowY: 'auto'
   }
-}
+};
 
-let courseNumber = 0
+let courseNumber = 0;
 class CourseList extends Component {
 
   constructor () {
-    super()
+    super();
     this.state = {
       courses: DummyCourses
-    }
+    };
     // TODO: fetch courses
 
   }
@@ -37,8 +37,8 @@ class CourseList extends Component {
           name={course}
           icon="img/swimmingfish.jpeg"
           key={courseNumber++}/>
-      )
-    })
+      );
+    });
 
     return (
       <div>
@@ -54,9 +54,9 @@ class CourseList extends Component {
           </MuiThemeProvider>
         </div>
       </div>
-    )
+    );
   }
 }
 
 
-export default CourseList
+export default CourseList;

@@ -1,23 +1,23 @@
-import React, {Component} from 'react'
-import {GridTile} from 'material-ui/GridList'
+import React, {Component} from 'react';
+import {GridTile} from 'material-ui/GridList';
 
 const courseStyle = {
   cursor: 'pointer'
-}
+};
 
 class Course extends Component {
   constructor() {
-    super()
+    super();
     // Fetch assignments
     this.assignments = [
       'Dummy Assignment 1',
       'Dummy Assignment 2'
-    ]
+    ];
   }
 
   openModal() {
     // Really we should be display a modal
-    alert(this.assignments)
+    alert(this.assignments);
   }
 
   render() {
@@ -30,8 +30,8 @@ class Course extends Component {
       >
         <img src={this.props.icon} alt='Course'/>
       </GridTile>
-    )
+    );
   }
 }
 
-export default Course
+export default Course;

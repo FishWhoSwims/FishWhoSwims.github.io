@@ -16,7 +16,7 @@ module.exports = {
       'indent': [2, 2],
       'linebreak-style': [2, 'unix'],
       'quotes': [2, 'single'],
-      'semi': [2, 'never'],
+      'semi': [2, 'always'],
       'brace-style': [2, '1tbs'],
       'array-bracket-spacing': [2, 'never'],
       'camelcase': [2, {'properties': 'always'}],

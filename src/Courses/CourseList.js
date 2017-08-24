@@ -13,24 +13,28 @@ const styles = {
   },
   gridList: {
     width: 500,
-    height: 450,
     overflowY: 'auto',
   }
 }
 
-class CourseList extends Component {
+let courseNumber = 0;
 
+class CourseList extends Component {
   render() {
     const ClassCells = DummyCourses.map((course) => {
       return (
-        <Course name={course} icon="img/swimmingfish.jpeg"/>
+        <Course
+        name={course}
+        icon="img/swimmingfish.jpeg"
+        key={courseNumber++}/>
       )
-    })
+    });
+
     return (
       <div style={styles.root}>
         <MuiThemeProvider>
           <GridList
-            cellHeight={180}
+            cellHeight={300}
             style={styles.gridList}
           >
             {ClassCells}

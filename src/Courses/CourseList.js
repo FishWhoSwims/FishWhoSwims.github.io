@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {GridList} from 'material-ui/GridList'
 import Course from './Course.js'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 const DummyCourses = ['EMIS 3301', 'KNW 1333', 'CSE 3921', 'MATH 2222']
 
@@ -41,6 +41,8 @@ class CourseList extends Component {
     })
 
     return (
+      <div>
+
       <div style={styles.root}>
         <MuiThemeProvider>
           <GridList
@@ -50,6 +52,7 @@ class CourseList extends Component {
             {ClassCells}
           </GridList>
         </MuiThemeProvider>
+      </div>
       </div>
     )
   }

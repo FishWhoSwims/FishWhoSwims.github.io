@@ -1,11 +1,7 @@
 import React, {Component} from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {GridList} from 'material-ui/GridList'
-
 import Course from './Course.js'
-
-
-import './CourseList.css';
 const DummyCourses = ['EMIS 3301', 'KNW 1333', 'CSE 3921', 'MATH 2222']
 
 const styles = {
@@ -19,13 +15,13 @@ const styles = {
     width: 500,
     overflowY: 'auto'
   }
-};
+}
 
-let courseNumber = 0;
+let courseNumber = 0
 class CourseList extends Component {
 
   constructor () {
-    super();
+    super()
     this.state = {
       courses: DummyCourses
     }
@@ -41,7 +37,7 @@ class CourseList extends Component {
           icon="img/swimmingfish.jpeg"
           key={courseNumber++}/>
       )
-    });
+    })
 
     return (
       <div style={styles.root}>
@@ -54,7 +50,7 @@ class CourseList extends Component {
           </GridList>
         </MuiThemeProvider>
       </div>
-    );
+    )
   }
 }
 

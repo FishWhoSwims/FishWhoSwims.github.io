@@ -12,12 +12,12 @@ class Course extends Component {
     this.assignments = [
       'Dummy Assignment 1',
       'Dummy Assignment 2'
-    ];
+    ]
   }
 
   openModal() {
     // Really we should be display a modal
-    alert(this.assignments);
+    alert(this.assignments)
   }
 
   render() {

@@ -1,10 +1,9 @@
-import React, {Component} from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import AppBar from 'material-ui/AppBar'
-import CourseList from './Courses/CourseList.js'
-import SignIn from './SignInPage/SignIn.js'
-import { Switch, Route, BrowserRouter } from 'react-router-dom'
-
+import React, {Component} from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import CourseList from './Courses/CourseList.js';
+import SignIn from './SignInPage/SignIn.js';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
 
@@ -13,6 +12,12 @@ class App extends Component {
       <main>
         <MuiThemeProvider>
           <AppBar
+            onTitleTouchTap={() => {
+              window.location = '/courses';
+            }}
+            onLeftIconButtonTouchTap={() => {
+              window.location = '/courses';
+            }}
             title="Swimming Fish" />
         </MuiThemeProvider>
         <BrowserRouter>
@@ -22,8 +27,8 @@ class App extends Component {
           </Switch>
         </BrowserRouter>
       </main>
-    )
+    );
   }
 }
 
-export default App
+export default App;

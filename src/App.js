@@ -5,7 +5,6 @@ import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
-
 class App extends Component {
 
   render() {
@@ -13,6 +12,12 @@ class App extends Component {
       <main>
         <MuiThemeProvider>
           <AppBar
+            onTitleTouchTap={() => {
+              window.location = '/courses';
+            }}
+            onLeftIconButtonTouchTap={() => {
+              window.location = '/courses';
+            }}
             title="Swimming Fish" />
         </MuiThemeProvider>
         <BrowserRouter>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {GridTile} from 'material-ui/GridList';
 
 const courseStyle = {
-  cursor: 'pointer'
+  cursor: 'pointer',
 };
 
 class Course extends Component {
@@ -11,7 +11,7 @@ class Course extends Component {
     // Fetch assignments
     this.assignments = [
       'Dummy Assignment 1',
-      'Dummy Assignment 2'
+      'Dummy Assignment 2',
     ];
   }
 
@@ -21,14 +21,17 @@ class Course extends Component {
   }
 
   render() {
+    let tileStyles = Object.assign({},
+      courseStyle,
+      {backgroundColor: this.props.color}
+    );
     return (
       <GridTile
-        key={this.props.name}
-        title={this.props.name}
-        style={courseStyle}
+        key={this.props.courseId}
+        title={this.props.courseName + ' ' + this.props.courseNumber}
+        style={tileStyles}
         onClick={this.openModal.bind(this)}
       >
-        <img src={this.props.icon} alt='Course'/>
       </GridTile>
     );
   }

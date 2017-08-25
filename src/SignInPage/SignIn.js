@@ -15,6 +15,13 @@ var styles = {
     left: 0,
     width: 150,
     height: 150
+  },
+  alertOptions: {
+    offset: 14,
+    position: 'bottom left',
+    theme: 'dark',
+    time: 5000,
+    transition: 'scale'
   }
 }
 
@@ -31,14 +38,21 @@ class SignIn extends Component {
     return { muiTheme: getMuiTheme(baseTheme) };
   }
 
+  showAlert = () => {
+    this.msg.show('Username is wrong. Please try again', {
+      time: 2000,
+      type: 'error',
+    })
+  }
+
   checkUser(){
     //waiting for API endpoint
     // axios.get('/{this.state.userName}')
     //   .then(function (response) {
-    //
+    //     Router.transitionTo('/courses');
     //   })
     //   .catch(function (error) {
-    //     console.log(error);
+    //     showAlert();
     //   });
   }
 

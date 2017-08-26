@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import RaisedButton from 'material-ui/RaisedButton';
+//import {browserHistory} from 'react-router'
 // import styles from './SignIn.scss';
 
 var styles = {
@@ -49,11 +50,12 @@ class SignIn extends Component {
     //waiting for API endpoint
     // axios.get('/{this.state.userName}')
     //   .then(function (response) {
-    //     Router.transitionTo('/courses');
+    //     this.context.router.history.push('/courses');
     //   })
     //   .catch(function (error) {
     //     showAlert();
     //   });
+    this.context.router.history.push('/courses');
   }
 
   render(){
@@ -67,7 +69,7 @@ class SignIn extends Component {
             type="text"
             value= {this.state.userName}
           /><br />
-          <RaisedButton label="Primary" primary={true} onClick={this.checkUser()}/>
+          <RaisedButton label="Log in" primary={true} onClick={() => {this.checkUser()}}/>
         </form>
       </div>
     )
@@ -76,6 +78,10 @@ class SignIn extends Component {
 
 SignIn.childContextTypes = {
     muiTheme: React.PropTypes.object.isRequired,
+};
+
+SignIn.contextTypes = {
+  router: React.PropTypes.object,
 };
 
 export default SignIn

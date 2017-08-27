@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
+import Assignments from './Assignments/Assignments.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
@@ -13,10 +14,10 @@ class App extends Component {
         <MuiThemeProvider>
           <AppBar
             onTitleTouchTap={() => {
-              window.location = '/courses';
+              window.location = '/';
             }}
             onLeftIconButtonTouchTap={() => {
-              window.location = '/courses';
+              window.location = '/assignments';
             }}
             title="Swimming Fish" />
         </MuiThemeProvider>
@@ -24,6 +25,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={SignIn}/>
             <Route path='/courses' component={CourseList}/>
+            <Route path='/assignments' component={Assignments}/>
           </Switch>
         </BrowserRouter>
       </main>

@@ -82,6 +82,12 @@ class SignIn extends Component {
             type="text"
             onChange={this._handleTextFieldChange.bind(this)}
             value={this.state.fieldValue}
+            onKeyPress={(ev) => {
+              if (ev.key === 'Enter') {
+                this.signUp();
+                ev.preventDefault();
+              }
+            }}
           /><br />
         </form>
         <RaisedButton label="Log in" primary={true} style={styles.buttonStyle} fullWidth={true}

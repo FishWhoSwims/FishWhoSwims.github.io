@@ -7,7 +7,19 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
 
+  constructor(){
+    super();
+    this.state = {
+      isLoggedIn: false
+    };
+  }
+
   render() {
+    if (this.props.location.pathname != '') {
+      this.state.isLoggedIn = true;
+    } else {
+
+    }
     return   (
       <main>
         <MuiThemeProvider>
@@ -18,6 +30,7 @@ class App extends Component {
             onLeftIconButtonTouchTap={() => {
               window.location = '/courses';
             }}
+            isLoggedIn={true}
             title="Swimming Fish" />
         </MuiThemeProvider>
         <BrowserRouter>

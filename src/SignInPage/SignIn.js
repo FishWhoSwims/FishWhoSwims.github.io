@@ -58,6 +58,17 @@ class SignIn extends Component {
     this.context.router.history.push('/courses');
   }
 
+  signUp(){
+    //waiting for API endpoint
+    // axios.post('/{this.state.userName}')
+    //   .then(function (response) {
+    //
+    //   })
+    //   .catch(function (error) {
+    //     showAlert();
+    //   });
+  }
+
   render(){
     return (
       <div style={styles.root}>
@@ -70,6 +81,7 @@ class SignIn extends Component {
             value= {this.state.userName}
           /><br />
           <RaisedButton label="Log in" primary={true} onClick={() => {this.checkUser()}}/>
+          <RaisedButton label="Sign up" primary={true} onClick={() => {this.signUp()}}/>
         </form>
       </div>
     )

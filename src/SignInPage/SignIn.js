@@ -23,7 +23,7 @@ var styles = {
     time: 5000,
     transition: 'scale'
   }
-}
+};
 
 class SignIn extends Component {
 
@@ -38,11 +38,11 @@ class SignIn extends Component {
     return { muiTheme: getMuiTheme(baseTheme) };
   }
 
-  showAlert = () => {
+  showAlert() {
     this.msg.show('Username is wrong. Please try again', {
       time: 2000,
       type: 'error',
-    })
+    });
   }
 
   checkUser(){
@@ -70,12 +70,12 @@ class SignIn extends Component {
           <RaisedButton label="Primary" primary={true} onClick={this.checkUser()}/>
         </form>
       </div>
-    )
+    );
   }
 }
 
 SignIn.childContextTypes = {
-    muiTheme: React.PropTypes.object.isRequired,
+  muiTheme: React.PropTypes.object.isRequired,
 };
 
-export default SignIn
+export default SignIn;

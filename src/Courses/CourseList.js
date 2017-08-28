@@ -77,7 +77,6 @@ class CourseList extends Component {
 
     return (
       <div>
-
         <div style={styles.root}>
           <MuiThemeProvider>
             <GridList

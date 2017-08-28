@@ -8,6 +8,14 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
 
+  constructor(){
+    super();
+    this.state = {
+      isLoggedIn: false,
+      userName: 'ndang'
+    };
+  }
+
   render() {
     return   (
       <main>
@@ -19,6 +27,7 @@ class App extends Component {
             onLeftIconButtonTouchTap={() => {
               window.location = '/assignments';
             }}
+            iconElementRight={<h3>Welcome {this.state.userName} </h3>}
             title="Swimming Fish" />
         </MuiThemeProvider>
         <BrowserRouter>

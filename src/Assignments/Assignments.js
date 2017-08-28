@@ -90,39 +90,64 @@ const assignmentList = [
 
 let assignmentNumber = 0;
 class Assignments extends Component {
+
   constructor() {
     super();
+    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    this.targetUrl = 'http://52.35.1.78/API';
+    // this.getNotes();
     this.state = {
-      assignments: assignmentList,
+      assignments: [],
     };
+    
+  }
+
+  componentWillMount() {
+    var userID = 1;
+    var classID = 1;
+    // Due to CORs issues you have to set up a proxy
+    // var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+    //   targetUrl = 'http://52.35.1.78/API/users/1/classes/1/notes/1/'
+    return fetch(this.proxyUrl + this.targetUrl + '/users/' + userID + '/classes/' + classID)
+      .then(results => {
+        return results.json();
+      }).then(data => {
+        console.log('success:', data);
+        let assignments = data.assignments.map((assignment) => {
+          return (
+            <Assignment
+              data={assignment}/>
+          )
+        })
+        let notes = data.notes.map((note) => {
+          return (
+            <Assignment
+              data={note} />
+          )
+        })
+        let exams = data.exams.map((exam) => {
+          return (
+            <Assignment
+              data={exam} />
+          )
+        })
+        this.setState({assignments : assignments});
+      })
+      // .then(result => console.log('success:', result))
+      .catch(error => console.log('error:', error));
   }
 
   render() {
+    // this.getNotes();
     const AssignRow = this.state.assignments.map((assignment) => {
+      console.log('success:', assignment);
       return (
         <Assignment
-          data = {assignment} key={assignmentNumber++} />
+          data = {assignment.props.data} key={assignmentNumber++} />
       );
     });
 
-    // return (
-    //   <div>
-    //     <MuiThemeProvider>
-    //       <Table>
-    //         <TableHeader>
-    //           <TableRow>
-    //             <TableHeaderColumn>File Name</TableHeaderColumn>
-    //             <TableHeaderColumn>Due Date</TableHeaderColumn>
-    //             <TableHeaderColumn>Status</TableHeaderColumn>
-    //           </TableRow>
-    //         </TableHeader>
-    //         <TableBody>
-    //           {AssignRow}
-    //         </TableBody>
-    //       </Table>
-    //     </MuiThemeProvider>
-    //   </div>
-    // );
+    console.log('success:', AssignRow);
     return (
       <div>
         <MuiThemeProvider>
@@ -165,90 +190,6 @@ class Assignments extends Component {
     );
   }
 
-  // constructor(){
-  //   super();
-  //   this.state = {
-  //     assignments: assignmentList,
-  //     fixedHeader: true,
-  //     fixedFooter: true,
-  //     stripedRows: false,
-  //     showRowHover: true,
-  //     selectable: true,
-  //     multiSelectable: true,
-  //     enableSelectAll: true,
-  //     deselectOnClickaway: true,
-  //     showCheckboxes: true,
-  //     height: '300px',
-  //   };
-  // }
-
-  // handleToggle(event, toggled) {
-  //   this.setState({
-  //     [event.target.name]: toggled,
-  //   });
-  // }
-
-  // handleChange(event) {
-  //   this.setState({height: event.target.value});
-  // }
-
-  // render(){
-  //   /*let redirect = requireUsername();
-  //   if (redirect) {
-  //     return redirect;
-  //   }*/
-
-  //   const tableRows = this.state.assignments.map((row, index) => (
-  //     <TableRow key={index}>
-  //       <TableRowColumn>{row.assignName}</TableRowColumn>
-  //       <TableRowColumn>{row.createDate}</TableRowColumn>
-  //       <TableRowColumn>{row.dueDate}</TableRowColumn>
-  //       <TableRowColumn>{row.ptWorth}</TableRowColumn>
-  //       <TableRowColumn>{row.finished}</TableRowColumn>
-  //     </TableRow>
-  //   ));
-
-    // return (
-    //   <div>
-    //     <MuiThemeProvider>
-    //       <Table
-    //         height={this.state.height}
-    //         fixedHeader={this.state.fixedHeader}
-    //         fixedFooter={this.state.fixedFooter}
-    //         selectable={this.state.selectable}
-    //         multiSelectable={this.state.multiSelectable}
-    //       >
-    //         <TableHeader
-    //           displaySelectAll={this.state.showCheckboxes}
-    //           adjustForCheckbox={this.state.showCheckboxes}
-    //           enableSelectAll={this.state.enableSelectAll}
-    //         >
-    //           <TableRow>
-    //             <TableHeaderColumn colSpan="5" style={{textAlign: 'center'}}>
-    //                                 Assignment Table
-    //             </TableHeaderColumn>
-    //           </TableRow>
-    //           <TableRow>
-    //             <TableHeaderColumn>Title</TableHeaderColumn>
-    //             <TableHeaderColumn>Create Date</TableHeaderColumn>
-    //             <TableHeaderColumn>Due Date</TableHeaderColumn>
-    //             <TableHeaderColumn>Points</TableHeaderColumn>
-    //             <TableHeaderColumn>Status</TableHeaderColumn>
-    //           </TableRow>
-    //         </TableHeader>
-    //         <TableBody
-    //           displayRowCheckbox={this.state.showCheckboxes}
-    //           deselectOnClickaway={this.state.deselectOnClickaway}
-    //           showRowHover={this.state.showRowHover}
-    //           stripedRows={this.state.stripedRows}
-    //         >
-    //           {tableRows}
-    //         </TableBody>
-    //       </Table>
-    //     </MuiThemeProvider>
-    //   </div>
-    // );
-  // }
 }
 
 export default Assignments;

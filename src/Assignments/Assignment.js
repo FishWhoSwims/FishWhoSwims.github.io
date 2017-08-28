@@ -18,11 +18,11 @@ class Assignment extends Component{
       // <TableBody>
       <TableRow {...other}>
         {other.children[0] /* checkbox passed down from Table-Body */}
-        <TableRowColumn><div>{data.assignName}</div></TableRowColumn>
-        <TableRowColumn><div>{data.createDate}</div></TableRowColumn>
-        <TableRowColumn><div>{data.dueDate}</div></TableRowColumn>
-        <TableRowColumn><div>{data.ptWorth}</div></TableRowColumn>
-        <TableRowColumn><div>{data.finished}</div></TableRowColumn>
+        <TableRowColumn><div>{data.name}</div></TableRowColumn>
+        <TableRowColumn><div>{data.date}</div></TableRowColumn>
+        {/* <TableRowColumn><div>{data.dueDate}</div></TableRowColumn> */}
+        {/* <TableRowColumn><div>{data.ptWorth}</div></TableRowColumn> */}
+        {/* <TableRowColumn><div>{data.finished}</div></TableRowColumn> */}
       </TableRow>
       // </TableBody>
     );

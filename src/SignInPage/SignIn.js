@@ -39,6 +39,7 @@ class SignIn extends Component {
     this.state = {
       userName: ''
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   getChildContext() {
@@ -61,6 +62,7 @@ class SignIn extends Component {
     //   .catch(function (error) {
     //     showAlert();
     //   });
+    alert(this.state.userName);
     this.context.router.history.push('/courses');
   }
 
@@ -75,6 +77,12 @@ class SignIn extends Component {
     //   });
   }
 
+  handleChange = (event) => {
+    this.setState({
+      userName: event.target.value,
+    });
+  }
+
   render(){
     return (
       <div style={styles.root}>
@@ -85,6 +93,7 @@ class SignIn extends Component {
             floatingLabelText="What is your name?"
             type="text"
             value= {this.state.userName}
+            onChange={this.handleChange}
           /><br />
         </form>
         <RaisedButton label="Log in" primary={true} style={styles.buttonStyle} fullWidth={true}

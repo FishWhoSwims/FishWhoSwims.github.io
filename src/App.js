@@ -26,7 +26,7 @@ class App extends Component {
             onLeftIconButtonTouchTap={() => {
               window.location = '/courses';
             }}
-            iconElementRight={<h3>Welcome {this.state.userName} </h3>}
+            iconElementRight={<h3>Welcome {this.state.userName}! </h3>}
             title="Swimming Fish" />
         </MuiThemeProvider>
         <BrowserRouter>

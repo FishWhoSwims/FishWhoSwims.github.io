@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import RaisedButton from 'material-ui/RaisedButton';
+import axios from 'axios';
 //import {browserHistory} from 'react-router'
 // import styles from './SignIn.scss';
 
@@ -46,7 +47,7 @@ class SignIn extends Component {
     return { muiTheme: getMuiTheme(baseTheme) };
   }
 
-  showAlert = () => {
+  showAlert(){
     this.msg.show('Username is wrong. Please try again', {
       time: 2000,
       type: 'error',
@@ -60,7 +61,7 @@ class SignIn extends Component {
     //     this.context.router.history.push('/courses');
     //   })
     //   .catch(function (error) {
-    //     showAlert();
+    //     this.showAlert();
     //   });
     alert(this.state.userName);
     this.context.router.history.push('/courses');
@@ -73,7 +74,7 @@ class SignIn extends Component {
     //
     //   })
     //   .catch(function (error) {
-    //     showAlert();
+    //
     //   });
   }
 

@@ -4,36 +4,59 @@ import AppBar from 'material-ui/AppBar';
 import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import AppContainer from './AppContainer';
 
 class App extends Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
-      isLoggedIn: false,
-      userName: 'ndang'
+      //isLoggedIn: true,
+      currentPath: ''
     };
+    this.props.history.listen((location, action) => {
+      console.log("on route change");
+    });
+  }
+
+  isInLogInPage = () => {
+    console.log(this.state.currentPath);
+    if(this.state.currentPath === '/'){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  routeChangeHandler(){
+    console.log('route change');
   }
 
   render() {
+    this.state.currentPath = window.location.pathname
     return   (
       <main>
         <MuiThemeProvider>
-          <AppBar
+        {
+        !this.isInLogInPage()
+        ? <AppBar
             onTitleTouchTap={() => {
               window.location = '/courses';
             }}
             onLeftIconButtonTouchTap={() => {
               window.location = '/courses';
             }}
-            iconElementRight={<h3>Welcome {this.state.userName}! </h3>}
             title="Swimming Fish" />
+        : null
+        }
         </MuiThemeProvider>
         <BrowserRouter>
-          <Switch>
-            <Route exact path='/' component={SignIn}/>
-            <Route path='/courses' component={CourseList}/>
-          </Switch>
+          <AppContainer>
+            <Switch>
+              <Route exact path='/' component={SignIn}/>
+              <Route path='/courses' component={CourseList}/>
+            </Switch>
+          </AppContainer>
         </BrowserRouter>
       </main>
     );

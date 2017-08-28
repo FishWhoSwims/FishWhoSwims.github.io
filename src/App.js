@@ -5,6 +5,8 @@ import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
 import Assignments from './Assignments/Assignments.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import DetailPage from './Assignments/DetailPage.js';
+
 
 class App extends Component {
 
@@ -34,7 +36,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={SignIn}/>
             <Route path='/courses' component={CourseList}/>
-            <Route path='/assignments' component={Assignments}/>
+            <Route path='/assignments' component={DetailPage}/>
           </Switch>
         </BrowserRouter>
       </main>

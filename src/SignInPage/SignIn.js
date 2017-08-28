@@ -31,7 +31,7 @@ var styles = {
     color: '#1A237E',
     textAlign: 'center'
   }
-}
+};
 
 class SignIn extends Component {
 
@@ -51,7 +51,7 @@ class SignIn extends Component {
     this.msg.show('Username is wrong. Please try again', {
       time: 2000,
       type: 'error',
-    })
+    });
   }
 
   checkUser(){
@@ -103,12 +103,12 @@ class SignIn extends Component {
         <RaisedButton label="Sign up" primary={true} style={styles.buttonStyle}
                       onClick={() => {this.signUp()}}/>
       </div>
-    )
+    );
   }
 }
 
 SignIn.childContextTypes = {
-    muiTheme: React.PropTypes.object.isRequired,
+  muiTheme: React.PropTypes.object.isRequired,
 };
 
 SignIn.contextTypes = {

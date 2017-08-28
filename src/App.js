@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
+import Assignments from './Assignments/Assignments.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import AppContainer from './AppContainer';
 
@@ -41,10 +42,10 @@ class App extends Component {
         !this.isInLogInPage()
         ? <AppBar
             onTitleTouchTap={() => {
-              window.location = '/courses';
+              window.location = '/';
             }}
             onLeftIconButtonTouchTap={() => {
-              window.location = '/courses';
+              window.location = '/assignments';
             }}
             title="Swimming Fish" />
         : null

@@ -3,8 +3,8 @@ import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import RaisedButton from 'material-ui/RaisedButton';
-//import {browserHistory} from 'react-router'
-// import styles from './SignIn.scss';
+import {getUsername, setUsername} from '../util/username.js';
+import {Redirect} from 'react-router';
 
 var styles = {
   root: {
@@ -37,7 +37,8 @@ class SignIn extends Component {
   constructor() {
     super();
     this.state = {
-      userName: ''
+      username: getUsername(),
+      fieldValue: ''
     };
   }
 
@@ -53,29 +54,24 @@ class SignIn extends Component {
   }
 
   checkUser(){
-    //waiting for API endpoint
-    // axios.get('/{this.state.userName}')
-    //   .then(function (response) {
-    //     this.context.router.history.push('/courses');
-    //   })
-    //   .catch(function (error) {
-    //     showAlert();
-    //   });
-    this.context.router.history.push('/courses');
+    this.signUp();
   }
 
   signUp(){
-    //waiting for API endpoint
-    // axios.post('/{this.state.userName}')
-    //   .then(function (response) {
-    //
-    //   })
-    //   .catch(function (error) {
-    //     showAlert();
-    //   });
+    setUsername(this.state.fieldValue);
+    this.setState({username: getUsername()});
+  }
+
+  _handleTextFieldChange(e) {
+    this.setState({
+      fieldValue: e.target.value
+    })
   }
 
   render(){
+    if(this.state.username != null) {
+      return <Redirect to='/courses'/>;
+    }
     return (
       <div style={styles.root}>
         <form>
@@ -84,7 +80,8 @@ class SignIn extends Component {
             hintText="Your name here"
             floatingLabelText="What is your name?"
             type="text"
-            value= {this.state.userName}
+            onChange={this._handleTextFieldChange.bind(this)}
+            value={this.state.fieldValue}
           /><br />
         </form>
         <RaisedButton label="Log in" primary={true} style={styles.buttonStyle} fullWidth={true}

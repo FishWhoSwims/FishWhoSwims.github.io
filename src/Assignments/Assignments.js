@@ -8,6 +8,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import Assignment from './Assignment.js';
 import requireUsername from '../util/requireUsername.js';
 /*const styles = {
   propContainer: {
@@ -87,50 +88,41 @@ const assignmentList = [
   }
 ];
 
+let assignmentNumber = 0;
 class Assignments extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       assignments: assignmentList,
-      fixedHeader: true,
-      fixedFooter: true,
-      stripedRows: false,
-      showRowHover: true,
-      selectable: true,
-      multiSelectable: true,
-      enableSelectAll: true,
-      deselectOnClickaway: true,
-      showCheckboxes: true,
-      height: '300px',
     };
   }
 
-  handleToggle(event, toggled) {
-    this.setState({
-      [event.target.name]: toggled,
+  render() {
+    const AssignRow = this.state.assignments.map((assignment) => {
+      return (
+        <Assignment
+          data = {assignment} key={assignmentNumber++} />
+      );
     });
-  }
 
-  handleChange(event) {
-    this.setState({height: event.target.value});
-  }
-
-  render(){
-    /*let redirect = requireUsername();
-    if (redirect) {
-      return redirect;
-    }*/
-
-    const tableRows = this.state.assignments.map((row, index) => (
-      <TableRow key={index}>
-        <TableRowColumn>{row.assignName}</TableRowColumn>
-        <TableRowColumn>{row.createDate}</TableRowColumn>
-        <TableRowColumn>{row.dueDate}</TableRowColumn>
-        <TableRowColumn>{row.ptWorth}</TableRowColumn>
-        <TableRowColumn>{row.finished}</TableRowColumn>
-      </TableRow>
-    ));
-
+    // return (
+    //   <div>
+    //     <MuiThemeProvider>
+    //       <Table>
+    //         <TableHeader>
+    //           <TableRow>
+    //             <TableHeaderColumn>File Name</TableHeaderColumn>
+    //             <TableHeaderColumn>Due Date</TableHeaderColumn>
+    //             <TableHeaderColumn>Status</TableHeaderColumn>
+    //           </TableRow>
+    //         </TableHeader>
+    //         <TableBody>
+    //           {AssignRow}
+    //         </TableBody>
+    //       </Table>
+    //     </MuiThemeProvider>
+    //   </div>
+    // );
     return (
       <div>
         <MuiThemeProvider>
@@ -147,8 +139,8 @@ class Assignments extends Component {
               enableSelectAll={this.state.enableSelectAll}
             >
               <TableRow>
-                <TableHeaderColumn colSpan="5" style={{textAlign: 'center'}}>
-                                    Assignment Table
+                <TableHeaderColumn colSpan="5" style={{ textAlign: 'center' }}>
+                  Assignment Table
                 </TableHeaderColumn>
               </TableRow>
               <TableRow>
@@ -165,13 +157,98 @@ class Assignments extends Component {
               showRowHover={this.state.showRowHover}
               stripedRows={this.state.stripedRows}
             >
-              {tableRows}
+              {AssignRow}
             </TableBody>
           </Table>
         </MuiThemeProvider>
       </div>
     );
   }
+
+  // constructor(){
+  //   super();
+  //   this.state = {
+  //     assignments: assignmentList,
+  //     fixedHeader: true,
+  //     fixedFooter: true,
+  //     stripedRows: false,
+  //     showRowHover: true,
+  //     selectable: true,
+  //     multiSelectable: true,
+  //     enableSelectAll: true,
+  //     deselectOnClickaway: true,
+  //     showCheckboxes: true,
+  //     height: '300px',
+  //   };
+  // }
+
+  // handleToggle(event, toggled) {
+  //   this.setState({
+  //     [event.target.name]: toggled,
+  //   });
+  // }
+
+  // handleChange(event) {
+  //   this.setState({height: event.target.value});
+  // }
+
+  // render(){
+  //   /*let redirect = requireUsername();
+  //   if (redirect) {
+  //     return redirect;
+  //   }*/
+
+  //   const tableRows = this.state.assignments.map((row, index) => (
+  //     <TableRow key={index}>
+  //       <TableRowColumn>{row.assignName}</TableRowColumn>
+  //       <TableRowColumn>{row.createDate}</TableRowColumn>
+  //       <TableRowColumn>{row.dueDate}</TableRowColumn>
+  //       <TableRowColumn>{row.ptWorth}</TableRowColumn>
+  //       <TableRowColumn>{row.finished}</TableRowColumn>
+  //     </TableRow>
+  //   ));
+
+    // return (
+    //   <div>
+    //     <MuiThemeProvider>
+    //       <Table
+    //         height={this.state.height}
+    //         fixedHeader={this.state.fixedHeader}
+    //         fixedFooter={this.state.fixedFooter}
+    //         selectable={this.state.selectable}
+    //         multiSelectable={this.state.multiSelectable}
+    //       >
+    //         <TableHeader
+    //           displaySelectAll={this.state.showCheckboxes}
+    //           adjustForCheckbox={this.state.showCheckboxes}
+    //           enableSelectAll={this.state.enableSelectAll}
+    //         >
+    //           <TableRow>
+    //             <TableHeaderColumn colSpan="5" style={{textAlign: 'center'}}>
+    //                                 Assignment Table
+    //             </TableHeaderColumn>
+    //           </TableRow>
+    //           <TableRow>
+    //             <TableHeaderColumn>Title</TableHeaderColumn>
+    //             <TableHeaderColumn>Create Date</TableHeaderColumn>
+    //             <TableHeaderColumn>Due Date</TableHeaderColumn>
+    //             <TableHeaderColumn>Points</TableHeaderColumn>
+    //             <TableHeaderColumn>Status</TableHeaderColumn>
+    //           </TableRow>
+    //         </TableHeader>
+    //         <TableBody
+    //           displayRowCheckbox={this.state.showCheckboxes}
+    //           deselectOnClickaway={this.state.deselectOnClickaway}
+    //           showRowHover={this.state.showRowHover}
+    //           stripedRows={this.state.stripedRows}
+    //         >
+    //           {tableRows}
+    //         </TableBody>
+    //       </Table>
+    //     </MuiThemeProvider>
+    //   </div>
+    // );
+  // }
 }
 
 export default Assignments;

@@ -1,24 +1,30 @@
 import React, {Component} from 'react';
-/*import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
+import {
   TableRowColumn,
-} from 'material-ui/Table';*/
+  TableRow,
+} from 'material-ui/Table';
 
 class Assignment extends Component{
   constructor(){
     super();
-    this.state = {
-      assignmentName: ''
-    };
+    // this.state = {
+    //   assignmentName: ''
+    // };
   }
 
   render(){
+    const { data, ...other } = this.props;
     return (
-      (<div></div>)
+      // <TableBody>
+      <TableRow {...other}>
+        {other.children[0] /* checkbox passed down from Table-Body */}
+        <TableRowColumn><div>{data.assignName}</div></TableRowColumn>
+        <TableRowColumn><div>{data.createDate}</div></TableRowColumn>
+        <TableRowColumn><div>{data.dueDate}</div></TableRowColumn>
+        <TableRowColumn><div>{data.ptWorth}</div></TableRowColumn>
+        <TableRowColumn><div>{data.finished}</div></TableRowColumn>
+      </TableRow>
+      // </TableBody>
     );
   }
 }

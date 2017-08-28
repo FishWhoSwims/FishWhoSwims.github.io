@@ -3,7 +3,8 @@ import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import RaisedButton from 'material-ui/RaisedButton';
-// import styles from './SignIn.scss';
+import {getUsername, setUsername} from '../util/username.js';
+import {Redirect} from 'react-router';
 
 var styles = {
   root: {
@@ -13,8 +14,8 @@ var styles = {
     right: 0,
     bottom: 0,
     left: 0,
-    width: 150,
-    height: 150
+    width: 300,
+    height: 300
   },
   alertOptions: {
     offset: 14,
@@ -22,15 +23,22 @@ var styles = {
     theme: 'dark',
     time: 5000,
     transition: 'scale'
+  }, buttonStyle: {
+    marginBottom: 12,
+    marginTop: 12
+  }, text: {
+    color: '#1A237E',
+    textAlign: 'center'
   }
-}
+};
 
 class SignIn extends Component {
 
   constructor() {
     super();
     this.state = {
-      userName: ''
+      username: getUsername(),
+      fieldValue: ''
     };
   }
 
@@ -38,44 +46,64 @@ class SignIn extends Component {
     return { muiTheme: getMuiTheme(baseTheme) };
   }
 
-  showAlert = () => {
+  showAlert() {
     this.msg.show('Username is wrong. Please try again', {
       time: 2000,
       type: 'error',
-    })
+    });
   }
 
   checkUser(){
-    //waiting for API endpoint
-    // axios.get('/{this.state.userName}')
-    //   .then(function (response) {
-    //     Router.transitionTo('/courses');
-    //   })
-    //   .catch(function (error) {
-    //     showAlert();
-    //   });
+    this.signUp();
+  }
+
+  signUp(){
+    setUsername(this.state.fieldValue);
+    this.setState({username: getUsername()});
+  }
+
+  _handleTextFieldChange(e) {
+    this.setState({
+      fieldValue: e.target.value
+    })
   }
 
   render(){
+    if(this.state.username != null) {
+      return <Redirect to='/courses'/>;
+    }
     return (
       <div style={styles.root}>
         <form>
-          <h1>Sign in</h1><br/>
+          <h1 style={styles.text}>SIGN IN</h1><br/>
           <TextField
             hintText="Your name here"
             floatingLabelText="What is your name?"
             type="text"
-            value= {this.state.userName}
+            onChange={this._handleTextFieldChange.bind(this)}
+            value={this.state.fieldValue}
           /><br />
-          <RaisedButton label="Primary" primary={true} onClick={this.checkUser()}/>
         </form>
+        <RaisedButton label="Log in" primary={true} style={styles.buttonStyle} fullWidth={true}
+          onClick={() => {
+            this.checkUser();
+          }}/><br/>
+        <label style={styles.text}>Do not have an account? </label>
+        <RaisedButton label="Sign up" primary={true} style={styles.buttonStyle}
+          onClick={() => {
+            this.signUp();
+          }}/>
       </div>
-    )
+    );
   }
 }
 
 SignIn.childContextTypes = {
-    muiTheme: React.PropTypes.object.isRequired,
+  muiTheme: React.PropTypes.object.isRequired,
 };
 
-export default SignIn
+SignIn.contextTypes = {
+  router: React.PropTypes.object,
+};
+
+export default SignIn;

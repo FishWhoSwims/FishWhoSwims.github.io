@@ -3,6 +3,7 @@ import {GridList} from 'material-ui/GridList';
 import Course from './Course.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {cyan500, deepPurple600, teal800, indigo500, lightBlue800} from 'material-ui/styles/colors';
+import requireUsername from '../util/requireUsername.js';
 
 const DummyCourses = [
   {
@@ -67,6 +68,11 @@ class CourseList extends Component {
   }
 
   render() {
+    let redirect = requireUsername();
+    if (redirect) {
+      return redirect;
+    }
+
     const ClassCells = this.state.courses.map((course) => {
       return (
         <Course
@@ -77,7 +83,6 @@ class CourseList extends Component {
 
     return (
       <div>
-
         <div style={styles.root}>
           <MuiThemeProvider>
             <GridList

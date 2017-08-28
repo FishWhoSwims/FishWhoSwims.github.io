@@ -3,29 +3,45 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
+<<<<<<< HEAD
 import FileList from './FilePage/FileList.js';
+=======
+import Assignments from './Assignments/Assignments.js';
+import {getUsername} from './util/username.js';
+>>>>>>> upstream/master
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      username: getUsername()
+    }
+  }
+
+  logout() {
+    window.localStorage.removeItem('username');
+    window.location = '/';
+  }
 
   render() {
     return   (
       <main>
         <MuiThemeProvider>
           <AppBar
-            onTitleTouchTap={() => {
-              window.location = '/courses';
-            }}
             onLeftIconButtonTouchTap={() => {
               window.location = '/courses';
             }}
-            title="Swimming Fish" />
+            onRightIconButtonTouchTap={this.logout.bind(this)}
+            iconElementLeft={<img style={{width:50}} src='img/swimmingfish.jpeg'/>}
+            iconElementRight={<p style={{cursor: 'pointer'}}>Logout</p>}
+          />
         </MuiThemeProvider>
         <BrowserRouter>
           <Switch>
             <Route exact path='/' component={SignIn}/>
             <Route path='/courses' component={CourseList}/>
-            <Route path='/files' component={FileList}/>
+            <Route path='/assignments' component={Assignments}/>
           </Switch>
         </BrowserRouter>
       </main>

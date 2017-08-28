@@ -88,10 +88,14 @@ class SignIn extends Component {
           /><br />
         </form>
         <RaisedButton label="Log in" primary={true} style={styles.buttonStyle} fullWidth={true}
-                      onClick={() => {this.checkUser()}}/><br/>
+          onClick={() => {
+            this.checkUser();
+          }}/><br/>
         <label style={styles.text}>Do not have an account? </label>
         <RaisedButton label="Sign up" primary={true} style={styles.buttonStyle}
-                      onClick={() => {this.signUp()}}/>
+          onClick={() => {
+            this.signUp();
+          }}/>
       </div>
     );
   }
@@ -105,4 +109,4 @@ SignIn.contextTypes = {
   router: React.PropTypes.object,
 };
 
-export default SignIn
+export default SignIn;

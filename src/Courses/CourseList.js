@@ -69,7 +69,7 @@ class CourseList extends Component {
 
   render() {
     let redirect = requireUsername();
-    if(redirect) {
+    if (redirect) {
       return redirect;
     }
 

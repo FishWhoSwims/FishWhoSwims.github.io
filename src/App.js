@@ -5,12 +5,8 @@ import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
 import Assignments from './Assignments/Assignments.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { Redirect } from 'react-router';
-class App extends Component {
 
-  constructor(){
-    super();
-  }
+class App extends Component {
 
   render() {
     return   (
@@ -21,7 +17,7 @@ class App extends Component {
               window.location = '/courses';
             }}
             iconElementLeft={<img style={{width:50}} src='img/swimmingfish.jpeg'/>}
-            />
+          />
         </MuiThemeProvider>
         <BrowserRouter>
           <Switch>

@@ -3,12 +3,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
-<<<<<<< HEAD
-import FileList from './FilePage/FileList.js';
-=======
 import Assignments from './Assignments/Assignments.js';
 import {getUsername} from './util/username.js';
->>>>>>> upstream/master
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 class App extends Component {

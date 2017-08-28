@@ -3,8 +3,7 @@ import {GridList} from 'material-ui/GridList';
 import Course from './Course.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {cyan500, deepPurple600, teal800, indigo500, lightBlue800} from 'material-ui/styles/colors';
-import {getUserName} from '../util/username.js';
-import {Redirect} from 'react-router';
+import requireUsername from '../util/requireUsername.js';
 
 const DummyCourses = [
   {
@@ -65,13 +64,13 @@ class CourseList extends Component {
     super();
     this.state = {
       courses: DummyCourses,
-      username: getUserName()
     };
   }
 
   render() {
-    if(this.state.username == null) {
-      return <Redirect to='/'/>
+    let redirect = requireUsername();
+    if(redirect) {
+      return redirect;
     }
 
     const ClassCells = this.state.courses.map((course) => {

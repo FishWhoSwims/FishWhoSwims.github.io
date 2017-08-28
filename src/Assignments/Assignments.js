@@ -8,7 +8,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-
+import requireUsername from '../util/requireUsername.js';
 /*const styles = {
   propContainer: {
     width: 200,
@@ -116,6 +116,11 @@ class Assignments extends Component {
   }
 
   render(){
+    let redirect = requireUsername();
+    if(redirect) {
+      return redirect;
+    }
+
     const tableRows = this.state.assignments.map((row, index) => (
       <TableRow key={index}>
         <TableRowColumn>{row.assignName}</TableRowColumn>

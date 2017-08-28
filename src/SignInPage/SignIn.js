@@ -65,11 +65,11 @@ class SignIn extends Component {
   _handleTextFieldChange(e) {
     this.setState({
       fieldValue: e.target.value
-    })
+    });
   }
 
   render(){
-    if(this.state.username != null) {
+    if (this.state.username != null) {
       return <Redirect to='/courses'/>;
     }
     return (

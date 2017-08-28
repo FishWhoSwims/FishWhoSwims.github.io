@@ -5,15 +5,11 @@ import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
 import Assignments from './Assignments/Assignments.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-
+import { Redirect } from 'react-router';
 class App extends Component {
 
   constructor(){
     super();
-    this.state = {
-      isLoggedIn: false,
-      userName: 'ndang'
-    };
   }
 
   render() {
@@ -21,14 +17,11 @@ class App extends Component {
       <main>
         <MuiThemeProvider>
           <AppBar
-            onTitleTouchTap={() => {
-              window.location = '/';
-            }}
             onLeftIconButtonTouchTap={() => {
-              window.location = '/assignments';
+              window.location = '/courses';
             }}
-            iconElementRight={<h3>Welcome {this.state.userName} </h3>}
-            title="Swimming Fish" />
+            iconElementLeft={<img style={{width:50}} src='img/swimmingfish.jpeg'/>}
+            />
         </MuiThemeProvider>
         <BrowserRouter>
           <Switch>

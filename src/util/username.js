@@ -1,12 +1,12 @@
 let username = window.localStorage.getItem('username');
 username = username || null;
 
-function setUserName(name) {
+function setUsername(name) {
   username = name;
   window.localStorage.setItem('username', username);
 }
-function getUserName() {
+function getUsername() {
   return username;
 }
 
-export {setUserName, getUserName};
+export {setUsername, getUsername};

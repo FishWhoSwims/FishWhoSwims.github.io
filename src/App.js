@@ -4,18 +4,22 @@ import AppBar from 'material-ui/AppBar';
 import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
 import Assignments from './Assignments/Assignments.js';
+import {getUsername} from './util/username.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import DetailPage from './Assignments/DetailPage.js';
 
 
 class App extends Component {
-
-  constructor(){
+  constructor() {
     super();
     this.state = {
-      isLoggedIn: false,
-      userName: 'ndang'
-    };
+      username: getUsername()
+    }
+  }
+
+  logout() {
+    window.localStorage.removeItem('username');
+    window.location = '/';
   }
 
   render() {
@@ -23,14 +27,13 @@ class App extends Component {
       <main>
         <MuiThemeProvider>
           <AppBar
-            onTitleTouchTap={() => {
-              window.location = '/';
-            }}
             onLeftIconButtonTouchTap={() => {
-              window.location = '/assignments';
+              window.location = '/courses';
             }}
-            iconElementRight={<h3>Welcome {this.state.userName} </h3>}
-            title="Swimming Fish" />
+            onRightIconButtonTouchTap={this.logout.bind(this)}
+            iconElementLeft={<img style={{width:50}} src='img/swimmingfish.jpeg'/>}
+            iconElementRight={<p style={{cursor: 'pointer'}}>Logout</p>}
+          />
         </MuiThemeProvider>
         <BrowserRouter>
           <Switch>

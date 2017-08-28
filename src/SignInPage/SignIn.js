@@ -14,8 +14,8 @@ var styles = {
     right: 0,
     bottom: 0,
     left: 0,
-    width: 150,
-    height: 150
+    width: 300,
+    height: 300
   },
   alertOptions: {
     offset: 14,
@@ -23,6 +23,12 @@ var styles = {
     theme: 'dark',
     time: 5000,
     transition: 'scale'
+  }, buttonStyle: {
+    marginBottom: 12,
+    marginTop: 12
+  }, text: {
+    color: '#1A237E',
+    textAlign: 'center'
   }
 }
 
@@ -73,16 +79,19 @@ class SignIn extends Component {
     return (
       <div style={styles.root}>
         <form>
-          <h1>Sign in</h1><br/>
+          <h1 style={styles.text}>SIGN IN</h1><br/>
           <TextField
             hintText="Your name here"
             floatingLabelText="What is your name?"
             type="text"
             value= {this.state.userName}
           /><br />
-          <RaisedButton label="Log in" primary={true} onClick={() => {this.checkUser()}}/>
-          <RaisedButton label="Sign up" primary={true} onClick={() => {this.signUp()}}/>
         </form>
+        <RaisedButton label="Log in" primary={true} style={styles.buttonStyle} fullWidth={true}
+                      onClick={() => {this.checkUser()}}/><br/>
+        <label style={styles.text}>Do not have an account? </label>
+        <RaisedButton label="Sign up" primary={true} style={styles.buttonStyle}
+                      onClick={() => {this.signUp()}}/>
       </div>
     )
   }

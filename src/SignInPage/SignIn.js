@@ -55,6 +55,10 @@ class SignIn extends Component {
 
   checkUser(){
     this.signUp();
+    // if (this.state.username != null) {
+    //   <Redirect to='/courses'/>;
+    //   this.context.router.history.push('/courses');
+    // }
   }
 
   signUp(){
@@ -70,7 +74,8 @@ class SignIn extends Component {
 
   render(){
     if (this.state.username != null) {
-      return <Redirect to='/courses'/>;
+      //return <Redirect to='/courses'/>;
+      this.context.router.history.push('/courses');
     }
     return (
       <div style={styles.root}>

@@ -10,8 +10,6 @@ class Course extends Component {
     super();
     // Fetch assignments
     this.assignments = [
-      'Dummy Assignment 1',
-      'Dummy Assignment 2',
     ];
   }
 
@@ -23,7 +21,7 @@ class Course extends Component {
   render() {
     let tileStyles = Object.assign({},
       courseStyle,
-      {backgroundColor: this.props.color}
+      {backgroundColor: '#'+this.props.color}
     );
     return (
       <GridTile

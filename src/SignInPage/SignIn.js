@@ -55,7 +55,6 @@ class SignIn extends Component {
 
   checkUser(){
     this.signUp();
-    this.context.router.history.push('/courses');
   }
 
   signUp(){

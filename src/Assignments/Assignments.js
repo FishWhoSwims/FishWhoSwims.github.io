@@ -98,6 +98,9 @@ class Assignments extends Component {
     // this.getNotes();
     this.state = {
       assignments: [],
+      notes: [],
+      exams: [],
+      all: [],
     };
     
   }
@@ -116,36 +119,81 @@ class Assignments extends Component {
         let assignments = data.assignments.map((assignment) => {
           return (
             <Assignment
-              data={assignment}/>
+              data={assignment} type='assignment' key={assignmentNumber++}/>
           )
         })
         let notes = data.notes.map((note) => {
           return (
             <Assignment
-              data={note} />
+              data={note} type='note' key={assignmentNumber++}/>
           )
         })
+        console.log('notes:', notes);
         let exams = data.exams.map((exam) => {
           return (
             <Assignment
-              data={exam} />
+              data={exam} type='exam' key={assignmentNumber++}/>
           )
         })
-        this.setState({assignments : assignments});
+
+        // var rows = [];
+        // this.state.notes.forEach(function (rowItem, i) {
+        //   rows.push(
+        //     <tr key={i}>
+        //       <td>rent</td>
+        //       <td>{rowItem.name}</td>
+        //       <td>{rowItem.cost}</td>
+        //     </tr>
+        //   );
+        // });
+        let row = assignments.concat(notes);
+        let rows = row.concat(exams);
+
+        this.setState({
+          assignments : assignments,
+          notes : notes,
+          exams: exams,
+          all : rows
+        });
       })
       // .then(result => console.log('success:', result))
       .catch(error => console.log('error:', error));
   }
 
+  // combineRows (){
+  //   var rows = [];
+  //   this.state.notes.props.data.forEach(function (rowItem, i) {
+  //     rows.push(
+  //       <tr key={i}>
+  //         <td>rent</td>
+  //         <td>{rowItem.name}</td>
+  //         <td>{rowItem.cost}</td>
+  //       </tr>
+  //     );
+  //   });
+
+    // this.props.packageList.buy.forEach(function (rowItem, i) {
+    //   rows.push(
+    //     <tr key={i}>
+    //       <td>buy</td>
+    //       <td>{rowItem.name}</td>
+    //       <td>{rowItem.cost}</td>
+    //     </tr>
+    //   );
+    // });
+  //   return rows;
+  // }
+
   render() {
     // this.getNotes();
-    const AssignRow = this.state.assignments.map((assignment) => {
-      console.log('success:', assignment);
+    const AssignRow = this.state.all.map((assignment) => {
+      // console.log('success:', assignment);
       return (
         <Assignment
-          data = {assignment.props.data} key={assignmentNumber++} />
+          type = {assignment.props.type} data = {assignment.props.data} key={assignmentNumber++} />
       );
     });
+    // const AssignRow = this.combineRows();
 
     console.log('success:', AssignRow);
     return (
@@ -170,10 +218,11 @@ class Assignments extends Component {
               </TableRow>
               <TableRow>
                 <TableHeaderColumn>Title</TableHeaderColumn>
-                <TableHeaderColumn>Create Date</TableHeaderColumn>
+                {/* <TableHeaderColumn>Create Date</TableHeaderColumn> */}
                 <TableHeaderColumn>Due Date</TableHeaderColumn>
-                <TableHeaderColumn>Points</TableHeaderColumn>
-                <TableHeaderColumn>Status</TableHeaderColumn>
+                <TableHeaderColumn>Associated Exam ID</TableHeaderColumn>
+                {/* <TableHeaderColumn>Points</TableHeaderColumn> */}
+                {/* <TableHeaderColumn>Status</TableHeaderColumn> */}
               </TableRow>
             </TableHeader>
             <TableBody

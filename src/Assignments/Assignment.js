@@ -13,19 +13,35 @@ class Assignment extends Component{
   }
 
   render(){
-    const { data, ...other } = this.props;
-    return (
-      // <TableBody>
-      <TableRow {...other}>
-        {other.children[0] /* checkbox passed down from Table-Body */}
-        <TableRowColumn><div>{data.name}</div></TableRowColumn>
-        <TableRowColumn><div>{data.date}</div></TableRowColumn>
-        {/* <TableRowColumn><div>{data.dueDate}</div></TableRowColumn> */}
-        {/* <TableRowColumn><div>{data.ptWorth}</div></TableRowColumn> */}
-        {/* <TableRowColumn><div>{data.finished}</div></TableRowColumn> */}
-      </TableRow>
-      // </TableBody>
-    );
+    const { data, type, ...other } = this.props;
+    if(type === 'assignment' || type === 'note'){
+      return (
+        // <TableBody>
+        <TableRow {...other}>
+          {other.children[0] /* checkbox passed down from Table-Body */}
+          <TableRowColumn>{data.name}</TableRowColumn>
+          <TableRowColumn>{data.date}</TableRowColumn>
+          <TableRowColumn>{data.assocExamID}</TableRowColumn>
+          {/* <TableRowColumn><div>{data.ptWorth}</div></TableRowColumn> */}
+          {/* <TableRowColumn><div>{data.finished}</div></TableRowColumn> */}
+        </TableRow>
+        // </TableBody>
+      );
+    }
+    else {
+      return (
+        // <TableBody>
+        <TableRow {...other}>
+          {other.children[0] /* checkbox passed down from Table-Body */}
+          <TableRowColumn>{data.name}</TableRowColumn>
+          <TableRowColumn>{data.date}</TableRowColumn>
+          <TableRowColumn>------</TableRowColumn>
+          {/* <TableRowColumn><div>{data.ptWorth}</div></TableRowColumn> */}
+          {/* <TableRowColumn><div>{data.finished}</div></TableRowColumn> */}
+        </TableRow>
+        // </TableBody>
+      );
+    }
   }
 }
 

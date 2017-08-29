@@ -5,6 +5,9 @@ import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
 import Assignments from './Assignments/Assignments.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+
 import AppContainer from './AppContainer';
 
 class App extends Component {
@@ -15,9 +18,9 @@ class App extends Component {
       //isLoggedIn: true,
       currentPath: ''
     };
-    this.props.history.listen((location, action) => {
-      console.log("on route change");
-    });
+    // this.props.history.listen((location, action) => {
+    //   console.log("on route change");
+    // });
   }
 
   isInLogInPage = () => {
@@ -27,10 +30,6 @@ class App extends Component {
     } else {
       return false;
     }
-  }
-
-  routeChangeHandler(){
-    console.log('route change');
   }
 
   render() {
@@ -51,14 +50,12 @@ class App extends Component {
         : null
         }
         </MuiThemeProvider>
-        <BrowserRouter>
-          <AppContainer>
-            <Switch>
-              <Route exact path='/' component={SignIn}/>
-              <Route path='/courses' component={CourseList}/>
-            </Switch>
-          </AppContainer>
-        </BrowserRouter>
+          <BrowserRouter>
+              <Switch>
+                <Route exact path='/' component={SignIn}/>
+                <Route path='/courses' component={CourseList}/>
+              </Switch>
+          </BrowserRouter>
       </main>
     );
   }

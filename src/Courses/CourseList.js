@@ -29,8 +29,8 @@ class CourseList extends Component {
       courses: [],
     };
     fetch(this.proxyUrl + this.targetUrl + '/users/1/classes/')
-    .then(response => response.json())
-    .then(response => this.setState({courses: response}));
+      .then(response => response.json())
+      .then(response => this.setState({courses: response}));
   }
 
   render() {

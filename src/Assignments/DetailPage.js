@@ -41,8 +41,8 @@ class DetailPage extends Component{
             <CardTitle title={this.state.assignmentInfo.assignName} subtitle={this.state.assignmentInfo.ptWorth+" points"} />
             
             <List>
-              <ListItem primaryText={"CREATED ON " + this.state.assignmentInfo.createDate}/>
-              <ListItem primaryText={"DUE BY " + this.state.assignmentInfo.dueDate}/>
+              <ListItem primaryText={"CREATED ON: " + this.state.assignmentInfo.createDate}/>
+              <ListItem primaryText={"DUE BY: " + this.state.assignmentInfo.dueDate}/>
               <ListItem primaryText={"Description: " + this.state.assignmentInfo.description}/>
             </List>
             <CardActions>

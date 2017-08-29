@@ -21,7 +21,7 @@ class Assignment extends Component{
           {other.children[0] /* checkbox passed down from Table-Body */}
           <TableRowColumn>{data.name}</TableRowColumn>
           <TableRowColumn>{data.date}</TableRowColumn>
-          <TableRowColumn>{data.assocExamID}</TableRowColumn>
+          <TableRowColumn>{data.examID}</TableRowColumn>
           {/* <TableRowColumn><div>{data.ptWorth}</div></TableRowColumn> */}
           {/* <TableRowColumn><div>{data.finished}</div></TableRowColumn> */}
         </TableRow>

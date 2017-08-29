@@ -9,6 +9,7 @@ import {
   TableRow,
 } from 'material-ui/Table';
 import Assignment from './Assignment.js';
+import requireUsername from '../util/requireUsername.js';
 
 let assignmentNumber = 0;
 class Assignments extends Component {
@@ -77,6 +78,12 @@ class Assignments extends Component {
   }
 
   render() {
+
+    let redirect = requireUsername();
+    if (redirect) {
+      return redirect;
+    }
+
     // this.getNotes();
     const AllRow = this.state.all.map((assignment) => {
       // console.log('success:', assignment);

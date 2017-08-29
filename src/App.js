@@ -4,6 +4,7 @@ import AppBar from 'material-ui/AppBar';
 import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
 import Assignments from './Assignments/Assignments.js';
+import DetailPage from './Assignments/DetailPage.js';
 import {getUsername} from './util/username.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
@@ -38,6 +39,7 @@ class App extends Component {
             <Route exact path='/' component={SignIn}/>
             <Route path='/courses' component={CourseList}/>
             <Route path='/assignments' component={Assignments}/>
+            <Route path='/detailpage' component={DetailPage}/>
           </Switch>
         </BrowserRouter>
       </main>

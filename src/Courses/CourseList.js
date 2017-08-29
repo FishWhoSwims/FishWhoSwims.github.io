@@ -2,46 +2,7 @@ import React, {Component} from 'react';
 import {GridList} from 'material-ui/GridList';
 import Course from './Course.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {cyan500, deepPurple600, teal800, indigo500, lightBlue800} from 'material-ui/styles/colors';
 import requireUsername from '../util/requireUsername.js';
-
-const DummyCourses = [
-  {
-    courseNumber: '3308',
-    courseName: 'EMIS',
-    instructor: 'Goodman',
-    color: cyan500,
-    courseId: '1'
-  },
-  {
-    courseNumber: '1341',
-    courseName: 'CSE',
-    instructor: 'Walker',
-    color: deepPurple600,
-    courseId: '1'
-  },
-  {
-    courseNumber: '2134',
-    courseName: 'MATH',
-    instructor: 'Best Prof',
-    color: teal800,
-    courseId: '1'
-  },
-  {
-    courseNumber: '7312',
-    courseName: 'CSE',
-    instructor: 'Larson',
-    color: indigo500,
-    courseId: '1'
-  },
-  {
-    courseNumber: '2122',
-    courseName: 'CSE',
-    instructor: 'Evans',
-    color: lightBlue800,
-    courseId: '1'
-  }
-];
 
 const styles = {
   root: {
@@ -62,9 +23,14 @@ class CourseList extends Component {
 
   constructor () {
     super();
+    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    this.targetUrl = 'http://52.35.1.78/API';
     this.state = {
-      courses: DummyCourses,
+      courses: [],
     };
+    fetch(this.proxyUrl + this.targetUrl + '/users/1/classes/')
+      .then(response => response.json())
+      .then(response => this.setState({courses: response}));
   }
 
   render() {

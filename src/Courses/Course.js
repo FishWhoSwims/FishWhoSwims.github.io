@@ -11,16 +11,16 @@ class Course extends Component {
     super();
     this.state = {
       redirect: null
-    }
+    };
   }
 
   openModal() {
-    this.setState({redirect: '/assignments'})
+    this.setState({redirect: '/assignments'});
   }
 
   render() {
-    if(this.state.redirect != null) {
-      return <Redirect to={this.state.redirect}/>
+    if (this.state.redirect != null) {
+      return <Redirect to={this.state.redirect}/>;
     }
     let tileStyles = Object.assign({},
       courseStyle,

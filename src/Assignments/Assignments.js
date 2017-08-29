@@ -7,88 +7,8 @@ import {
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn,
 } from 'material-ui/Table';
 import Assignment from './Assignment.js';
-import requireUsername from '../util/requireUsername.js';
-/*const styles = {
-  propContainer: {
-    width: 200,
-    overflow: 'hidden',
-    margin: '20px auto 0',
-  },
-  propToggleHeader: {
-    margin: '20px auto 10px',
-  },
-};*/
-
-
-const assignmentList = [
-  {
-    assignName: 'Exploring Table Data',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-9-1 23:59',
-    ptWorth: 10,
-    finished: true,
-    pastDue: false
-  },
-  {
-    assignName: 'Exploring Text Data',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-9-8 23:59',
-    ptWorth: 10,
-    finished: true,
-    pastDue: false
-  },
-  {
-    assignName: 'Exploring Image Data',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-9-22 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  },
-  {
-    assignName: 'Extending Logistic Regression',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-10-6 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  },
-  {
-    assignName: 'Evaluation and Multi-Layer Perceptron',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-10-20 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  },
-  {
-    assignName: 'Wide and Deep Networks',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-11-3 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  },
-  {
-    assignName: 'CNNs',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-11-17 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  },
-  {
-    assignName: 'RNNs',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-12-1 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  }
-];
 
 let assignmentNumber = 0;
 class Assignments extends Component {
@@ -281,7 +201,7 @@ class Assignments extends Component {
                     adjustForCheckbox={this.state.showCheckboxes}
                     enableSelectAll={this.state.enableSelectAll}
                   >
-                  
+
                     <TableRow>
                       <TableHeaderColumn>Title</TableHeaderColumn>
                       <TableHeaderColumn>Due Date</TableHeaderColumn>
@@ -314,7 +234,7 @@ class Assignments extends Component {
                     adjustForCheckbox={this.state.showCheckboxes}
                     enableSelectAll={this.state.enableSelectAll}
                   >
-                  
+
                     <TableRow>
                       <TableHeaderColumn>Title</TableHeaderColumn>
                       <TableHeaderColumn>Due Date</TableHeaderColumn>

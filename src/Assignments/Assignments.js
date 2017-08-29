@@ -116,10 +116,10 @@ class Assignments extends Component {
   }
 
   render(){
-    let redirect = requireUsername();
+    /*let redirect = requireUsername();
     if (redirect) {
       return redirect;
-    }
+    }*/
 
     const tableRows = this.state.assignments.map((row, index) => (
       <TableRow key={index}>

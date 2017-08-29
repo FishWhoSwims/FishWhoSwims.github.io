@@ -5,10 +5,7 @@ import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
 import Assignments from './Assignments/Assignments.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-
-import AppContainer from './AppContainer';
+// import AppContainer from './AppContainer';
 
 class App extends Component {
 

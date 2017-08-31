@@ -30,8 +30,8 @@ class App extends Component {
               window.location = '/courses';
             }}
             onRightIconButtonTouchTap={this.logout.bind(this)}
-            iconElementLeft={<img style={{width:50}} src='img/swimmingfish.jpeg'/>}
-            iconElementRight={<p style={{cursor: 'pointer'}}>Logout</p>}
+            iconElementLeft={<img style={{cursor: 'pointer', width:50}} src='img/swimmingfish.jpeg'/>}
+            iconElementRight={<p style={{cursor: 'pointer', color: 'white'}}>Logout</p>}
           />
         </MuiThemeProvider>
         <BrowserRouter>

@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
 
 
-const cardInfo = {    
+const cardInfo = {
   assignName: 'Exploring Table Data',
   createDate: '2017-8-27 8:00',
   dueDate: '2017-9-1 23:59',
@@ -27,7 +27,7 @@ class DetailPage extends Component{
     };
   }
 
-  
+
 
   render(){
     return (
@@ -39,7 +39,7 @@ class DetailPage extends Component{
             >
             </CardMedia>
             <CardTitle title={this.state.assignmentInfo.assignName} subtitle={this.state.assignmentInfo.ptWorth+" points"} />
-            
+
             <List>
               <ListItem primaryText={"CREATED ON: " + this.state.assignmentInfo.createDate}/>
               <ListItem primaryText={"DUE BY: " + this.state.assignmentInfo.dueDate}/>

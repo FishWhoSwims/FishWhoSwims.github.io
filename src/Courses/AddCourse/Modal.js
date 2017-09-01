@@ -23,12 +23,11 @@ const closeButton = {
 };
 
 class FormModal extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       modalIsOpen: true
     };
-    this.closeModal = this.closeModal.bind(this);
   }
 
   render() {

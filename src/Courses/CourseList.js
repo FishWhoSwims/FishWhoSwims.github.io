@@ -16,7 +16,7 @@ const styles = {
   },
   gridList: {
     padding: 5,
-    width: 500,
+    width: 800,
     height: 'auto',
     overflowY: 'auto'
   },
@@ -84,6 +84,8 @@ class CourseList extends Component {
             <GridList
               cellHeight={300}
               style={styles.gridList}
+              cols={3}
+              padding={5}
             >
               {ClassCells}
             </GridList>

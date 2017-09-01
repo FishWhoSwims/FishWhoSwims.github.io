@@ -2,7 +2,11 @@ import React, {Component} from 'react';
 import {GridList} from 'material-ui/GridList';
 import Course from './Course.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import RaisedButton from 'material-ui/RaisedButton';
 import requireUsername from '../util/requireUsername.js';
+import AddCourseModal from './AddCourse/Modal';
 
 const styles = {
   root: {
@@ -15,7 +19,10 @@ const styles = {
     width: 500,
     height: 'auto',
     overflowY: 'auto'
-  }
+  },
+  buttonStyle: {
+    marginBottom: 12,
+    marginTop: 12  }
 };
 
 let courseNumber = 0;
@@ -27,10 +34,33 @@ class CourseList extends Component {
     this.targetUrl = 'http://52.35.1.78/API';
     this.state = {
       courses: [],
+      classCells: [],
+      showCourseForm: false
     };
+    this.closeFormModal = this.closeFormModal.bind(this);
+    this.addCourse = this.addCourse.bind(this);
     fetch(this.proxyUrl + this.targetUrl + '/users/1/classes/')
       .then(response => response.json())
       .then(response => this.setState({courses: response}));
+  }
+
+  getChildContext() {
+    return { muiTheme: getMuiTheme(baseTheme) };
+  }
+
+  addCourse(){
+    this.setState({
+      showCourseForm: true
+    });
+    this.forceUpdate();
+  }
+
+  closeFormModal(){
+    console.log(this.state);
+    this.setState({
+      showCourseForm: false
+    });
+    this.forceUpdate();
   }
 
   render() {
@@ -59,10 +89,20 @@ class CourseList extends Component {
             </GridList>
           </MuiThemeProvider>
         </div>
+        <RaisedButton label="Add Course" primary={true} style={styles.buttonStyle}
+            onClick={()=>this.addCourse()}/>
+        {
+          this.state.showCourseForm
+          ? <AddCourseModal closeFormModal={this.closeFormModal}/>
+          : null
+        }
       </div>
     );
   }
 }
 
+CourseList.childContextTypes = {
+  muiTheme: React.PropTypes.object.isRequired,
+};
 
 export default CourseList;

@@ -4,7 +4,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
-
+import {Redirect} from 'react-router';
 
 const cardInfo = {
   assignName: 'Exploring Table Data',
@@ -22,14 +22,23 @@ const cardInfo = {
 class DetailPage extends Component{
   constructor(){
     super();
+    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    this.targetUrl = 'http://52.35.1.78/API';
     this.state = {
       assignmentInfo: cardInfo,
+      redirect: null,
     };
   }
 
 
+  openModal() {
+    this.setState({redirect: '/assignments'});
+  }
 
   render(){
+    if (this.state.redirect != null) {
+      return <Redirect to={this.state.redirect}/>;
+    }
     return (
       (<div>
         <MuiThemeProvider>
@@ -47,7 +56,7 @@ class DetailPage extends Component{
             </List>
             <CardActions>
               <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
-              <RaisedButton label="CANCEL" backgroundColor='#FF5722'/>
+              <RaisedButton onClick={this.openModal.bind(this)} label="CANCEL" backgroundColor='#FF5722'/>
             </CardActions>
           </Card>
         </MuiThemeProvider>

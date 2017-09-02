@@ -21,8 +21,11 @@ const styles = {
     overflowY: 'auto'
   },
   buttonStyle: {
-    marginBottom: 12,
-    marginTop: 12  }
+    position: 'absolute',
+    left: '45%',
+    marginBottom: 15,
+    marginTop: 15
+  }
 };
 
 let courseNumber = 0;

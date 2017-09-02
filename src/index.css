@@ -2,4 +2,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: #E0F2F1;
+  background-image: url("BookBackground.jpg");
+  background-size: cover;
+  opacity: 0.5;
 }

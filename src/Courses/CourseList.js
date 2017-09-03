@@ -70,6 +70,7 @@ class CourseList extends Component {
   getData(data){
     console.log(data); 
     this.state.courses.push(data);
+
     this.forceUpdate();
   }
 

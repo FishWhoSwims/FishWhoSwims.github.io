@@ -31,8 +31,8 @@ const styles = {
 let courseNumber = 0;
 class CourseList extends Component {
 
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     this.targetUrl = 'http://52.35.1.78/API';
     this.state = {
@@ -42,6 +42,8 @@ class CourseList extends Component {
     };
     this.closeFormModal = this.closeFormModal.bind(this);
     this.addCourse = this.addCourse.bind(this);
+    this.getData = this.getData.bind(this);
+
     fetch(this.proxyUrl + this.targetUrl + '/users/1/classes/')
       .then(response => response.json())
       .then(response => this.setState({courses: response}));
@@ -59,12 +61,22 @@ class CourseList extends Component {
   }
 
   closeFormModal(){
-    console.log(this.state);
     this.setState({
       showCourseForm: false
     });
     this.forceUpdate();
   }
+
+  getData(data){
+     //this.setState({childData: data});  
+     console.log(data); 
+    //  this.setState({
+    //   courses: response
+    // });
+    this.state.courses.push(data);
+    this.forceUpdate();
+  }
+
 
   render() {
     let redirect = requireUsername();
@@ -98,7 +110,7 @@ class CourseList extends Component {
             onClick={()=>this.addCourse()}/>
         {
           this.state.showCourseForm
-          ? <AddCourseModal closeFormModal={this.closeFormModal}/>
+          ? <AddCourseModal closeFormModal={this.closeFormModal} sendData={this.getData}/>
           : null
         }
       </div>

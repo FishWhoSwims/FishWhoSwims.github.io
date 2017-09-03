@@ -14,7 +14,6 @@ const styles = {
     transform: 'translate(-50%, -50%)'
   }
 };
-
 const closeButton = {
     position: 'absolute',
     top: '5px',
@@ -31,7 +30,6 @@ class FormModal extends React.Component {
   }
 
   render() {
-    console.log('here');
     return (
         <Modal
           isOpen={this.state.modalIsOpen}
@@ -44,7 +42,7 @@ class FormModal extends React.Component {
             onClick={this.props.closeFormModal}
             style={closeButton}
           />
-          <CourseForm />
+          <CourseForm sendData={this.props.sendData} closeFormModal={this.props.closeFormModal}/>
         </Modal>
     );
   }

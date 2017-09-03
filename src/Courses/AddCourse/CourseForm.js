@@ -65,10 +65,10 @@ class CourseForm extends Component{
                <select style={{color: this.state.color}} ref="dropDownColor" 
                         onChange={(e) => this.handleChange(e, 'color')} value={this.state.color}>
                   <option>Pick a color</option>
-                  <option value="#5C6BC0" style={{color: '#5C6BC0'}}>Indigo</option>
-                  <option value="#00ACC1" style={{color: '#00ACC1'}}>Cyan</option>
-                  <option value="#43A047" style={{color: '#43A047'}}>Green</option>
-                  <option value="#F4511E" style={{color: '#F4511E'}}>Deep Orange</option>
+                  <option value="5C6BC0" style={{color: '#5C6BC0'}}>Indigo</option>
+                  <option value="00ACC1" style={{color: '#00ACC1'}}>Cyan</option>
+                  <option value="43A047" style={{color: '#43A047'}}>Green</option>
+                  <option value="F4511E" style={{color: '#F4511E'}}>Deep Orange</option>
                 </select>
             </div>
         </form>

@@ -68,11 +68,7 @@ class CourseList extends Component {
   }
 
   getData(data){
-     //this.setState({childData: data});  
-     console.log(data); 
-    //  this.setState({
-    //   courses: response
-    // });
+    console.log(data); 
     this.state.courses.push(data);
     this.forceUpdate();
   }

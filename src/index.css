@@ -3,7 +3,6 @@ body {
   padding: 0;
   font-family: sans-serif;
   background-color: #E0F2F1;
-  background-image: url("BookBackground.jpg");
+  background-image: url("BookBackground.png");
   background-size: cover;
-  opacity: 0.5;
 }

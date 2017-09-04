@@ -9,9 +9,10 @@ const styles = {
     top: '45%',
     left: '50%',
     right: 'auto',
-    bottom: '-10%',
+    bottom: '-20%',
     marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: '#E3F2FD'
   }
 };
 const closeButton = {

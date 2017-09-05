@@ -65,40 +65,29 @@ class Assignments extends Component {
   componentWillMount() {
     var userID = 1;
     var classID = 1;
-    return fetch(this.proxyUrl + this.targetUrl + '/users/' + userID + '/classes/' + classID)
+    var assignments, exams, notes;
+    var rows = [];
+    var row = [];
+    var final = [];
+
+
+    fetch(this.proxyUrl + this.targetUrl + '/users/' + userID + '/classes/' + classID)
       .then(results => {
         return results.json();
       }).then(data => {
-        console.log('success:', data);
-        let assignments = data.assignments.map((assignment) => {
+        exams = data.exams.map((assignment) => {
           return (
             <Assignment
-              data={assignment} type='assignment' key={assignmentNumber++} />
-          )
-        })
-        let notes = data.notes.map((note) => {
-          return (
-            <Assignment
-              data={note} type='note' key={assignmentNumber++} />
-          )
-        })
-        console.log('notes:', notes);
-        let exams = data.exams.map((exam) => {
-          return (
-            <Assignment
-              data={exam} type='exam' key={assignmentNumber++} />
+              data={assignment} type='exam' key={assignmentNumber++} />
           )
         })
 
-        let row = assignments.concat(notes);
-        let rows = row.concat(exams);
+        // console.log('success exams:', exams);
+        row = exams;
+        // console.log('success row:', row);
 
         this.setState({
-          assignments: assignments,
-          notes: notes,
           exams: exams,
-          all: rows,
-          tempRows: rows,
           courseName: data.courseName,
           courseInstructor: data.instructor,
           courseID: data.courseID,
@@ -109,6 +98,54 @@ class Assignments extends Component {
       })
       .then(result => console.log('success:', result))
       .catch(error => console.log('error:', error));
+
+    fetch(this.proxyUrl + this.targetUrl + '/users/' + userID + '/classes/' + classID + '/assignments')
+      .then(results => {
+        return results.json();
+      }).then(data => {
+        console.log('success:', data);
+        assignments = data.map((assignment) => {
+          return (
+            <Assignment
+              data={assignment} type='assignment' key={assignmentNumber++} />
+          )
+        })
+
+        // console.log('success row:', row);
+        rows = row.concat(assignments);
+
+        this.setState({
+          assignments: assignments
+        });
+      })
+      .then(result => console.log('success:', result))
+      .catch(error => console.log('error:', error));
+
+    fetch(this.proxyUrl + this.targetUrl + '/users/' + userID + '/classes/' + classID + '/notes')
+      .then(results => {
+        return results.json();
+      }).then(data => {
+        console.log('success:', data);
+        notes = data.map((assignment) => {
+          return (
+            <Assignment
+              data={assignment} type='note' key={assignmentNumber++} />
+          )
+        })
+
+        final = rows.concat(notes);
+
+        console.log('success final:', final);
+
+        this.setState({
+          notes: notes,
+          tempRows: final,
+          all: final,
+        });
+      })
+      .then(result => console.log('success:', result))
+      .catch(error => console.log('error:', error));
+
   }
 
   handleClick = (value) => {

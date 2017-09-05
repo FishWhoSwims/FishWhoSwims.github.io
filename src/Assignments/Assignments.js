@@ -171,6 +171,12 @@ class Assignments extends Component {
   };
 
   render() {
+
+    let redirect = requireUsername();
+    if (redirect) {
+      return redirect;
+    }
+
     // this.getNotes();
       // console.log('success:', assignment);
     const AllRow = this.state.tempRows.map((assignment) => {

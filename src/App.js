@@ -4,6 +4,9 @@ import AppBar from 'material-ui/AppBar';
 import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
 import Assignments from './Assignments/Assignments.js';
+import AssignmentDetail from './Assignments/DetailPages/AssignmentDetail.js';
+import NoteDetail from './Assignments/DetailPages/NoteDetail.js';
+import ExamDetail from './Assignments/DetailPages/ExamDetail.js';
 import {getUsername} from './util/username.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
@@ -29,8 +32,8 @@ class App extends Component {
               window.location = '/courses';
             }}
             onRightIconButtonTouchTap={this.logout.bind(this)}
-            iconElementLeft={<img style={{width:50}} src='img/swimmingfish.jpeg'/>}
-            iconElementRight={<p style={{cursor: 'pointer'}}>Logout</p>}
+            iconElementLeft={<img style={{cursor: 'pointer', width:50}} src='img/swimmingfish.jpeg'/>}
+            iconElementRight={<p style={{cursor: 'pointer', color: 'white'}}>Logout</p>}
           />
         </MuiThemeProvider>
         <BrowserRouter>
@@ -38,6 +41,9 @@ class App extends Component {
             <Route exact path='/' component={SignIn}/>
             <Route path='/courses' component={CourseList}/>
             <Route path='/assignments' component={Assignments}/>
+            <Route path='/detailpage/notedetail' component={NoteDetail}/>
+            <Route path='/detailpage/assignmentdetail' component={AssignmentDetail}/>
+            <Route path='/detailpage/examdetail' component={ExamDetail}/>
           </Switch>
         </BrowserRouter>
       </main>

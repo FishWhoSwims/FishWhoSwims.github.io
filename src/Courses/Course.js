@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {GridTile} from 'material-ui/GridList';
+import {Redirect} from 'react-router';
 
 const courseStyle = {
   cursor: 'pointer',
@@ -8,22 +9,22 @@ const courseStyle = {
 class Course extends Component {
   constructor() {
     super();
-    // Fetch assignments
-    this.assignments = [
-      'Dummy Assignment 1',
-      'Dummy Assignment 2',
-    ];
+    this.state = {
+      redirect: null
+    };
   }
 
   openModal() {
-    // Really we should be display a modal
-    alert(this.assignments);
+    this.setState({redirect: '/assignments'});
   }
 
   render() {
+    if (this.state.redirect != null) {
+      return <Redirect to={this.state.redirect}/>;
+    }
     let tileStyles = Object.assign({},
       courseStyle,
-      {backgroundColor: this.props.color}
+      {backgroundColor: '#'+this.props.color}
     );
     return (
       <GridTile

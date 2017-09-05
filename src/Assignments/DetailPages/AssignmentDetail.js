@@ -37,10 +37,10 @@ class DetailPage extends Component{
 
   render(){
     if (this.state.redirect != null) {
-      return <Redirect to={this.state.redirect}/>;
+    return (<Redirect to={this.state.redirect}/>);
     }
     return (
-      (<div>
+      <div>
         <MuiThemeProvider>
           <Card>
             <CardMedia
@@ -60,7 +60,7 @@ class DetailPage extends Component{
             </CardActions>
           </Card>
         </MuiThemeProvider>
-      </div>)
+      </div>
     );
   }
 }

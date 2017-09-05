@@ -15,15 +15,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router';
 import Assignment from '../Assignment.js';
 
-const cardInfo = {
-  examName: 'Exam 1',
-  createDate: '2017-8-27 8:00',
-  dueDate: '2017-9-1 23:59',
-  ptWorth: 50,
-  finished: true,
-  pastDue: false,
-  description: "You are to perform preprocessing and exploratory analysis of a data set: exploring the statistical summaries of the features, visualizing the attributes, and addressing data quality. This report is worth 10% of the final grade. Please upload a report (one per team) with all code used, visualizations, and text in a rendered Jupyter notebook. Any visualizations that cannot be embedded in the notebook, please provide screenshots of the output."
-};
 
 const tableInfo = {
   examID: 1,
@@ -59,44 +50,12 @@ const tableInfo = {
   ]
 };
 
-const tableData = [
-  {
-    name: 'John Smith',
-    status: 'Employed',
-  },
-  {
-    name: 'Randal White',
-    status: 'Unemployed',
-  },
-  {
-    name: 'Stephanie Sanders',
-    status: 'Employed',
-  },
-  {
-    name: 'Steve Brown',
-    status: 'Employed',
-  },
-  {
-    name: 'Joyce Whitten',
-    status: 'Employed',
-  },
-  {
-    name: 'Samuel Roberts',
-    status: 'Employed',
-  },
-  {
-    name: 'Adam Moore',
-    status: 'Employed',
-  },
-];
-
 class DetailPage extends Component{
   constructor(){
     super();
     this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     this.targetUrl = 'http://52.35.1.78/API';
     this.state = {
-      examInfo: cardInfo,
       examTable: tableInfo,
       redirect: null,
       fixedHeader: true,

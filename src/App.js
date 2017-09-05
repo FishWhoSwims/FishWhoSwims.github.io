@@ -33,8 +33,12 @@ class App extends Component {
             }}
             onRightIconButtonTouchTap={this.logout.bind(this)}
             iconElementLeft={<img style={{cursor: 'pointer', width:50}} src='img/swimmingfish.jpeg'/>}
-            iconElementRight={<p style={{cursor: 'pointer', color: 'white'}}>Logout</p>}
-          />
+            iconElementRight=
+            {
+              this.state.username
+              ? <p style={{cursor: 'pointer', color: 'white'}}>Logout</p>
+              : null
+            }          />
         </MuiThemeProvider>
         <BrowserRouter>
           <Switch>

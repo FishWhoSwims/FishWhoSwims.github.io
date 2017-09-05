@@ -10,6 +10,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router';
@@ -76,12 +77,20 @@ class DetailPage extends Component{
   }
 
   render(){
+
+    let paperStyle = {
+      'width' : '75%',
+      'marginLeft': '280px',
+      'marginBottom' : '20px'
+    };
+
     if (this.state.redirect != null) {
-      return <Redirect to={this.state.redirect}/>;
+      return (<Redirect to={this.state.redirect}/>);
     }
     return (
       (<div>
         <MuiThemeProvider>
+          <Paper style={paperStyle}>
           <Card>
             <CardMedia
               overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
@@ -170,6 +179,7 @@ class DetailPage extends Component{
               <RaisedButton onClick={this.openModal.bind(this)} label="CANCEL" backgroundColor='#FF5722'/>
             </CardActions>
           </Card>
+          </Paper>
         </MuiThemeProvider>
       </div>)
     );

@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import FontIcon from 'material-ui/FontIcon';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+
+import Paper from 'material-ui/Paper';
+import Menu from 'material-ui/Menu';
+import RemoveRedEye from 'material-ui/svg-icons/image/remove-red-eye';
+import PersonAdd from 'material-ui/svg-icons/social/person-add';
+import ContentLink from 'material-ui/svg-icons/content/link';
+import Divider from 'material-ui/Divider';
+import ContentCopy from 'material-ui/svg-icons/content/content-copy';
+import Download from 'material-ui/svg-icons/file/file-download';
+import Delete from 'material-ui/svg-icons/action/delete';
+
+
 import {
   Table,
   TableBody,
@@ -11,84 +28,6 @@ import {
 } from 'material-ui/Table';
 import Assignment from './Assignment.js';
 import requireUsername from '../util/requireUsername.js';
-/*const styles = {
-  propContainer: {
-    width: 200,
-    overflow: 'hidden',
-    margin: '20px auto 0',
-  },
-  propToggleHeader: {
-    margin: '20px auto 10px',
-  },
-};*/
-
-
-const assignmentList = [
-  {
-    assignName: 'Exploring Table Data',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-9-1 23:59',
-    ptWorth: 10,
-    finished: true,
-    pastDue: false
-  },
-  {
-    assignName: 'Exploring Text Data',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-9-8 23:59',
-    ptWorth: 10,
-    finished: true,
-    pastDue: false
-  },
-  {
-    assignName: 'Exploring Image Data',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-9-22 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  },
-  {
-    assignName: 'Extending Logistic Regression',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-10-6 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  },
-  {
-    assignName: 'Evaluation and Multi-Layer Perceptron',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-10-20 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  },
-  {
-    assignName: 'Wide and Deep Networks',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-11-3 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  },
-  {
-    assignName: 'CNNs',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-11-17 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  },
-  {
-    assignName: 'RNNs',
-    createDate: '2017-8-27 8:00',
-    dueDate: '2017-12-1 23:59',
-    ptWorth: 10,
-    finished: false,
-    pastDue: false
-  }
-];
 
 let assignmentNumber = 0;
 class Assignments extends Component {
@@ -98,12 +37,20 @@ class Assignments extends Component {
     this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     this.targetUrl = 'http://52.35.1.78/API';
     // this.getNotes();
+    this.state = { open: true };
     this.state = {
       assignments: [],
       notes: [],
       exams: [],
       all: [],
+      tempRows: [],
       value: 'a',
+      tableTitle: 'All Files',
+      // courseName: '',
+      // courseInstructor: '',
+      // courseID: '',
+      // courseColor: '',
+      // courseNumber: ''
     };
 
   }
@@ -112,6 +59,7 @@ class Assignments extends Component {
     this.setState({
       value: value,
     });
+    console.log('value:', value);
   };
 
   componentWillMount() {
@@ -149,223 +97,181 @@ class Assignments extends Component {
           assignments: assignments,
           notes: notes,
           exams: exams,
-          all: rows
+          all: rows,
+          tempRows: rows,
+          courseName: data.courseName,
+          courseInstructor: data.instructor,
+          courseID: data.courseID,
+          courseColor: data.color,
+          courseNumber: data.courseNumber
         });
+        console.log('course name:', this.state.courseName);
       })
       .then(result => console.log('success:', result))
       .catch(error => console.log('error:', error));
   }
 
+  handleClick = (value) => {
+    console.log('value:', value);
+    if (value === "a") {
+      this.setState({
+        value: value,
+        tempRows: this.state.all,
+        tableTitle: "All Files"
+      })
+    }
+    else if (value === "b") {
+      this.setState({
+        value: value,
+        tempRows: this.state.exams,
+        tableTitle: "Exams"
+      })
+    }
+    else if (value === "c") {
+      this.setState({
+        value: value,
+        tempRows: this.state.assignments,
+        tableTitle: "Assignments"
+      })
+    }
+    else if (value === "d") {
+      this.setState({
+        value: value,
+        tempRows: this.state.notes,
+        tableTitle: "Notes"
+      })
+    }
+  };
+
   render() {
     // this.getNotes();
-    const AllRow = this.state.all.map((assignment) => {
       // console.log('success:', assignment);
+    const AllRow = this.state.tempRows.map((assignment) => {
       return (
         <Assignment
           type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
       );
     });
+    const title = this.state.tableTitle;
+    console.log("title: ", title)
 
-    const AssignRow = this.state.assignments.map((assignment) => {
-      // console.log('success:', assignment);
-      return (
-        <Assignment
-          type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
-      );
-    });
+    let forceNavDown = { 'top': '64px' };
 
-    const NoteRow = this.state.notes.map((assignment) => {
-      // console.log('success:', assignment);
-      return (
-        <Assignment
-          type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
-      );
-    });
+    let tableStyle = { 
+      'marginLeft': '30px' ,
+      'marginRight': '30px',
+      'width' : '95%',
+      'position': 'static',
+    };
+    let titleStyle = {
+      'marginLeft': '280px',
+    };
+    let cardStyle = {
+      'background': '#'+this.state.courseColor,
+    };
+    let paperStyle = {
+      'width' : '75%',
+      'marginLeft': '280px',
+      'marginBottom' : '20px'
+    };
+    let paperTitle = {
+      'marginLeft': '15px',
+      'paddingTop': '15px',
+      'marginBottom' : '-5px'
+    };
 
-    const ExamRow = this.state.exams.map((assignment) => {
-      // console.log('success:', assignment);
-      return (
-        <Assignment
-          type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
-      );
-    });
+    const style = {
+      rightIcon: {
+        textAlign: 'center',
+        lineHeight: '24px',
+      },
+    };
 
     return (
       <div>
         <MuiThemeProvider>
-          <Tabs
-            value={this.state.value}
-            onChange={this.handleChange}
-          >
-            <Tab label="All" value="a">
-              <div>
-                <h2 >All Files</h2>
-                <Table
-                  height={this.state.height}
-                  fixedHeader={this.state.fixedHeader}
-                  fixedFooter={this.state.fixedFooter}
-                  selectable={this.state.selectable}
-                  multiSelectable={this.state.multiSelectable}
-                >
-                  <TableHeader
-                    displaySelectAll={this.state.showCheckboxes}
-                    adjustForCheckbox={this.state.showCheckboxes}
-                    enableSelectAll={this.state.enableSelectAll}
-                  >
-                    {/* <TableRow>
-                      <TableHeaderColumn style={{ textAlign: 'center' }}>
-                        Assignment Table
-                </TableHeaderColumn>
-                    </TableRow> */}
-                    <TableRow>
-                      <TableHeaderColumn>Title</TableHeaderColumn>
-                      <TableHeaderColumn>Due Date</TableHeaderColumn>
-                      <TableHeaderColumn>Associated Exam ID</TableHeaderColumn>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody
-                    displayRowCheckbox={this.state.showCheckboxes}
-                    deselectOnClickaway={this.state.deselectOnClickaway}
-                    showRowHover={this.state.showRowHover}
-                    stripedRows={this.state.stripedRows}
-                  >
-                    {AllRow}
-                  </TableBody>
-                </Table>
-              </div>
-            </Tab>
-            <Tab label="Exams" value="d">
-              <div>
-                <h2 >Exams</h2>
-                <Table
-                  height={this.state.height}
-                  fixedHeader={this.state.fixedHeader}
-                  fixedFooter={this.state.fixedFooter}
-                  selectable={this.state.selectable}
-                  multiSelectable={this.state.multiSelectable}
-                >
-                  <TableHeader
-                    displaySelectAll={this.state.showCheckboxes}
-                    adjustForCheckbox={this.state.showCheckboxes}
-                    enableSelectAll={this.state.enableSelectAll}
-                  >
-                    <TableRow>
-                      <TableHeaderColumn>Title</TableHeaderColumn>
-                      <TableHeaderColumn>Due Date</TableHeaderColumn>
-                      <TableHeaderColumn>Associated Exam ID</TableHeaderColumn>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody
-                    displayRowCheckbox={this.state.showCheckboxes}
-                    deselectOnClickaway={this.state.deselectOnClickaway}
-                    showRowHover={this.state.showRowHover}
-                    stripedRows={this.state.stripedRows}
-                  >
-                    {ExamRow}
-                  </TableBody>
-                </Table>
-              </div>
-            </Tab>
-            <Tab label="Assignments" value="b">
-              <div>
-                <h2 >Assignments</h2>
-                <Table
-                  height={this.state.height}
-                  fixedHeader={this.state.fixedHeader}
-                  fixedFooter={this.state.fixedFooter}
-                  selectable={this.state.selectable}
-                  multiSelectable={this.state.multiSelectable}
-                >
-                  <TableHeader
-                    displaySelectAll={this.state.showCheckboxes}
-                    adjustForCheckbox={this.state.showCheckboxes}
-                    enableSelectAll={this.state.enableSelectAll}
-                  >
-                  
-                    <TableRow>
-                      <TableHeaderColumn>Title</TableHeaderColumn>
-                      <TableHeaderColumn>Due Date</TableHeaderColumn>
-                      <TableHeaderColumn>Associated Exam ID</TableHeaderColumn>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody
-                    displayRowCheckbox={this.state.showCheckboxes}
-                    deselectOnClickaway={this.state.deselectOnClickaway}
-                    showRowHover={this.state.showRowHover}
-                    stripedRows={this.state.stripedRows}
-                  >
-                    {AssignRow}
-                  </TableBody>
-                </Table>
-              </div>
-            </Tab>
-            <Tab label="Notes" value="c">
-              <div>
-                <h2 >Notes</h2>
-                <Table
-                  height={this.state.height}
-                  fixedHeader={this.state.fixedHeader}
-                  fixedFooter={this.state.fixedFooter}
-                  selectable={this.state.selectable}
-                  multiSelectable={this.state.multiSelectable}
-                >
-                  <TableHeader
-                    displaySelectAll={this.state.showCheckboxes}
-                    adjustForCheckbox={this.state.showCheckboxes}
-                    enableSelectAll={this.state.enableSelectAll}
-                  >
-                  
-                    <TableRow>
-                      <TableHeaderColumn>Title</TableHeaderColumn>
-                      <TableHeaderColumn>Due Date</TableHeaderColumn>
-                      <TableHeaderColumn>Associated Exam ID</TableHeaderColumn>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody
-                    displayRowCheckbox={this.state.showCheckboxes}
-                    deselectOnClickaway={this.state.deselectOnClickaway}
-                    showRowHover={this.state.showRowHover}
-                    stripedRows={this.state.stripedRows}
-                  >
-                    {NoteRow}
-                  </TableBody>
-                </Table>
-              </div>
-            </Tab>
-          </Tabs>
+          <div>
+            <Drawer 
+              value={this.state.value}
+              onChange={this.handleChange}
+              open={this.state.open} 
+              containerStyle={forceNavDown}>
+              <Card style= {cardStyle}>
+                <CardTitle title={this.state.courseName} subtitle={this.state.courseInstructor} />
+                <CardText>
+                  Course Number: {this.state.courseNumber}
+                </CardText>
+              </Card>
+              <MenuItem primaryText="All" leftIcon={<RemoveRedEye />} onClick={() => this.handleClick("a")}/>
+              <MenuItem primaryText="Exams" leftIcon={<PersonAdd />} onClick={() => this.handleClick("b")}/>
+              <MenuItem primaryText="Assigments" leftIcon={<ContentLink />} onClick={() => this.handleClick("c")}/>
+              <MenuItem primaryText="Notes" leftIcon={<ContentCopy />} onClick={() => this.handleClick("d")}/>
+            </Drawer>
+            <h2 style = {titleStyle}> {title} </h2>
+            <Paper style = {paperStyle}>
+              <h2 style={paperTitle}>Upcoming</h2>
+            <Table
+              style= {tableStyle}
+              height={this.state.height}
+              fixedHeader={this.state.fixedHeader}
+              fixedFooter={this.state.fixedFooter}
+              selectable={this.state.selectable}
+              multiSelectable={this.state.multiSelectable}
+            >
+              <TableHeader
+                displaySelectAll={false}
+                adjustForCheckbox={false}
+                enableSelectAll={this.state.enableSelectAll}
+              >
+                <TableRow>
+                  <TableHeaderColumn>Title</TableHeaderColumn>
+                  <TableHeaderColumn>Due Date</TableHeaderColumn>
+                  <TableHeaderColumn>Associated Exam ID</TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody
+                displayRowCheckbox={false}
+                deselectOnClickaway={this.state.deselectOnClickaway}
+                showRowHover={this.state.showRowHover}
+                stripedRows={this.state.stripedRows}
+              >
+                {AllRow}
+              </TableBody>
+            </Table>
+            </Paper>
 
-          {/* <Table
-            height={this.state.height}
-            fixedHeader={this.state.fixedHeader}
-            fixedFooter={this.state.fixedFooter}
-            selectable={this.state.selectable}
-            multiSelectable={this.state.multiSelectable}
-          >
-            <TableHeader
-              displaySelectAll={this.state.showCheckboxes}
-              adjustForCheckbox={this.state.showCheckboxes}
-              enableSelectAll={this.state.enableSelectAll}
+            <Paper style={paperStyle}>
+            <h2 style={paperTitle}>Past</h2>
+            <Table
+              style={tableStyle}
+              height={this.state.height}
+              fixedHeader={this.state.fixedHeader}
+              fixedFooter={this.state.fixedFooter}
+              selectable={this.state.selectable}
+              multiSelectable={this.state.multiSelectable}
             >
-              <TableRow>
-                <TableHeaderColumn colSpan="5" style={{ textAlign: 'center' }}>
-                  Assignment Table
-                </TableHeaderColumn>
-              </TableRow>
-              <TableRow>
-                <TableHeaderColumn>Title</TableHeaderColumn>
-                <TableHeaderColumn>Due Date</TableHeaderColumn>
-                <TableHeaderColumn>Associated Exam ID</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody
-              displayRowCheckbox={this.state.showCheckboxes}
-              deselectOnClickaway={this.state.deselectOnClickaway}
-              showRowHover={this.state.showRowHover}
-              stripedRows={this.state.stripedRows}
-            >
-              {AssignRow}
-            </TableBody>
-          </Table> */}
+              <TableHeader
+                displaySelectAll={false}
+                adjustForCheckbox={false}
+                enableSelectAll={this.state.enableSelectAll}
+              >
+                <TableRow>
+                  <TableHeaderColumn>Title</TableHeaderColumn>
+                  <TableHeaderColumn>Due Date</TableHeaderColumn>
+                  <TableHeaderColumn>Associated Exam ID</TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody
+                displayRowCheckbox={false}
+                deselectOnClickaway={this.state.deselectOnClickaway}
+                showRowHover={this.state.showRowHover}
+                stripedRows={this.state.stripedRows}
+              >
+                {AllRow}
+              </TableBody>
+            </Table>
+            </Paper>
+          </div>
         </MuiThemeProvider>
       </div>
     );

@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Tabs, Tab } from 'material-ui/Tabs';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import FontIcon from 'material-ui/FontIcon';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
+import { Redirect } from 'react-router';
 
 import Paper from 'material-ui/Paper';
-import Menu from 'material-ui/Menu';
 import RemoveRedEye from 'material-ui/svg-icons/image/remove-red-eye';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import ContentLink from 'material-ui/svg-icons/content/link';
-import Divider from 'material-ui/Divider';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
-import Download from 'material-ui/svg-icons/file/file-download';
-import Delete from 'material-ui/svg-icons/action/delete';
 
 
 import {
@@ -24,7 +18,6 @@ import {
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn,
 } from 'material-ui/Table';
 import Assignment from './Assignment.js';
 import requireUsername from '../util/requireUsername.js';
@@ -46,11 +39,6 @@ class Assignments extends Component {
       tempRows: [],
       value: 'a',
       tableTitle: 'All Files',
-      // courseName: '',
-      // courseInstructor: '',
-      // courseID: '',
-      // courseColor: '',
-      // courseNumber: ''
     };
 
   }
@@ -61,6 +49,10 @@ class Assignments extends Component {
     });
     console.log('value:', value);
   };
+
+  redirectToDetailPage() {
+    
+  }
 
   componentWillMount() {
     var userID = 1;
@@ -83,7 +75,6 @@ class Assignments extends Component {
         })
 
         // console.log('success exams:', exams);
-        row = exams;
         // console.log('success row:', row);
 
         this.setState({
@@ -112,7 +103,6 @@ class Assignments extends Component {
         })
 
         // console.log('success row:', row);
-        rows = row.concat(assignments);
 
         this.setState({
           assignments: assignments
@@ -133,9 +123,9 @@ class Assignments extends Component {
           )
         })
 
+        row = this.state.exams;
+        rows = row.concat(this.state.assignments);
         final = rows.concat(notes);
-
-        console.log('success final:', final);
 
         this.setState({
           notes: notes,
@@ -217,13 +207,6 @@ class Assignments extends Component {
       'marginBottom' : '-5px'
     };
 
-    const style = {
-      rightIcon: {
-        textAlign: 'center',
-        lineHeight: '24px',
-      },
-    };
-
     return (
       <div>
         <MuiThemeProvider>
@@ -252,7 +235,7 @@ class Assignments extends Component {
               height={this.state.height}
               fixedHeader={this.state.fixedHeader}
               fixedFooter={this.state.fixedFooter}
-              selectable={this.state.selectable}
+              selectable={true}
               multiSelectable={this.state.multiSelectable}
             >
               <TableHeader
@@ -269,7 +252,7 @@ class Assignments extends Component {
               <TableBody
                 displayRowCheckbox={false}
                 deselectOnClickaway={this.state.deselectOnClickaway}
-                showRowHover={this.state.showRowHover}
+                showRowHover={true}
                 stripedRows={this.state.stripedRows}
               >
                 {AllRow}

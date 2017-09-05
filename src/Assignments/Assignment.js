@@ -5,12 +5,6 @@ import {
 } from 'material-ui/Table';
 
 class Assignment extends Component{
-  constructor(){
-    super();
-    // this.state = {
-    //   assignmentName: ''
-    // };
-  }
 
   render(){
     const { data, type, ...other } = this.props;

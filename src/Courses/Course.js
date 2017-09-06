@@ -19,8 +19,9 @@ class Course extends Component {
   }
 
   render() {
+    console.log(this.props);
     if (this.state.redirect != null) {
-      return <Redirect to={this.state.redirect}/>;
+      return <Redirect to={`${this.state.redirect}/${this.props.courseID}`}/>;
     }
     let tileStyles = Object.assign({},
       courseStyle,
@@ -28,7 +29,7 @@ class Course extends Component {
     );
     return (
       <GridTile
-        key={this.props.courseId}
+        key={this.props.courseID}
         title={this.props.courseName + ' ' + this.props.courseNumber}
         style={tileStyles}
         onClick={this.openModal.bind(this)}

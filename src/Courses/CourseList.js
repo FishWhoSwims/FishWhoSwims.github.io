@@ -16,6 +16,7 @@ const styles = {
     position: 'relative'
   },
   gridList: {
+    marginTop: '75px',
     padding: 5,
     width: 800,
     height: 'auto',

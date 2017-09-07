@@ -13,6 +13,7 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
+    position: 'relative'
   },
   gridList: {
     padding: 5,
@@ -23,6 +24,7 @@ const styles = {
   buttonStyle: {
     position: 'absolute',
     left: '45%',
+    zIndex: -1,
     marginBottom: 15,
     marginTop: 15
   }
@@ -78,7 +80,7 @@ class CourseList extends Component {
     //   },
     //   body: JSON.stringify(data)
     // })
-    // .then((response) => { 
+    // .then((response) => {
     //    //do something awesome that makes the world a better place
     //    console.log(response);
     // });

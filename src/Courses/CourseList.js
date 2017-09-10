@@ -70,20 +70,20 @@ class CourseList extends Component {
   }
 
   getData(data){
-    this.state.courses.push(data);
+    //this.state.courses.push(data);
 
-    // fetch("this.targetUrl + '/users/1/classes/", {
-    //   method: "post",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(data)
-    // })
-    // .then((response) => {
-    //    //do something awesome that makes the world a better place
-    //    console.log(response);
-    // });
+    fetch(this.targetUrl + "/users/1/classes/", {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((response) => {
+       //do something awesome that makes the world a better place
+       console.log(response);
+    });
 
     this.forceUpdate();
   }

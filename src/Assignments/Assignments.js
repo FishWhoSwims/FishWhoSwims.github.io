@@ -27,7 +27,7 @@ class Assignments extends Component {
 
   constructor() {
     super();
-    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    // this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     this.targetUrl = 'http://52.35.1.78/API';
     // this.getNotes();
     this.state = { open: true };
@@ -61,9 +61,18 @@ class Assignments extends Component {
     var rows = [];
     var row = [];
     var final = [];
+    var now =  new Date();
+    console.log("date: ", now);
+    // 01, 02, 03, ... 29, 30, 31
+    var dd = (now.getDate() < 10 ? '0' : '') + now.getDate();
+    // 01, 02, 03, ... 10, 11, 12
+    var MM = ((now.getMonth() + 1) < 10 ? '0' : '') + (now.getMonth() + 1);
+    // 1970, 1971, ... 2015, 2016, ...
+    var yyyy = now.getFullYear();
+    var date = (yyyy + "-" + MM + "-" + dd);
+    console.log("date: ", date);
 
-
-    fetch(this.proxyUrl + this.targetUrl + '/users/' + userID + '/classes/' + classID)
+    fetch(this.targetUrl + '/users/' + userID + '/classes/' + classID)
       .then(results => {
         return results.json();
       }).then(data => {
@@ -83,14 +92,15 @@ class Assignments extends Component {
           courseInstructor: data.instructor,
           courseID: data.courseID,
           courseColor: data.color,
-          courseNumber: data.courseNumber
+          courseNumber: data.courseNumber,
+          date: date,
         });
         console.log('course name:', this.state.courseName);
       })
       .then(result => console.log('success:', result))
       .catch(error => console.log('error:', error));
 
-    fetch(this.proxyUrl + this.targetUrl + '/users/' + userID + '/classes/' + classID + '/assignments')
+    fetch(this.targetUrl + '/users/' + userID + '/classes/' + classID + '/assignments')
       .then(results => {
         return results.json();
       }).then(data => {
@@ -111,7 +121,7 @@ class Assignments extends Component {
       .then(result => console.log('success:', result))
       .catch(error => console.log('error:', error));
 
-    fetch(this.proxyUrl + this.targetUrl + '/users/' + userID + '/classes/' + classID + '/notes')
+    fetch(this.targetUrl + '/users/' + userID + '/classes/' + classID + '/notes')
       .then(results => {
         return results.json();
       }).then(data => {
@@ -180,10 +190,21 @@ class Assignments extends Component {
     // this.getNotes();
       // console.log('success:', assignment);
     const AllRow = this.state.tempRows.map((assignment) => {
-      return (
-        <Assignment
-          type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
-      );
+      if (assignment.props.data.date >= this.state.date){
+        return (
+          <Assignment
+            type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
+        );
+      }
+    });
+
+    const PastAllRow = this.state.tempRows.map((assignment) => {
+      if (assignment.props.data.date < this.state.date) {
+        return (
+          <Assignment
+            type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
+        );
+      }
     });
     const title = this.state.tableTitle;
     console.log("title: ", title)
@@ -293,7 +314,7 @@ class Assignments extends Component {
                 showRowHover={this.state.showRowHover}
                 stripedRows={this.state.stripedRows}
               >
-                {AllRow}
+                {PastAllRow}
               </TableBody>
             </Table>
             </Paper>

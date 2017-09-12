@@ -16,10 +16,7 @@ class Assignment extends Component{
           <TableRowColumn>{data.name}</TableRowColumn>
           <TableRowColumn>{data.date}</TableRowColumn>
           <TableRowColumn>{data.assocExamID ? data.assocExamID : 'Not Assigned'}</TableRowColumn>
-          {/* <TableRowColumn><div>{data.ptWorth}</div></TableRowColumn> */}
-          {/* <TableRowColumn><div>{data.finished}</div></TableRowColumn> */}
         </TableRow>
-        // </TableBody>
       );
     }
     else {
@@ -30,10 +27,7 @@ class Assignment extends Component{
           <TableRowColumn>{data.name}</TableRowColumn>
           <TableRowColumn>{data.date}</TableRowColumn>
           <TableRowColumn>------</TableRowColumn>
-          {/* <TableRowColumn><div>{data.ptWorth}</div></TableRowColumn> */}
-          {/* <TableRowColumn><div>{data.finished}</div></TableRowColumn> */}
         </TableRow>
-        // </TableBody>
       );
     }
   }

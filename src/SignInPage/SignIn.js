@@ -38,7 +38,8 @@ class SignIn extends Component {
     super();
     this.state = {
       username: getUsername(),
-      fieldValue: ''
+      fieldName: '',
+      fieldPassword: ''
     };
   }
 
@@ -62,9 +63,15 @@ class SignIn extends Component {
     this.setState({username: getUsername()});
   }
 
-  _handleTextFieldChange(e) {
+  handleNameChange(e) {
     this.setState({
-      fieldValue: e.target.value
+      fieldName: e.target.value
+    });
+  }
+
+  handlePassChange(e) {
+    this.setState({
+      fieldPassword: e.target.value
     });
   }
 
@@ -78,10 +85,23 @@ class SignIn extends Component {
           <h1 style={styles.text}>SIGN IN</h1><br/>
           <TextField
             hintText="Your name here"
-            floatingLabelText="What is your name?"
+            floatingLabelText="Name: "
             type="text"
-            onChange={this._handleTextFieldChange.bind(this)}
-            value={this.state.fieldValue}
+            onChange={this.handleNameChange.bind(this)}
+            value={this.state.fieldName}
+            onKeyPress={(ev) => {
+              if (ev.key === 'Enter') {
+                this.signUp();
+                ev.preventDefault();
+              }
+            }}
+          /><br />
+          <TextField
+            hintText="Your password here"
+            floatingLabelText="Password: "
+            type="text"
+            onChange={this.handlePassChange.bind(this)}
+            value={this.state.fieldPassword}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
                 this.signUp();

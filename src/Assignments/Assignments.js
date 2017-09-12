@@ -39,7 +39,7 @@ class Assignments extends Component {
     this.state = { open: true };
     this.state = {
       userID: '1',
-      courseID: '',
+      courseID: this.props.match.params.courseId,
       assignments: [],
       notes: [],
       exams: [],
@@ -52,6 +52,7 @@ class Assignments extends Component {
       showExamForm: false,
     };
 
+    console.log("testing props",this.props);
     this.closeFormModal = this.closeFormModal.bind(this);
     this.closeNoteModal = this.closeNoteModal.bind(this);
     this.closeExamModal = this.closeExamModal.bind(this);
@@ -163,7 +164,7 @@ class Assignments extends Component {
     var date = (yyyy + "-" + MM + "-" + dd);
     console.log("date: ", date);
 
-    fetch(this.targetUrl + '/users/' + userID + '/classes/' + classID)
+    fetch(this.targetUrl + '/users/' + userID + '/classes/' + this.state.courseID)
       .then(results => {
         return results.json();
       }).then(data => {
@@ -191,7 +192,7 @@ class Assignments extends Component {
       .then(result => console.log('success:', result))
       .catch(error => console.log('error:', error));
 
-    fetch(this.targetUrl + '/users/' + userID + '/classes/' + classID + '/assignments')
+    fetch(this.targetUrl + '/users/' + userID + '/classes/' + this.state.courseID + '/assignments')
       .then(results => {
         return results.json();
       }).then(data => {
@@ -212,7 +213,7 @@ class Assignments extends Component {
       .then(result => console.log('success:', result))
       .catch(error => console.log('error:', error));
 
-    fetch(this.targetUrl + '/users/' + userID + '/classes/' + classID + '/notes')
+    fetch(this.targetUrl + '/users/' + userID + '/classes/' + this.state.courseID + '/notes')
       .then(results => {
         return results.json();
       }).then(data => {

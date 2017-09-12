@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
   content : {
-    top: '45%',
+    top: '50%',
     left: '50%',
     right: 'auto',
     bottom: '-20%',

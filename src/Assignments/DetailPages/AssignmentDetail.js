@@ -60,13 +60,20 @@ class DetailPage extends Component{
                 <CardTitle title={this.state.assignmentInfo.name} subtitle={this.state.assignmentInfo.type} />
 
                 <List>
-                  <ListItem primaryText={"DATE: " + this.state.assignmentInfo.date}/>
+                  <ListItem primaryText={"DUE DATE: " + this.state.assignmentInfo.date}/>
                 </List>
                 <CardActions>
                   <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
                   <RaisedButton onClick={this.openModal.bind(this)} label="CANCEL" backgroundColor='#FF5722'/>
+                  
                 </CardActions>
               </Card>
+            </Paper>
+            <Paper style={paperStyle}>
+              <form enctype="multipart/form-data" action="/upload/file" method="post">
+                <input id="file" type="file" />
+              </form>
+              <RaisedButton label="UPLOAD" backgroundColor='#00BCD4'/>
             </Paper>
           </div>
         </MuiThemeProvider>

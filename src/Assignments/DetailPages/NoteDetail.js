@@ -56,7 +56,7 @@ class DetailPage extends Component{
                 overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
               >
               </CardMedia>
-              <CardTitle title={this.state.noteInfo.name} />
+              <CardTitle title={this.state.noteInfo.name} subtitle={this.state.noteInfo.type}/>
 
               <List>
                 <ListItem primaryText={"CREATED ON: " + this.state.noteInfo.date}/>
@@ -66,6 +66,12 @@ class DetailPage extends Component{
                 <RaisedButton onClick={this.openModal.bind(this)} label="CANCEL" backgroundColor='#FF5722'/>
               </CardActions>
             </Card>
+            </Paper>
+            <Paper style={paperStyle}>
+              <form enctype="multipart/form-data" action="/upload/file" method="post">
+                <input id="file" type="file" />
+              </form>
+              <RaisedButton label="UPLOAD" backgroundColor='#00BCD4'/>
             </Paper>
           </div>
         </MuiThemeProvider>

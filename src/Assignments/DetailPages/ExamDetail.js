@@ -90,6 +90,7 @@ class DetailPage extends Component{
       'paddingTop': '15px',
       'marginBottom' : '-5px'
     };
+    let forceDown = { 'marginTop': '64px' };
 
     if (this.state.redirect != null) {
       return (<Redirect to={this.state.redirect}/>);
@@ -97,7 +98,7 @@ class DetailPage extends Component{
     return (
       (<div>
         <MuiThemeProvider>
-          <Card>
+          <Card style={forceDown}>
             <CardMedia
               overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
             >

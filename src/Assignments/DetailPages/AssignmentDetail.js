@@ -8,13 +8,12 @@ import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
 
 const cardInfo = {
-  assignName: 'Exploring Table Data',
-  createDate: '2017-8-27 8:00',
-  dueDate: '2017-9-1 23:59',
-  ptWorth: 10,
-  finished: true,
-  pastDue: false,
-  description: "You are to perform preprocessing and exploratory analysis of a data set: exploring the statistical summaries of the features, visualizing the attributes, and addressing data quality. This report is worth 10% of the final grade. Please upload a report (one per team) with all code used, visualizations, and text in a rendered Jupyter notebook. Any visualizations that cannot be embedded in the notebook, please provide screenshots of the output."
+  courseMaterialID: 5,
+  type: "assignment",
+  name: "Assembly Lab Quiz",
+  date: "2017-09-18",
+  assocExamID: 1,
+  courseID: 1
 };
 
 
@@ -58,12 +57,10 @@ class DetailPage extends Component{
                   overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
                 >
                 </CardMedia>
-                <CardTitle title={this.state.assignmentInfo.assignName} subtitle={this.state.assignmentInfo.ptWorth+" points"} />
+                <CardTitle title={this.state.assignmentInfo.name} subtitle={this.state.assignmentInfo.type} />
 
                 <List>
-                  <ListItem primaryText={"CREATED ON: " + this.state.assignmentInfo.createDate}/>
-                  <ListItem primaryText={"DUE BY: " + this.state.assignmentInfo.dueDate}/>
-                  <ListItem primaryText={"Description: " + this.state.assignmentInfo.description}/>
+                  <ListItem primaryText={"DATE: " + this.state.assignmentInfo.date}/>
                 </List>
                 <CardActions>
                   <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>

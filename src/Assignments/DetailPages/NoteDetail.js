@@ -8,11 +8,12 @@ import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
 
 const cardInfo = {
-  noteName: 'Note 1',
-  createDate: '2017-8-27 8:00',
-  finished: true,
-  pastDue: false,
-  description: "Notes for lecture 1"
+  courseMaterialID: 6,
+  type: "note",
+  name: "ARM In-Class Notes",
+  date: "2017-09-18",
+  assocExamID: 1,
+  courseID: 1
 };
 
 
@@ -55,11 +56,10 @@ class DetailPage extends Component{
                 overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
               >
               </CardMedia>
-              <CardTitle title={this.state.noteInfo.noteName} />
+              <CardTitle title={this.state.noteInfo.name} />
 
               <List>
-                <ListItem primaryText={"CREATED ON: " + this.state.noteInfo.createDate}/>
-                <ListItem primaryText={"Description: " + this.state.noteInfo.description}/>
+                <ListItem primaryText={"CREATED ON: " + this.state.noteInfo.date}/>
               </List>
               <CardActions>
                 <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>

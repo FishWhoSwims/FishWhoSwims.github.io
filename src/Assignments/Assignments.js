@@ -4,10 +4,16 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import { Redirect } from 'react-router';
+import AddAssignmentModal from './AddAssignment/Modal';
+import AddNoteModal from './AddAssignment/NoteModal';
+import AddExamModal from './AddAssignment/ExamModal';
 
 import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
 import RemoveRedEye from 'material-ui/svg-icons/image/remove-red-eye';
-import PersonAdd from 'material-ui/svg-icons/social/person-add';
+import AssignIcon from 'material-ui/svg-icons/action/assignment';
+import ExamIcon from 'material-ui/svg-icons/action/assignment-late';
+import SGIcon from 'material-ui/svg-icons/content/add-box';
 import ContentLink from 'material-ui/svg-icons/content/link';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 
@@ -25,13 +31,15 @@ import requireUsername from '../util/requireUsername.js';
 let assignmentNumber = 0;
 class Assignments extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     // this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     this.targetUrl = 'http://52.35.1.78/API';
     // this.getNotes();
     this.state = { open: true };
     this.state = {
+      userID: '1',
+      courseID: '',
       assignments: [],
       notes: [],
       exams: [],
@@ -39,8 +47,66 @@ class Assignments extends Component {
       tempRows: [],
       value: 'a',
       tableTitle: 'All Files',
+      showAssignForm: false,
+      showNoteForm: false,
+      showExamForm: false,
     };
 
+    this.closeFormModal = this.closeFormModal.bind(this);
+    this.closeNoteModal = this.closeNoteModal.bind(this);
+    this.closeExamModal = this.closeExamModal.bind(this);
+    this.addAssign = this.addAssign.bind(this);
+    this.addNote = this.addNote.bind(this);
+    this.addExam = this.addExam.bind(this);
+
+  }
+
+  addAssign() {
+    console.log("Reached AddAssign()");
+    console.log("userID", this.state.userID);
+    this.setState({
+      showAssignForm: true,
+    });
+    this.forceUpdate();
+  }
+
+  addNote() {
+    console.log("Reached AddAssign()");
+    console.log("userID", this.state.userID);
+    this.setState({
+      showNoteForm: true,
+    });
+    this.forceUpdate();
+  }
+
+  closeNoteModal() {
+    this.setState({
+      showNoteForm: false
+    });
+    this.forceUpdate();
+  }
+
+  addExam() {
+    console.log("Reached AddAssign()");
+    console.log("userID", this.state.userID);
+    this.setState({
+      showExamForm: true,
+    });
+    this.forceUpdate();
+  }
+
+  closeExamModal() {
+    this.setState({
+      showExamForm: false
+    });
+    this.forceUpdate();
+  }
+
+  closeFormModal() {
+    this.setState({
+      showAssignForm: false
+    });
+    this.forceUpdate();
   }
 
   handleChange = (value) => {
@@ -49,6 +115,31 @@ class Assignments extends Component {
     });
     console.log('value:', value);
   };
+
+  getData(data) {
+    console.log(data);
+    // this.state.assignments.push(data);
+    // this.state.all.push(data);
+
+    var formData = {
+      name: data.name,
+      date: data.date,
+    }
+
+    fetch(data.targetUrl + '/users/' + data.userID + '/classes/' + data.courseID + '/assignments', {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((response) => { 
+       //do something awesome that makes the world a better place
+       console.log(response);
+    });
+
+  }
 
   redirectToDetailPage() {
     
@@ -234,6 +325,11 @@ class Assignments extends Component {
       'marginBottom' : '-5px'
     };
 
+    let modalStyle = {
+      'top': '50%',
+      'left': '50%',
+    };
+
     return (
       <div>
         <MuiThemeProvider>
@@ -250,9 +346,47 @@ class Assignments extends Component {
                 </CardText>
               </Card>
               <MenuItem primaryText="All" leftIcon={<RemoveRedEye />} onClick={() => this.handleClick("a")}/>
-              <MenuItem primaryText="Exams" leftIcon={<PersonAdd />} onClick={() => this.handleClick("b")}/>
-              <MenuItem primaryText="Assigments" leftIcon={<ContentLink />} onClick={() => this.handleClick("c")}/>
+              <MenuItem primaryText="Exams" leftIcon={<ExamIcon />} onClick={() => this.handleClick("b")}/>
+              <MenuItem primaryText="Assigments" leftIcon={<AssignIcon />} onClick={() => this.handleClick("c")}/>
               <MenuItem primaryText="Notes" leftIcon={<ContentCopy />} onClick={() => this.handleClick("d")}/>
+              <Divider />
+              <MenuItem primaryText="Add Exam" leftIcon={<ExamIcon />} onClick={() => this.addExam()} />
+              {
+                this.state.showExamForm
+                  ? <AddExamModal
+                    style={modalStyle}
+                    closeFormModal={this.closeExamModal}
+                    userID={this.state.userID}
+                    courseID={this.state.courseID}
+                    targetUrl={this.targetUrl}
+                    sendData={this.getData} />
+                  : null
+              }
+              <MenuItem primaryText="Add Assignment" leftIcon={<AssignIcon />} onClick={() => this.addAssign()} />
+              {
+                this.state.showAssignForm
+                  ? <AddAssignmentModal 
+                      style = {modalStyle} 
+                      closeFormModal={this.closeFormModal}
+                      userID = {this.state.userID}
+                      courseID={this.state.courseID}
+                      targetUrl = {this.targetUrl}
+                      sendData={this.getData} />
+                  : null
+              }
+              <MenuItem primaryText="Add Note" leftIcon={<ContentCopy />} onClick={() => this.addNote()} />
+              {
+                this.state.showNoteForm
+                  ? <AddNoteModal
+                    style={modalStyle}
+                    closeFormModal={this.closeNoteModal}
+                    userID={this.state.userID}
+                    courseID={this.state.courseID}
+                    targetUrl={this.targetUrl}
+                    sendData={this.getData} />
+                  : null
+              }
+              <MenuItem primaryText="Create Study Guide" leftIcon={<SGIcon />} onClick={() => this.handleClick("d")} />
             </Drawer>
             <h2 style = {titleStyle}> {title} </h2>
             <Paper style = {paperStyle}>

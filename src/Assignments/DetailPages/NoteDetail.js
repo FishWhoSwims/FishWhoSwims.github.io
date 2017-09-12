@@ -47,7 +47,7 @@ class DetailPage extends Component{
       return (<Redirect to={this.state.redirect}/>);
     }
     return (
-      (<div>
+      <div>
         <MuiThemeProvider>
           <div>
             <Paper style={paperStyle}>
@@ -75,7 +75,7 @@ class DetailPage extends Component{
             </Paper>
           </div>
         </MuiThemeProvider>
-      </div>)
+      </div>
     );
   }
 }

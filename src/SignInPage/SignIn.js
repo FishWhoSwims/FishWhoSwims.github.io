@@ -32,7 +32,8 @@ class SignIn extends Component {
     super();
     this.state = {
       username: getUsername(),
-      fieldValue: ''
+      fieldValue: '',
+      signUpRedirect: false
     };
   }
 
@@ -52,7 +53,8 @@ class SignIn extends Component {
   }
 
   signUp(){
-    return <Redirect to='/signup'/>;
+    this.setState({signUpRedirect: true});
+    this.forceUpdate();
   }
 
   _handleTextFieldChange(e) {
@@ -65,12 +67,16 @@ class SignIn extends Component {
     if (this.state.username != null) {
       return <Redirect to='/courses'/>;
     }
+    if(this.state.signUpRedirect == true){
+      return <Redirect to='/signup' />
+    }
     return (
       <div style={styles.root}>
         <form>
           <h1 style={styles.text}>SIGN IN</h1><br/>
           <TextField
             hintText="Your name here"
+            hintStyle={{color: '#fff'}}
             floatingLabelText="What is your name?"
             type="text"
             onChange={this._handleTextFieldChange.bind(this)}

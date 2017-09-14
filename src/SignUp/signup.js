@@ -33,10 +33,15 @@ class SignUp extends Component {
     this.state = {
       username: '',
       pass: '',
+      passConfirm: '',
       email: '',
       first: '',
       last: ''
     };
+    this.props = {
+      touched: '',
+      error: ''
+    }
   }
 
   getChildContext() {
@@ -44,33 +49,27 @@ class SignUp extends Component {
   }
 
   nameChange(e){
-    this.setState(){
-      name: e.target.value
-    }
+    this.setState({username: e.target.value});
   }
 
   passChange(e){
-    this.setState(){
-      pass: e.target.value
-    }
+    this.setState({pass: e.target.value});
+  }
+
+  passConfirmChange(e){
+    this.setState({passConfirm: e.target.value});
   }
 
   emailChange(e){
-    this.setState(){
-      email: e.target.value
-    }
+    this.setState({email: e.target.value});
   }
 
   firstChange(e){
-    this.setState(){
-      first: e.target.value
-    }
+    this.setState({first: e.target.value});
   }
 
   lastChange(e){
-    this.setState(){
-      last: e.target.value
-    }
+    this.setState({last: e.target.value});
   }
 
   signUp(){
@@ -81,8 +80,10 @@ class SignUp extends Component {
     return (
       <div style={styles.root}>
         <form>
-          <h1 style={styles.text}>SIGN Up</h1><br/>
-          <TextField hintText="Your username here" floatingLabelText="Username:" type="text"
+          <h1 style={styles.text}>SIGN UP</h1><br/>
+          <TextField
+            hintText="Your username here" floatingLabelText="Username:" type="text"
+            errorText={this.state.touched && this.state.error}
             onChange={this.nameChange.bind(this)} value={this.state.username}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
@@ -92,7 +93,8 @@ class SignUp extends Component {
             }}
           /><br />
           <TextField
-            hintText="Your password here" floatingLabelText="Password:" type="text"
+            hintText="Your password here" floatingLabelText="Password:" type="password"
+            errorText={this.state.touched && this.state.error}
             onChange={this.passChange.bind(this)} value={this.state.pass}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
@@ -102,7 +104,19 @@ class SignUp extends Component {
             }}
           /><br />
           <TextField
+            hintText="Confirm password here" floatingLabelText="Confirm Password:" type="password"
+            errorText={this.state.touched && this.state.error}
+            onChange={this.passConfirmChange.bind(this)} value={this.state.passConfirm}
+            onKeyPress={(ev) => {
+              if (ev.key === 'Enter') {
+                this.signUp();
+                ev.preventDefault();
+              }
+            }}
+          /><br />
+          <TextField
             hintText="Your email here" floatingLabelText="Email Adress:" type="text"
+            errorText={this.state.touched && this.state.error}
             onChange={this.emailChange.bind(this)} value={this.state.email}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
@@ -113,6 +127,7 @@ class SignUp extends Component {
           /><br />
           <TextField
             hintText="Your first name here" floatingLabelText="First Name:" type="text"
+            errorText={this.state.touched && this.state.error}
             onChange={this.firstChange.bind(this)} value={this.state.first}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
@@ -123,6 +138,7 @@ class SignUp extends Component {
           /><br />
           <TextField
             hintText="Your last name here" floatingLabelText="Last Name:" type="text"
+            errorText={this.state.touched && this.state.error}
             onChange={this.lastChange.bind(this)} value={this.state.last}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {

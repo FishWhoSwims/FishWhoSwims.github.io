@@ -73,7 +73,7 @@ class SignIn extends Component {
             username: responseJson.userID
           });
         })
-        .catch(function() {
+        .catch(() => {
             this.showAlert();
         });
       }

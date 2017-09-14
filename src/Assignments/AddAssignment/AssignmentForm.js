@@ -4,13 +4,20 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
+import DropDownMenu from 'material-ui/DropDownMenu';
 
 const styles = {
     buttonStyle: {
         marginBottom: 12,
         marginTop: 12
+    },
+    dropStyle: {
+        width: '100%',
+        paddingLeft: '-15px',
+        paddingRight: '15px',
     }
 };
+
 const background = {
     indigo: '#5C6BC0',
     cyan: '#00ACC1',
@@ -23,9 +30,18 @@ class AssignmentForm extends Component {
     constructor(props) {
         super(props);
         this.targetUrl = 'http://52.35.1.78/API';
+        console.log("Exams", this.props.parentState.exams[0].props.data.name);
+        const items = [];
+        items.push(<MenuItem value={0} key={0} primaryText={`-------`} />);
+        for (let i = 1; i <= this.props.parentState.exams.length; i++) {
+            items.push(<MenuItem value={i} key={i} primaryText={this.props.parentState.exams[i-1].props.data.name} />);
+        }
+        console.log("Menu", items);
         this.state = {
             name: '',
             date: '',
+            value: 0,
+            menu: items,
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -34,12 +50,14 @@ class AssignmentForm extends Component {
         this.setState({ [name]: e.target.value });
     }
 
+    handleDropChange = (event, index, value) => this.setState({ value });
+
     submit() {
         var formData = {
             name: this.state.name,
             date: this.state.date,
-            userID: this.props.userID,
-            courseID: this.props.courseID,
+            userID: this.props.parentState.userID,
+            courseID: this.props.parentState.courseID,
             targetUrl: this.props.targetUrl,
         }
         
@@ -75,7 +93,15 @@ class AssignmentForm extends Component {
                         hintText="Due Date" 
                         onChange={(x, event) => this.setDate(x, event)} 
                         defaultDate={new Date()}
-                    /><br /><br />
+                    />
+                    <SelectField 
+                        floatingLabelText="Associated Exam"
+                        floatingLabelFixed={true}
+                        value={this.state.value} 
+                        onChange={this.handleDropChange}>
+                        {this.state.menu}
+                    </SelectField>
+                    <br /><br />
                     {/* <TextField
                         floatingLabelText="What is your assignment due?"
                         floatingLabelFixed={true}

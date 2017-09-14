@@ -375,7 +375,8 @@ class Assignments extends Component {
                     userID={this.state.userID}
                     courseID={this.state.courseID}
                     targetUrl={this.targetUrl}
-                    sendData={this.postAssign} />
+                    sendData={this.postAssign}
+                    parentState = {this.state} />
                   : null
               }
               <MenuItem primaryText="Add Assignment" leftIcon={<AssignIcon />} onClick={() => this.addAssign()} />
@@ -384,10 +385,9 @@ class Assignments extends Component {
                   ? <AddAssignmentModal 
                       style = {modalStyle} 
                       closeFormModal={this.closeFormModal}
-                      userID = {this.state.userID}
-                      courseID={this.state.courseID}
                       targetUrl = {this.targetUrl}
-                      sendData={this.postAssign} />
+                      sendData={this.postAssign} 
+                      parentState={this.state}/>
                   : null
               }
               <MenuItem primaryText="Add Note" leftIcon={<ContentCopy />} onClick={() => this.addNote()} />

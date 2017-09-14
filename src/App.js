@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import CourseList from './Courses/CourseList.js';
 import SignIn from './SignInPage/SignIn.js';
+import SignUp from './SignUp/signup.js'
 import Assignments from './Assignments/Assignments.js';
 import AssignmentDetail from './Assignments/DetailPages/AssignmentDetail.js';
 import NoteDetail from './Assignments/DetailPages/NoteDetail.js';
@@ -53,6 +54,7 @@ class App extends Component {
         <BrowserRouter>
           <Switch>
             <Route exact path='/' component={SignIn}/>
+            <Route path='/signup' component={SignUp} />
             <Route path='/courses' component={CourseList}/>
             <Route path='/assignments/:courseId' component={Assignments}/>
             <Route path='/detailpage/notedetail' component={NoteDetail}/>

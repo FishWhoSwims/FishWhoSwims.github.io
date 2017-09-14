@@ -52,8 +52,7 @@ class SignIn extends Component {
   }
 
   signUp(){
-    setUsername(this.state.fieldValue);
-    this.setState({username: getUsername()});
+    return <Redirect to='/signup'/>;
   }
 
   _handleTextFieldChange(e) {

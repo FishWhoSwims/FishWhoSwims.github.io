@@ -136,7 +136,7 @@ class SignIn extends Component {
           <TextField
             hintText="Your password here"
             floatingLabelText="Password: "
-            type="text"
+            type="password"
             onChange={this.handlePassChange.bind(this)}
             value={this.state.fieldPassword}
             onKeyPress={(ev) => {

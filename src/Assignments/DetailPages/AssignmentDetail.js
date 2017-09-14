@@ -23,7 +23,7 @@ class DetailPage extends Component{
   constructor(){
     super();
     this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://52.35.1.78/API';
+    this.targetUrl = 'ec2-34-209-20-30.us-west-2.compute.amazonaws.com';
     this.state = {
       assignmentInfo: cardInfo,
       redirect: null,
@@ -32,8 +32,31 @@ class DetailPage extends Component{
 
 
   openModal() {
-    this.setState({redirect: '/assignments'});
+    this.setState({redirect: ''});
   }
+
+  getData(){
+    fetch(this.targetUrl + '/users/' + '1' + '/classes/' + '1' + '/assignments/' + '4')
+    .then(  
+      function(response) {  
+        if (response.status !== 200) {  
+          console.log('Looks like there was a problem. Status Code: ' +  
+            response.status);  
+          return;  
+        }
+  
+        // Examine the text in the response  
+        response.json().then(function(data) {  
+          console.log(data);  
+        });  
+      }  
+    )  
+    .catch(function(err) {  
+      console.log('Fetch Error :-S', err);  
+    });
+  }
+
+
 
   render(){
 

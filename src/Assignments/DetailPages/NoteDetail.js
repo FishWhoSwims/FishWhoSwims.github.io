@@ -68,7 +68,7 @@ class DetailPage extends Component{
             </Card>
             </Paper>
             <Paper style={paperStyle}>
-              <form enctype="multipart/form-data" action="/upload/file" method="post">
+              <form action="/upload/file" method="post">
                 <input id="file" type="file" />
               </form>
               <RaisedButton label="UPLOAD" backgroundColor='#00BCD4'/>

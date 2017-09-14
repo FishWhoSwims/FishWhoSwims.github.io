@@ -31,12 +31,46 @@ class SignUp extends Component {
   constructor() {
     super();
     this.state = {
-
+      username: '',
+      pass: '',
+      email: '',
+      first: '',
+      last: ''
     };
   }
 
   getChildContext() {
     return { muiTheme: getMuiTheme(baseTheme) };
+  }
+
+  nameChange(e){
+    this.setState(){
+      name: e.target.value
+    }
+  }
+
+  passChange(e){
+    this.setState(){
+      pass: e.target.value
+    }
+  }
+
+  emailChange(e){
+    this.setState(){
+      email: e.target.value
+    }
+  }
+
+  firstChange(e){
+    this.setState(){
+      first: e.target.value
+    }
+  }
+
+  lastChange(e){
+    this.setState(){
+      last: e.target.value
+    }
   }
 
   signUp(){
@@ -49,7 +83,7 @@ class SignUp extends Component {
         <form>
           <h1 style={styles.text}>SIGN Up</h1><br/>
           <TextField hintText="Your username here" floatingLabelText="Username:" type="text"
-            onChange={this._handleTextFieldChange.bind(this)} value={this.state.fieldValue}
+            onChange={this.nameChange.bind(this)} value={this.state.username}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
                 this.signUp();
@@ -59,7 +93,7 @@ class SignUp extends Component {
           /><br />
           <TextField
             hintText="Your password here" floatingLabelText="Password:" type="text"
-            onChange={this._handleTextFieldChange.bind(this)} value={this.state.fieldValue}
+            onChange={this.passChange.bind(this)} value={this.state.pass}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
                 this.signUp();
@@ -69,7 +103,7 @@ class SignUp extends Component {
           /><br />
           <TextField
             hintText="Your email here" floatingLabelText="Email Adress:" type="text"
-            onChange={this._handleTextFieldChange.bind(this)} value={this.state.fieldValue}
+            onChange={this.emailChange.bind(this)} value={this.state.email}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
                 this.signUp();
@@ -79,7 +113,7 @@ class SignUp extends Component {
           /><br />
           <TextField
             hintText="Your first name here" floatingLabelText="First Name:" type="text"
-            onChange={this._handleTextFieldChange.bind(this)} value={this.state.fieldValue}
+            onChange={this.firstChange.bind(this)} value={this.state.first}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
                 this.signUp();
@@ -89,7 +123,7 @@ class SignUp extends Component {
           /><br />
           <TextField
             hintText="Your last name here" floatingLabelText="Last Name:" type="text"
-            onChange={this._handleTextFieldChange.bind(this)} value={this.state.fieldValue}
+            onChange={this.lastChange.bind(this)} value={this.state.last}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
                 this.signUp();

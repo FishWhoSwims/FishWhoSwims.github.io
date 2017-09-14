@@ -326,6 +326,7 @@ class Assignments extends Component {
     };
     let titleStyle = {
       'marginLeft': '280px',
+      'paddingTop': '60px'
     };
     let cardStyle = {
       'background': '#'+this.state.courseColor,
@@ -404,7 +405,7 @@ class Assignments extends Component {
               }
               <MenuItem primaryText="Create Study Guide" leftIcon={<SGIcon />} onClick={() => this.handleClick("d")} />
             </Drawer>
-            <h2 style = {titleStyle}> {title} </h2>
+            <h2 style = {titleStyle}> {this.state.tableTitle} </h2>
             <Paper style = {paperStyle}>
               <h2 style={paperTitle}>Upcoming</h2>
             <Table

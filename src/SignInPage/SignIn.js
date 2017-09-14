@@ -41,6 +41,8 @@ class SignIn extends Component {
       fieldName: '',
       fieldPassword: ''
     };
+    this.logIn = this.logIn.bind(this);
+
   }
 
   getChildContext() {
@@ -54,13 +56,38 @@ class SignIn extends Component {
     });
   }
 
+  logIn(name, pass) {
+
+      if(!name || !pass){
+
+      } else {
+        var targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
+        fetch(targetUrl + "login/", {
+          method: "post",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({"username": name, "password": pass})
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setUsername(responseJson.userID);
+          this.setState({
+            username: responseJson.userID
+          });
+        })
+      }
+  }
+
   checkUser(){
-    this.signUp();
+    //setUsername();
+    this.logIn(this.state.fieldName, this.state.fieldPassword);
+    this.forceUpdate();
   }
 
   signUp(){
-    setUsername(this.state.fieldValue);
-    this.setState({username: getUsername()});
+
   }
 
   handleNameChange(e) {

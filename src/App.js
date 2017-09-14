@@ -27,8 +27,18 @@ class App extends Component {
   }
 
   logout() {
-    window.localStorage.removeItem('username');
-    window.location = '/';
+    var targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
+    fetch(targetUrl + "logout/", {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then((response) => {
+      window.localStorage.removeItem('username');
+      window.location = '/';
+    })
   }
 
   render() {

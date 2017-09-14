@@ -9,7 +9,7 @@ import NoteDetail from './Assignments/DetailPages/NoteDetail.js';
 import ExamDetail from './Assignments/DetailPages/ExamDetail.js';
 import {getUsername} from './util/username.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-
+import targetUrl from './util/targetUrl.js';
 const styles = {
   navbarStyle : {
     position: 'fixed',
@@ -27,7 +27,6 @@ class App extends Component {
   }
 
   logout() {
-    var targetUrl = 'localhost:8000/API/';
     fetch(targetUrl + "logout/", {
       method: "post",
       headers: {

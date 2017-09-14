@@ -58,7 +58,7 @@ class SignIn extends Component {
       if(!name || !pass){
         this.showAlert();
       } else {
-        fetch(targetUrl + "login/", {
+        fetch(targetUrl + "/login/", {
           method: "post",
           headers: {
             'Accept': 'application/json',

@@ -33,11 +33,7 @@ class Assignments extends Component {
 
   constructor(props) {
     super(props);
-    console.log("Props", this.props);
-    console.log("Props.location.state", this.props.location.state.courseID);
-    // this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     this.targetUrl = 'http://52.35.1.78/API';
-    // this.getNotes();
     this.state = { open: true };
     this.state = {
       userID: '1',
@@ -178,11 +174,15 @@ class Assignments extends Component {
           notes: notes,
           assignments: assignments,
           all: final,
-          tempRows: this.state.all,
+          tempRows: final,
         });
       })
       .catch(error => console.log('error:', error));
 
+  }
+
+  componentDidMount() {
+    
   }
 
   addAssign() {
@@ -253,10 +253,6 @@ class Assignments extends Component {
 
   redirectToDetailPage() {
     
-  }
-
-  componentWillMount() {
-
   }
 
   updateAssignmentPost() {

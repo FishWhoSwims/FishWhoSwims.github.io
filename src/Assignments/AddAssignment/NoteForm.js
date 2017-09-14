@@ -36,7 +36,6 @@ class NoteForm extends Component {
     }
 
     submit() {
-        console.log(this.props);
         var formData = {
             assignName: this.state.name,
             dueDate: this.state.date,

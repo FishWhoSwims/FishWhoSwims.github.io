@@ -21,7 +21,11 @@ class Course extends Component {
   render() {
     console.log(this.props);
     if (this.state.redirect != null) {
-      return <Redirect to={`${this.state.redirect}/${this.props.courseID}`}/>;
+      // return <Redirect to={`${this.state.redirect}/${this.props.courseID}`}/>;
+      return <Redirect to={{
+        pathname: '/assignments',
+        state: { courseID: this.props.courseID }
+      }} />
     }
     let tileStyles = Object.assign({},
       courseStyle,

@@ -22,7 +22,7 @@ class Assignment extends Component{
     if (this.state.redirect != null) {
       return <Redirect to={`${this.state.redirect}`} />;
     }
-    const { data, type, ...other } = this.props;
+    const { data, type, name, ...other } = this.props;
     if(type === 'assignment' || type === 'note'){
       return (
         // <TableBody>
@@ -30,7 +30,7 @@ class Assignment extends Component{
           {other.children[0] /* checkbox passed down from Table-Body */}
           <TableRowColumn>{data.name}</TableRowColumn>
           <TableRowColumn>{data.date}</TableRowColumn>
-          <TableRowColumn>{data.assocExamID ? data.assocExamID : 'Not Assigned'}</TableRowColumn>
+          <TableRowColumn>{name ? name : 'Not Assigned'}</TableRowColumn>
         </TableRow>
       );
     }

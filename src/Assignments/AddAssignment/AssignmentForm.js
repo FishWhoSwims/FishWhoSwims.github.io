@@ -28,7 +28,6 @@ class AssignmentForm extends Component {
             date: '',
         }
         this.handleChange = this.handleChange.bind(this);
-        // console.log(this.targetUrl + '/users/'+ this.state.userID + '/classes/'+ this.state.courseID +'/assignments')
     }
 
     handleChange(e, name) {
@@ -36,7 +35,6 @@ class AssignmentForm extends Component {
     }
 
     submit() {
-        console.log(this.props);
         var formData = {
             name: this.state.name,
             date: this.state.date,
@@ -44,14 +42,7 @@ class AssignmentForm extends Component {
             courseID: this.props.courseID,
             targetUrl: this.props.targetUrl,
         }
-
-        // fetch(this.targetUrl + '/users/1/classes/1/assignments', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         name: 'this.state.name',
-        //         date: 'this.state.date',
-        //     })
-        // })
+        
         this.props.sendData(formData);
         this.props.closeFormModal();
     }
@@ -63,7 +54,6 @@ class AssignmentForm extends Component {
         // 1970, 1971, ... 2015, 2016, ...
         var yyyy = event.getFullYear();
         var date = (yyyy + "-" + MM + "-" + dd);
-        // console.log("event",JSON.stringify(event));
         this.setState({ date: date });
     }
 

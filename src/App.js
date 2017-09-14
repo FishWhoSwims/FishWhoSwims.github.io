@@ -10,6 +10,14 @@ import ExamDetail from './Assignments/DetailPages/ExamDetail.js';
 import {getUsername} from './util/username.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
+const styles = {
+  navbarStyle : {
+    position: 'fixed',
+    top:'0px',
+    zIndex: '2'
+  }
+};
+
 class App extends Component {
   constructor() {
     super();
@@ -28,6 +36,7 @@ class App extends Component {
       <main>
         <MuiThemeProvider>
           <AppBar
+            style={styles.navbarStyle}
             onLeftIconButtonTouchTap={() => {
               window.location = '/courses';
             }}
@@ -38,7 +47,8 @@ class App extends Component {
               this.state.username
               ? <p style={{cursor: 'pointer', color: 'white'}}>Logout</p>
               : null
-            }          />
+            }
+            />
         </MuiThemeProvider>
         <BrowserRouter>
           <Switch>

@@ -17,13 +17,7 @@ var styles = {
     width: 300,
     height: 300
   },
-  alertOptions: {
-    offset: 14,
-    position: 'bottom left',
-    theme: 'dark',
-    time: 5000,
-    transition: 'scale'
-  }, buttonStyle: {
+  buttonStyle: {
     marginBottom: 12,
     marginTop: 12
   }, text: {
@@ -84,7 +78,7 @@ class SignIn extends Component {
             value={this.state.fieldValue}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
-                this.signUp();
+                this.checkUser();
                 ev.preventDefault();
               }
             }}

@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   logout() {
-    fetch(targetUrl + "logout/", {
+    fetch(targetUrl + "/logout/", {
       method: "post",
       headers: {
         'Accept': 'application/json',

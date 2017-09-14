@@ -74,7 +74,7 @@ class DetailPage extends Component{
 
 
   openModal() {
-    this.setState({redirect: '/assignments'});
+    this.setState({redirect: '/'});
   }
 
   render(){

@@ -32,14 +32,22 @@ class DetailPage extends Component{
 
 
   openModal() {
-    this.setState({redirect: '/assignments'});
+    this.setState({redirect: ''});
   }
 
   render(){
 
     let paperStyle = {
       'width' : '75%',
+      'marginTop': '200px',
       'marginLeft': '280px',
+      'marginBottom' : '20px'
+    };
+
+    let paperFileStyle = {
+      'width' : '20%',
+      'marginTop': '10px',
+      'marginLeft': '1030px',
       'marginBottom' : '20px'
     };
 
@@ -67,7 +75,7 @@ class DetailPage extends Component{
               </CardActions>
             </Card>
             </Paper>
-            <Paper style={paperStyle}>
+            <Paper style={paperFileStyle}>
               <form action="/upload/file" method="post">
                 <input id="file" type="file" />
               </form>

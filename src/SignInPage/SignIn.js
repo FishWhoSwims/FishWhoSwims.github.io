@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 import {getUsername, setUsername} from '../util/username.js';
 import {Redirect} from 'react-router';
+import targetUrl from '../util/targetUrl.js';
 
 var styles = {
   root: {
@@ -57,7 +58,6 @@ class SignIn extends Component {
       if(!name || !pass){
         this.showAlert();
       } else {
-        var targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
         fetch(targetUrl + "login/", {
           method: "post",
           headers: {

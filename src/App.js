@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   logout() {
-    var targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
+    var targetUrl = 'localhost:8000/API/';
     fetch(targetUrl + "logout/", {
       method: "post",
       headers: {

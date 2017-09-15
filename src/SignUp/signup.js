@@ -5,6 +5,8 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 import {getUsername, setUsername} from '../util/username.js';
 import {Redirect} from 'react-router';
+import targetUrl from '../util/targetUrl.js';
+import Snackbar from 'material-ui/Snackbar';
 
 var styles = {
   root: {
@@ -18,8 +20,8 @@ var styles = {
     height: 300
   },
   buttonStyle: {
-    marginBottom: 12,
-    marginTop: 12
+    marginBottom: '30px',
+    marginTop: '12px'
   }, text: {
     color: '#1A237E',
     textAlign: 'center'
@@ -31,6 +33,7 @@ class SignUp extends Component {
   constructor() {
     super();
     this.state = {
+      open: false,
       username: '',
       pass: '',
       passConfirm: '',
@@ -38,6 +41,8 @@ class SignUp extends Component {
       first: '',
       last: ''
     };
+    this.showAlert = this.showAlert.bind(this);
+    this.closeAlert = this.closeAlert.bind(this);
   }
 
   getChildContext() {
@@ -76,32 +81,47 @@ class SignUp extends Component {
     }
   }
 
-  submit(){
-    var targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
-    fetch(targetUrl + "users/", {
-      method: "post",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "username": this.state.username,
-        "password": this.state.pass,
-        "email": this.state.email,
-        "firstName": this.state.first,
-        "lastName": this.state.last
-      })
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      setUsername(responseJson.userID);
-      this.setState({
-        username: responseJson.userID
-      });
-    })
-    .catch(() => {
-        this.showAlert();
+  showAlert = (text) => {
+    this.setState({
+      open: true,
+      message: text
     });
+  };
+
+  closeAlert = () => {
+    this.setState({
+      open: false,
+      message: ''
+    });
+  }
+
+  submit(){
+
+    if(this.state.pass != this.state.passConfirm){
+      this.showAlert("Password not match. Try again");
+    } else {
+      fetch(targetUrl + "/users/", {
+        method: "post",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "username": this.state.username,
+          "password": this.state.pass,
+          "email": this.state.email,
+          "firstName": this.state.first,
+          "lastName": this.state.last
+        })
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setUsername(responseJson);
+      })
+      .catch(() => {
+        this.showAlert("User already exist!!");
+      });
+    }
   }
 
   render(){
@@ -181,6 +201,13 @@ class SignUp extends Component {
           onClick={() => {
             this.submit();
           }}/><br/>
+          <Snackbar
+            open={this.state.open}
+            message={this.state.message}
+            autoHideDuration={2000}
+            onRequestClose={this.closeAlert}
+            bodyStyle={{ backgroundColor: 'red', color: 'coral' }}
+          />
       </div>
     );
   }

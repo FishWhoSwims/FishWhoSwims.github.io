@@ -77,7 +77,31 @@ class SignUp extends Component {
   }
 
   submit(){
-
+    var targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
+    fetch(targetUrl + "users/", {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "username": this.state.username,
+        "password": this.state.pass,
+        "email": this.state.email,
+        "firstName": this.state.first,
+        "lastName": this.state.last
+      })
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      setUsername(responseJson.userID);
+      this.setState({
+        username: responseJson.userID
+      });
+    })
+    .catch(() => {
+        this.showAlert();
+    });
   }
 
   render(){

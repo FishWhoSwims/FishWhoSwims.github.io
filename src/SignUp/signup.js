@@ -99,6 +99,9 @@ class SignUp extends Component {
 
     if(this.state.pass != this.state.passConfirm){
       this.showAlert("Password not match. Try again");
+    } else if(!this.state.username || !this.state.pass || !this.state.email ||
+              !this.state.firstName || !this.state.lastName  ){
+      this.showAlert("One or more field missing. Please fix that");
     } else {
       fetch(targetUrl + "/users/", {
         method: "post",
@@ -204,7 +207,7 @@ class SignUp extends Component {
           <Snackbar
             open={this.state.open}
             message={this.state.message}
-            autoHideDuration={2000}
+            autoHideDuration={3000}
             onRequestClose={this.closeAlert}
             bodyStyle={{ backgroundColor: 'red', color: 'coral' }}
           />

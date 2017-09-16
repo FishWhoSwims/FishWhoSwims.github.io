@@ -11,6 +11,7 @@ const styles = {
     marginTop: 12
   }
 };
+
 const background = {
   indigo:'#5C6BC0',
   cyan: '#00ACC1',
@@ -25,7 +26,7 @@ class CourseForm extends Component{
     this.state = {
       name: '',
       number: '',
-      instructor: '', 
+      instructor: '',
       color: 'red'
     }
     this.handleChange = this.handleChange.bind(this);
@@ -37,7 +38,7 @@ class CourseForm extends Component{
 
   changeColor = (event, index, value) => {
       this.setState({
-          color: value 
+          color: value
       })
   }
 
@@ -45,7 +46,7 @@ class CourseForm extends Component{
     var formData = {
       courseName: this.state.name,
       courseNumber: this.state.number,
-      instructor: this.state.instructor, 
+      instructor: this.state.instructor,
       color: this.state.color
     }
     this.props.sendData(formData);

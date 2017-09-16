@@ -11,6 +11,7 @@ const styles = {
         marginTop: 12
     }
 };
+
 const background = {
     indigo: '#5C6BC0',
     cyan: '#00ACC1',

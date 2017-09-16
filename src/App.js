@@ -50,7 +50,7 @@ class App extends Component {
               window.location = '/courses';
             }}
             onRightIconButtonTouchTap={this.logout.bind(this)}
-            iconElementLeft={<img style={{cursor: 'pointer', width:50}} src='img/swimmingfish.jpeg'/>}
+            iconElementLeft={<img style={{cursor: 'pointer', width:50}} alt='swimming fish' src='img/swimmingfish.jpeg'/>}
             iconElementRight=
             {
               this.state.username

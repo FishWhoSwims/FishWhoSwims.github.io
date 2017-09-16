@@ -3,7 +3,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
-import { Redirect } from 'react-router';
 import AddAssignmentModal from './AddAssignment/Modal';
 import AddNoteModal from './AddAssignment/NoteModal';
 import AddExamModal from './AddAssignment/ExamModal';

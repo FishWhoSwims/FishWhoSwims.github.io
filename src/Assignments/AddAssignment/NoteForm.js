@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 
 const styles = {
@@ -11,13 +9,6 @@ const styles = {
         marginTop: 12
     }
 };
-
-const background = {
-    indigo: '#5C6BC0',
-    cyan: '#00ACC1',
-    green: '#43A047',
-    deepOrange: '#F4511E'
-}
 
 class NoteForm extends Component {
 

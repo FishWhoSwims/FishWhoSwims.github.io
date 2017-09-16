@@ -3,7 +3,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
-import { Redirect } from 'react-router';
 import AddAssignmentModal from './AddAssignment/Modal';
 import AddNoteModal from './AddAssignment/NoteModal';
 import AddExamModal from './AddAssignment/ExamModal';
@@ -14,9 +13,8 @@ import RemoveRedEye from 'material-ui/svg-icons/image/remove-red-eye';
 import AssignIcon from 'material-ui/svg-icons/action/assignment';
 import ExamIcon from 'material-ui/svg-icons/action/assignment-late';
 import SGIcon from 'material-ui/svg-icons/content/add-box';
-import ContentLink from 'material-ui/svg-icons/content/link';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
-
+import targetUrl from '../util/targetUrl.js';
 
 import {
   Table,
@@ -34,7 +32,6 @@ class Assignments extends Component {
   constructor(props) {
     super(props);
     // this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://52.35.1.78/API';
     // this.getNotes();
     this.state = { open: true };
     this.state = {
@@ -118,16 +115,7 @@ class Assignments extends Component {
   };
 
   getData(data) {
-    console.log(data);
-    // this.state.assignments.push(data);
-    // this.state.all.push(data);
-
-    var formData = {
-      name: data.name,
-      date: data.date,
-    }
-
-    fetch(data.targetUrl + '/users/' + data.userID + '/classes/' + data.courseID + '/assignments', {
+    fetch(data.targetUrl + 'users/' + data.userID + '/classes/' + data.courseID + '/assignments', {
       method: "post",
       headers: {
         'Accept': 'application/json',
@@ -135,7 +123,7 @@ class Assignments extends Component {
       },
       body: JSON.stringify(data)
     })
-    .then((response) => { 
+    .then((response) => {
        //do something awesome that makes the world a better place
        console.log(response);
     });
@@ -143,12 +131,11 @@ class Assignments extends Component {
   }
 
   redirectToDetailPage() {
-    
+
   }
 
   componentWillMount() {
     var userID = 1;
-    var classID = 1;
     var assignments, exams, notes;
     var rows = [];
     var row = [];
@@ -164,7 +151,7 @@ class Assignments extends Component {
     var date = (yyyy + "-" + MM + "-" + dd);
     console.log("date: ", date);
 
-    fetch(this.targetUrl + '/users/' + userID + '/classes/' + this.state.courseID)
+    fetch(targetUrl + '/users/' + userID + '/classes/' + this.state.courseID)
       .then(results => {
         return results.json();
       }).then(data => {
@@ -192,7 +179,7 @@ class Assignments extends Component {
       .then(result => console.log('success:', result))
       .catch(error => console.log('error:', error));
 
-    fetch(this.targetUrl + '/users/' + userID + '/classes/' + this.state.courseID + '/assignments')
+    fetch(targetUrl + '/users/' + userID + '/classes/' + this.state.courseID + '/assignments')
       .then(results => {
         return results.json();
       }).then(data => {
@@ -213,7 +200,7 @@ class Assignments extends Component {
       .then(result => console.log('success:', result))
       .catch(error => console.log('error:', error));
 
-    fetch(this.targetUrl + '/users/' + userID + '/classes/' + this.state.courseID + '/notes')
+    fetch(targetUrl + '/users/' + userID + '/classes/' + this.state.courseID + '/notes')
       .then(results => {
         return results.json();
       }).then(data => {
@@ -288,6 +275,7 @@ class Assignments extends Component {
             type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
         );
       }
+      return null;
     });
 
     const PastAllRow = this.state.tempRows.map((assignment) => {
@@ -297,13 +285,14 @@ class Assignments extends Component {
             type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
         );
       }
+      return null;
     });
     const title = this.state.tableTitle;
     console.log("title: ", title)
 
     let forceNavDown = { 'top': '64px' };
 
-    let tableStyle = { 
+    let tableStyle = {
       'marginLeft': '30px' ,
       'marginRight': '30px',
       'width' : '95%',
@@ -335,10 +324,10 @@ class Assignments extends Component {
       <div>
         <MuiThemeProvider>
           <div>
-            <Drawer 
+            <Drawer
               value={this.state.value}
               onChange={this.handleChange}
-              open={this.state.open} 
+              open={this.state.open}
               containerStyle={forceNavDown}>
               <Card style= {cardStyle}>
                 <CardTitle title={this.state.courseName} subtitle={this.state.courseInstructor} />
@@ -359,19 +348,19 @@ class Assignments extends Component {
                     closeFormModal={this.closeExamModal}
                     userID={this.state.userID}
                     courseID={this.state.courseID}
-                    targetUrl={this.targetUrl}
+                    targetUrl={targetUrl}
                     sendData={this.getData} />
                   : null
               }
               <MenuItem primaryText="Add Assignment" leftIcon={<AssignIcon />} onClick={() => this.addAssign()} />
               {
                 this.state.showAssignForm
-                  ? <AddAssignmentModal 
-                      style = {modalStyle} 
+                  ? <AddAssignmentModal
+                      style = {modalStyle}
                       closeFormModal={this.closeFormModal}
                       userID = {this.state.userID}
                       courseID={this.state.courseID}
-                      targetUrl = {this.targetUrl}
+                      targetUrl = {targetUrl}
                       sendData={this.getData} />
                   : null
               }
@@ -383,7 +372,7 @@ class Assignments extends Component {
                     closeFormModal={this.closeNoteModal}
                     userID={this.state.userID}
                     courseID={this.state.courseID}
-                    targetUrl={this.targetUrl}
+                    targetUrl={targetUrl}
                     sendData={this.getData} />
                   : null
               }

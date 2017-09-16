@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardMedia, CardTitle} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
@@ -16,9 +15,6 @@ const cardInfo = {
   courseID: 1
 };
 
-
-
-
 class DetailPage extends Component{
   constructor(){
     super();
@@ -29,7 +25,6 @@ class DetailPage extends Component{
       redirect: null,
     };
   }
-
 
   openModal() {
     this.setState({redirect: ''});

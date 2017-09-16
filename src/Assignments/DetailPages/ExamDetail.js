@@ -1,21 +1,17 @@
 import React, {Component} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardMedia, CardTitle} from 'material-ui/Card';
 import {
   Table,
   TableBody,
-  TableFooter,
   TableHeader,
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router';
-import Assignment from '../Assignment.js';
-
 
 const tableInfo =   {
   examID: 1,

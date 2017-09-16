@@ -3,7 +3,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
-import { Redirect } from 'react-router';
 import AddAssignmentModal from './AddAssignment/Modal';
 import AddNoteModal from './AddAssignment/NoteModal';
 import AddExamModal from './AddAssignment/ExamModal';
@@ -14,7 +13,6 @@ import RemoveRedEye from 'material-ui/svg-icons/image/remove-red-eye';
 import AssignIcon from 'material-ui/svg-icons/action/assignment';
 import ExamIcon from 'material-ui/svg-icons/action/assignment-late';
 import SGIcon from 'material-ui/svg-icons/content/add-box';
-import ContentLink from 'material-ui/svg-icons/content/link';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 import targetUrl from '../util/targetUrl.js';
 
@@ -117,15 +115,6 @@ class Assignments extends Component {
   };
 
   getData(data) {
-    console.log(data);
-    // this.state.assignments.push(data);
-    // this.state.all.push(data);
-
-    var formData = {
-      name: data.name,
-      date: data.date,
-    }
-
     fetch(data.targetUrl + 'users/' + data.userID + '/classes/' + data.courseID + '/assignments', {
       method: "post",
       headers: {
@@ -147,7 +136,6 @@ class Assignments extends Component {
 
   componentWillMount() {
     var userID = 1;
-    var classID = 1;
     var assignments, exams, notes;
     var rows = [];
     var row = [];
@@ -287,6 +275,7 @@ class Assignments extends Component {
             type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
         );
       }
+      return null;
     });
 
     const PastAllRow = this.state.tempRows.map((assignment) => {
@@ -296,6 +285,7 @@ class Assignments extends Component {
             type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
         );
       }
+      return null;
     });
     const title = this.state.tableTitle;
     console.log("title: ", title)

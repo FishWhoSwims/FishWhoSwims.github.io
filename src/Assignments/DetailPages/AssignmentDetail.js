@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardActions,  CardMedia, CardTitle} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
@@ -65,7 +64,7 @@ class DetailPage extends Component{
                 <CardActions>
                   <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
                   <RaisedButton onClick={this.openModal.bind(this)} label="CANCEL" backgroundColor='#FF5722'/>
-                  
+
                 </CardActions>
               </Card>
             </Paper>

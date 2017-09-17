@@ -119,8 +119,7 @@ class SignUp extends Component {
       })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log("Create user successful");
-        setUsername(responseJson);
+        setUsername(responseJson.userID);
         this.context.router.history.push('/courses');
       })
       .catch(() => {

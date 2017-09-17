@@ -3,7 +3,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
-import { Redirect } from 'react-router';
 import AddAssignmentModal from './AddAssignment/Modal';
 import AddNoteModal from './AddAssignment/NoteModal';
 import AddExamModal from './AddAssignment/ExamModal';
@@ -16,9 +15,8 @@ import RemoveRedEye from 'material-ui/svg-icons/image/remove-red-eye';
 import AssignIcon from 'material-ui/svg-icons/action/assignment';
 import ExamIcon from 'material-ui/svg-icons/action/assignment-late';
 import SGIcon from 'material-ui/svg-icons/content/add-box';
-import ContentLink from 'material-ui/svg-icons/content/link';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
-
+import targetUrl from '../util/targetUrl.js';
 
 import {
   Table,
@@ -243,7 +241,7 @@ class Assignments extends Component {
       },
       body: JSON.stringify(data)
     })
-    .then((response) => { 
+    .then((response) => {
        //do something awesome that makes the world a better place
       //  console.log(response.json());
     });
@@ -253,7 +251,7 @@ class Assignments extends Component {
   }
 
   redirectToDetailPage() {
-    
+
   }
 
   updateAssignmentPost() {
@@ -305,6 +303,7 @@ class Assignments extends Component {
             type={assignment.props.type} name= {assignment.props.name} data={assignment.props.data} key={assignmentNumber++} />
         );
       }
+      return null;
     });
 
     const PastAllRow = this.state.tempRows.map((assignment) => {
@@ -314,12 +313,13 @@ class Assignments extends Component {
             type={assignment.props.type} name={assignment.props.name} data={assignment.props.data} key={assignmentNumber++} />
         );
       }
+      return null;
     });
     const title = this.state.tableTitle;
 
     let forceNavDown = { 'top': '64px' };
 
-    let tableStyle = { 
+    let tableStyle = {
       'marginLeft': '30px' ,
       'marginRight': '30px',
       'width' : '95%',
@@ -352,10 +352,10 @@ class Assignments extends Component {
       <div>
         <MuiThemeProvider>
           <div>
-            <Drawer 
+            <Drawer
               value={this.state.value}
               onChange={this.handleChange}
-              open={this.state.open} 
+              open={this.state.open}
               containerStyle={forceNavDown}>
               <Card style= {cardStyle}>
                 <CardTitle title={this.state.courseName} subtitle={this.state.courseInstructor} />
@@ -384,12 +384,19 @@ class Assignments extends Component {
               <MenuItem primaryText="Add Assignment" leftIcon={<AssignIcon />} onClick={() => this.addAssign()} />
               {
                 this.state.showAssignForm
-                  ? <AddAssignmentModal 
-                      style = {modalStyle} 
+                  ? <AddAssignmentModal
+                      style = {modalStyle}
                       closeFormModal={this.closeFormModal}
+<<<<<<< HEAD
                       targetUrl = {this.targetUrl}
                       sendData={this.postAssign} 
                       parentState={this.state}/>
+=======
+                      userID = {this.state.userID}
+                      courseID={this.state.courseID}
+                      targetUrl = {targetUrl}
+                      sendData={this.getData} />
+>>>>>>> upstream/master
                   : null
               }
               <MenuItem primaryText="Add Note" leftIcon={<ContentCopy />} onClick={() => this.addNote()} />

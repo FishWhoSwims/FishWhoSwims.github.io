@@ -9,7 +9,7 @@ import NoteDetail from './Assignments/DetailPages/NoteDetail.js';
 import ExamDetail from './Assignments/DetailPages/ExamDetail.js';
 import {getUsername} from './util/username.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-
+import targetUrl from './util/targetUrl.js';
 const styles = {
   navbarStyle : {
     position: 'fixed',
@@ -27,8 +27,7 @@ class App extends Component {
   }
 
   logout() {
-    var targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
-    fetch(targetUrl + "logout/", {
+    fetch(targetUrl + "/logout/", {
       method: "post",
       headers: {
         'Accept': 'application/json',
@@ -51,7 +50,7 @@ class App extends Component {
               window.location = '/courses';
             }}
             onRightIconButtonTouchTap={this.logout.bind(this)}
-            iconElementLeft={<img style={{cursor: 'pointer', width:50}} src='img/swimmingfish.jpeg'/>}
+            iconElementLeft={<img style={{cursor: 'pointer', width:50}} alt='swimming fish' src='img/swimmingfish.jpeg'/>}
             iconElementRight=
             {
               this.state.username

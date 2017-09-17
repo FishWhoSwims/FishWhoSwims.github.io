@@ -8,7 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import requireUsername from '../util/requireUsername.js';
 import { getUsername, setUsername } from '../util/username.js';
 import AddCourseModal from './AddCourse/Modal';
-
+import targetUrl from '../util/targetUrl.js';
 const styles = {
   root: {
     display: 'flex',
@@ -37,8 +37,6 @@ class CourseList extends Component {
 
   constructor (props) {
     super(props);
-    // this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API';
     this.state = {
       userID: getUsername(),
       courses: [],
@@ -49,14 +47,7 @@ class CourseList extends Component {
     this.addCourse = this.addCourse.bind(this);
     this.getData = this.getData.bind(this);
 
-    fetch(this.targetUrl + '/users/'+ this.state.userID +'/classes/', {
-      method: "get",
-      headers: {
-        // 'DEBUGNOLOGIN': 'true',
-        'Accept': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
-      },
-    })
+    fetch(targetUrl + '/users/' + this.state.userID +'/classes/')
       .then(response => response.json())
       .then(response => this.setState({courses: response}));
   }
@@ -80,20 +71,20 @@ class CourseList extends Component {
   }
 
   getData(data){
-    this.state.courses.push(data);
+    //this.state.courses.push(data);
 
-    // fetch("this.targetUrl + '/users/1/classes/", {
-    //   method: "post",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(data)
-    // })
-    // .then((response) => {
-    //    //do something awesome that makes the world a better place
-    //    console.log(response);
-    // });
+    fetch(this.targetUrl + "/users/1/classes/", {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((response) => {
+       //do something awesome that makes the world a better place
+       console.log(response);
+    });
 
     this.forceUpdate();
   }

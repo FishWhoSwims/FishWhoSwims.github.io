@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import ExamForm from './ExamForm';
 import FlatButton from 'material-ui/FlatButton';
@@ -15,6 +14,7 @@ const styles = {
         backgroundColor: '#E3F2FD'
     }
 };
+
 const closeButton = {
     position: 'absolute',
     top: '5px',

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -11,6 +10,7 @@ const styles = {
     marginTop: 12
   }
 };
+
 const background = {
   indigo:'#5C6BC0',
   cyan: '#00ACC1',
@@ -25,7 +25,7 @@ class CourseForm extends Component{
     this.state = {
       name: '',
       number: '',
-      instructor: '', 
+      instructor: '',
       color: 'red'
     }
     this.handleChange = this.handleChange.bind(this);
@@ -37,7 +37,7 @@ class CourseForm extends Component{
 
   changeColor = (event, index, value) => {
       this.setState({
-          color: value 
+          color: value
       })
   }
 
@@ -45,8 +45,7 @@ class CourseForm extends Component{
     var formData = {
       courseName: this.state.name,
       courseNumber: this.state.number,
-      instructor: this.state.instructor, 
-      color: this.state.color
+      instructor: this.state.instructor
     }
     this.props.sendData(formData);
     this.props.closeFormModal();

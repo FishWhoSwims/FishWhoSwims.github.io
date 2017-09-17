@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import AssignmentForm from './AssignmentForm';
 import FlatButton from 'material-ui/FlatButton';

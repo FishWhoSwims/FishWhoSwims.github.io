@@ -45,8 +45,7 @@ class CourseForm extends Component{
     var formData = {
       courseName: this.state.name,
       courseNumber: this.state.number,
-      instructor: this.state.instructor,
-      color: this.state.color
+      instructor: this.state.instructor
     }
     this.props.sendData(formData);
     this.props.closeFormModal();

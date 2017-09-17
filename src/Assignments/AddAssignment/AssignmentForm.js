@@ -102,12 +102,6 @@ class AssignmentForm extends Component {
                         {this.state.menu}
                     </SelectField>
                     <br /><br />
-                    {/* <TextField
-                        floatingLabelText="What is your assignment due?"
-                        floatingLabelFixed={true}
-                        onChange={(e) => this.handleChange(e, 'number')}
-                        value={this.state.date}
-                    /><br /><br /> */}
 
                 </form>
                 <RaisedButton label="Add" primary={true} style={styles.buttonStyle}

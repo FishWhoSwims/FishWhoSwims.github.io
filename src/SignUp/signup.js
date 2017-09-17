@@ -100,7 +100,7 @@ class SignUp extends Component {
     if(this.state.pass != this.state.passConfirm){
       this.showAlert("Password not match. Try again");
     } else if(!this.state.username || !this.state.pass || !this.state.email ||
-              !this.state.firstName || !this.state.lastName  ){
+              !this.state.first || !this.state.last  ){
       this.showAlert("One or more field missing. Please fix that");
     } else {
       fetch(targetUrl + "/users/", {
@@ -119,7 +119,9 @@ class SignUp extends Component {
       })
       .then((response) => response.json())
       .then((responseJson) => {
+        console.log("Create user successful");
         setUsername(responseJson);
+        this.context.router.history.push('/courses');
       })
       .catch(() => {
         this.showAlert("User already exist!!");

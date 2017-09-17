@@ -29,7 +29,7 @@ class AssignmentForm extends Component {
 
     constructor(props) {
         super(props);
-        this.targetUrl = 'http://52.35.1.78/API';
+        this.targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
         console.log("Exams", this.props.parentState.exams[0].props.data.name);
         const items = [];
         items.push(<MenuItem value={0} key={0} primaryText={`-------`} />);

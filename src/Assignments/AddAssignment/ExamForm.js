@@ -22,7 +22,7 @@ class ExamForm extends Component {
 
     constructor(props) {
         super(props);
-        this.targetUrl = 'http://52.35.1.78/API';
+        this.targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
         this.state = {
             name: '',
             date: '',

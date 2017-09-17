@@ -7,6 +7,8 @@ import { Redirect } from 'react-router';
 import AddAssignmentModal from './AddAssignment/Modal';
 import AddNoteModal from './AddAssignment/NoteModal';
 import AddExamModal from './AddAssignment/ExamModal';
+import { getUsername, setUsername } from '../util/username.js';
+import { getCourseID, setCourseID } from '../util/courseInfo.js';
 
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
@@ -33,11 +35,12 @@ class Assignments extends Component {
 
   constructor(props) {
     super(props);
-    this.targetUrl = 'http://52.35.1.78/API';
+    this.targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API';
     this.state = { open: true };
     this.state = {
-      userID: '1',
-      courseID: this.props.location.state.courseID,
+      userID: getUsername(),
+      // courseID: this.props.location.state.courseID,
+      courseID: getCourseID(),
       assignments: [],
       notes: [],
       exams: [],
@@ -59,8 +62,6 @@ class Assignments extends Component {
     this.postAssign = this.postAssign.bind(this);
 
     // Pull data from server
-
-    var userID = 1;
     var assignments = [], exams = [], notes = [], newAssign = [], newNotes = [];
     var final = [];
     var now = new Date();
@@ -72,7 +73,7 @@ class Assignments extends Component {
     var yyyy = now.getFullYear();
     var date = (yyyy + "-" + MM + "-" + dd);
 
-    fetch(this.targetUrl + '/users/' + userID + '/classes/' + this.state.courseID)
+    fetch(this.targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.courseID)
       .then(results => {
         return results.json();
       }).then(data => {

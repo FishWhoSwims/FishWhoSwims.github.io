@@ -6,6 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 import requireUsername from '../util/requireUsername.js';
+import { getUsername, setUsername } from '../util/username.js';
 import AddCourseModal from './AddCourse/Modal';
 
 const styles = {
@@ -36,9 +37,10 @@ class CourseList extends Component {
 
   constructor (props) {
     super(props);
-    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://52.35.1.78/API';
+    // this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    this.targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API';
     this.state = {
+      userID: getUsername(),
       courses: [],
       classCells: [],
       showCourseForm: false
@@ -47,7 +49,14 @@ class CourseList extends Component {
     this.addCourse = this.addCourse.bind(this);
     this.getData = this.getData.bind(this);
 
-    fetch(this.proxyUrl + this.targetUrl + '/users/1/classes/')
+    fetch(this.targetUrl + '/users/'+ this.state.userID +'/classes/', {
+      method: "get",
+      headers: {
+        // 'DEBUGNOLOGIN': 'true',
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+    })
       .then(response => response.json())
       .then(response => this.setState({courses: response}));
   }

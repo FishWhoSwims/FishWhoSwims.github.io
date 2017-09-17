@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {GridTile} from 'material-ui/GridList';
 import {Redirect} from 'react-router';
+import { getCourseID, setCourseID } from '../util/courseInfo.js';
 
 const courseStyle = {
   cursor: 'pointer',
@@ -15,6 +16,7 @@ class Course extends Component {
   }
 
   openModal() {
+    setCourseID(this.props.courseID);
     this.setState({redirect: '/assignments'});
   }
 
@@ -24,7 +26,7 @@ class Course extends Component {
       // return <Redirect to={`${this.state.redirect}/${this.props.courseID}`}/>;
       return <Redirect to={{
         pathname: '/assignments',
-        state: { courseID: this.props.courseID }
+        // state: { courseID: this.props.courseID }
       }} />
     }
     let tileStyles = Object.assign({},

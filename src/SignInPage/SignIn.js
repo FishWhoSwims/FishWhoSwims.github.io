@@ -3,8 +3,10 @@ import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 import {getUsername, setUsername} from '../util/username.js';
 import {Redirect} from 'react-router';
+import targetUrl from '../util/targetUrl.js';
 
 var styles = {
   root: {
@@ -37,34 +39,76 @@ class SignIn extends Component {
   constructor() {
     super();
     this.state = {
+      open: false,
       username: getUsername(),
-      fieldValue: ''
+      fieldName: '',
+      fieldPassword: ''
     };
+    this.logIn = this.logIn.bind(this);
+    this.showAlert = this.showAlert.bind(this);
+    this.closeAlert = this.closeAlert.bind(this);
   }
 
   getChildContext() {
     return { muiTheme: getMuiTheme(baseTheme) };
   }
 
-  showAlert() {
-    this.msg.show('Username is wrong. Please try again', {
-      time: 2000,
-      type: 'error',
-    });
+  logIn(name, pass) {
+
+      if(!name || !pass){
+        this.showAlert();
+      } else {
+        fetch(targetUrl + "/login/", {
+          method: "post",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({"username": name, "password": pass})
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setUsername(responseJson.userID);
+          this.setState({
+            username: responseJson.userID
+          });
+        })
+        .catch(() => {
+            this.showAlert();
+        });
+      }
   }
 
   checkUser(){
-    this.signUp();
+    this.logIn(this.state.fieldName, this.state.fieldPassword);
+    this.forceUpdate();
   }
 
   signUp(){
-    setUsername(this.state.fieldValue);
-    this.setState({username: getUsername()});
+
   }
 
-  _handleTextFieldChange(e) {
+  handleNameChange(e) {
     this.setState({
-      fieldValue: e.target.value
+      fieldName: e.target.value
+    });
+  }
+
+  handlePassChange(e) {
+    this.setState({
+      fieldPassword: e.target.value
+    });
+  }
+
+  showAlert = () => {
+    this.setState({
+      open: true,
+    });
+  };
+
+  closeAlert = () => {
+    this.setState({
+      open: false
     });
   }
 
@@ -78,10 +122,23 @@ class SignIn extends Component {
           <h1 style={styles.text}>SIGN IN</h1><br/>
           <TextField
             hintText="Your name here"
-            floatingLabelText="What is your name?"
+            floatingLabelText="Name: "
             type="text"
-            onChange={this._handleTextFieldChange.bind(this)}
-            value={this.state.fieldValue}
+            onChange={this.handleNameChange.bind(this)}
+            value={this.state.fieldName}
+            onKeyPress={(ev) => {
+              if (ev.key === 'Enter') {
+                this.signUp();
+                ev.preventDefault();
+              }
+            }}
+          /><br />
+          <TextField
+            hintText="Your password here"
+            floatingLabelText="Password: "
+            type="password"
+            onChange={this.handlePassChange.bind(this)}
+            value={this.state.fieldPassword}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
                 this.signUp();
@@ -99,6 +156,13 @@ class SignIn extends Component {
           onClick={() => {
             this.signUp();
           }}/>
+          <Snackbar
+            open={this.state.open}
+            message="Invalid login info. Please try again"
+            autoHideDuration={2000}
+            onRequestClose={this.closeAlert}
+            bodyStyle={{ backgroundColor: 'red', color: 'coral' }}
+          />
       </div>
     );
   }

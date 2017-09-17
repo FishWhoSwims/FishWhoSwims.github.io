@@ -7,7 +7,7 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 import requireUsername from '../util/requireUsername.js';
 import AddCourseModal from './AddCourse/Modal';
-
+import targetUrl from '../util/targetUrl.js';
 const styles = {
   root: {
     display: 'flex',
@@ -36,8 +36,6 @@ class CourseList extends Component {
 
   constructor (props) {
     super(props);
-    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://52.35.1.78/API';
     this.state = {
       courses: [],
       classCells: [],
@@ -47,7 +45,7 @@ class CourseList extends Component {
     this.addCourse = this.addCourse.bind(this);
     this.getData = this.getData.bind(this);
 
-    fetch(this.proxyUrl + this.targetUrl + '/users/1/classes/')
+    fetch(targetUrl + '/users/1/classes/')
       .then(response => response.json())
       .then(response => this.setState({courses: response}));
   }
@@ -71,20 +69,20 @@ class CourseList extends Component {
   }
 
   getData(data){
-    this.state.courses.push(data);
+    //this.state.courses.push(data);
 
-    // fetch("this.targetUrl + '/users/1/classes/", {
-    //   method: "post",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(data)
-    // })
-    // .then((response) => {
-    //    //do something awesome that makes the world a better place
-    //    console.log(response);
-    // });
+    fetch(this.targetUrl + "/users/1/classes/", {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((response) => {
+       //do something awesome that makes the world a better place
+       console.log(response);
+    });
 
     this.forceUpdate();
   }

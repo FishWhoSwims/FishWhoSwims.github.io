@@ -12,6 +12,7 @@ import {
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router';
+import targetUrl from '../../util/targetUrl.js';
 
 const tableInfo =   {
   examID: 1,
@@ -51,8 +52,6 @@ const tableInfo =   {
 class DetailPage extends Component{
   constructor(){
     super();
-    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://52.35.1.78/API';
     this.state = {
       examTable: tableInfo,
       redirect: null,

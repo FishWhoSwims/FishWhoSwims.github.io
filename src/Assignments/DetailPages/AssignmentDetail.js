@@ -5,6 +5,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
+import targetUrl from '../../util/targetUrl.js';
 
 const cardInfo = {
   courseMaterialID: 5,
@@ -19,10 +20,8 @@ const cardInfo = {
 
 
 class DetailPage extends Component{
-  constructor(){
-    super();
-    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'ec2-34-209-20-30.us-west-2.compute.amazonaws.com';
+  constructor(props){
+    super(props);
     this.state = {
       assignmentInfo: cardInfo,
       redirect: null,
@@ -34,10 +33,10 @@ class DetailPage extends Component{
     this.setState({redirect: ''});
   }
 
-  getData(){
-    fetch(this.targetUrl + '/users/' + '1' + '/classes/' + '1' + '/assignments/' + '4')
+  componentWillMount(){
+    fetch(targetUrl + '/users/' + '4' + '/classes/' + '5' + '/assignments/' + '2')
     .then(  
-      function(response) {  
+      function(response) {
         if (response.status !== 200) {  
           console.log('Looks like there was a problem. Status Code: ' +  
             response.status);  

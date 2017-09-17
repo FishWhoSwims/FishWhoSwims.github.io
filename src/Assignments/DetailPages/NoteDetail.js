@@ -5,6 +5,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
+import targetUrl from '../../util/targetUrl.js';
 
 const cardInfo = {
   courseMaterialID: 6,
@@ -18,8 +19,6 @@ const cardInfo = {
 class DetailPage extends Component{
   constructor(){
     super();
-    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://52.35.1.78/API';
     this.state = {
       noteInfo: cardInfo,
       redirect: null,

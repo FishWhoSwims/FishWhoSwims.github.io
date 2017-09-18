@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
 import targetUrl from '../../util/targetUrl.js';
+import {getUsername, setUsername} from '../../util/username.js';
 
 const cardInfo = {
   courseMaterialID: 5,
@@ -34,7 +35,7 @@ class DetailPage extends Component{
   }
 
   componentWillMount(){
-    fetch(targetUrl + '/users/' + '4' + '/classes/' + '5' + '/assignments/' + '2')
+    fetch(targetUrl + '/users/' + getUsername() + '/classes/' + '7' + '/assignments/' + '2')
     .then(  
       function(response) {
         if (response.status !== 200) {  

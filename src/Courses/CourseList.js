@@ -5,9 +5,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import RaisedButton from 'material-ui/RaisedButton';
+import {getUsername, setUsername} from '../util/username.js';
 import requireUsername from '../util/requireUsername.js';
 import AddCourseModal from './AddCourse/Modal';
 import targetUrl from '../util/targetUrl.js';
+
 const styles = {
   root: {
     display: 'flex',
@@ -45,7 +47,7 @@ class CourseList extends Component {
     this.addCourse = this.addCourse.bind(this);
     this.getData = this.getData.bind(this);
 
-    fetch(targetUrl + '/users/1/classes/')
+    fetch(targetUrl + '/users/'+ getUsername() +'/classes/')
       .then(response => response.json())
       .then(response => this.setState({courses: response}));
   }

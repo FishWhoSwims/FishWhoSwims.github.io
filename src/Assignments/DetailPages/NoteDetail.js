@@ -5,6 +5,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
+import targetUrl from '../../util/targetUrl.js';
 
 const cardInfo = {
   courseMaterialID: 6,
@@ -18,8 +19,6 @@ const cardInfo = {
 class DetailPage extends Component{
   constructor(){
     super();
-    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://52.35.1.78/API';
     this.state = {
       noteInfo: cardInfo,
       redirect: null,
@@ -27,14 +26,22 @@ class DetailPage extends Component{
   }
 
   openModal() {
-    this.setState({redirect: '/assignments'});
+    this.setState({redirect: ''});
   }
 
   render(){
 
     let paperStyle = {
       'width' : '75%',
+      'marginTop': '200px',
       'marginLeft': '280px',
+      'marginBottom' : '20px'
+    };
+
+    let paperFileStyle = {
+      'width' : '20%',
+      'marginTop': '10px',
+      'marginLeft': '1030px',
       'marginBottom' : '20px'
     };
 
@@ -42,7 +49,7 @@ class DetailPage extends Component{
       return (<Redirect to={this.state.redirect}/>);
     }
     return (
-      (<div>
+      <div>
         <MuiThemeProvider>
           <div>
             <Paper style={paperStyle}>
@@ -62,15 +69,15 @@ class DetailPage extends Component{
               </CardActions>
             </Card>
             </Paper>
-            <Paper style={paperStyle}>
-              <form enctype="multipart/form-data" action="/upload/file" method="post">
+            <Paper style={paperFileStyle}>
+              <form action="/upload/file" method="post">
                 <input id="file" type="file" />
               </form>
               <RaisedButton label="UPLOAD" backgroundColor='#00BCD4'/>
             </Paper>
           </div>
         </MuiThemeProvider>
-      </div>)
+      </div>
     );
   }
 }

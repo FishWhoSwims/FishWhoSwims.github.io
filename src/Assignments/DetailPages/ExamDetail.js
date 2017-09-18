@@ -78,11 +78,19 @@ class DetailPage extends Component{
   }
 
   render(){
+    let forceNavDown = { 'top': '64px' };
 
     let paperStyle = {
       'width' : '75%',
       'marginLeft': '280px',
       'marginBottom' : '20px'
+    };
+
+    let cardStyle = {
+      'width' : '75%',
+      'marginLeft': '280px',
+      'marginBottom' : '20px',
+      'marginTop': '64px'
     };
 
     let paperTitle = {
@@ -98,8 +106,14 @@ class DetailPage extends Component{
     return (
       <div>
         <MuiThemeProvider>
-          <Card style={forceDown}>
-            <CardTitle title={this.state.examTable.name} subtitle={"Exam Date: " + this.state.examTable.date} />
+          <div>
+            <Card style={cardStyle}>
+              <CardTitle title={this.state.examTable.name} subtitle={"Exam Date: " + this.state.examTable.date} />
+              <CardActions>
+                {/* <RaisedButton label="EDIT" backgroundColor='#00BCD4'/> */}
+                <RaisedButton onClick={this.openModal.bind(this)} label="BACK" backgroundColor='#FF5722'/>
+              </CardActions>
+            </Card>
             <Paper style={paperStyle}>
               <h2 style={paperTitle}>Assignments</h2>
               <Table
@@ -166,12 +180,7 @@ class DetailPage extends Component{
                 </TableBody>
               </Table>
             </Paper>
-            <CardActions>
-              <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
-              <RaisedButton onClick={this.openModal.bind(this)} label="BACK" backgroundColor='#FF5722'/>
-            </CardActions>
-          </Card>
-
+          </div>
         </MuiThemeProvider>
       </div>
     );

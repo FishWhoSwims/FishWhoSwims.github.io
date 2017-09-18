@@ -19,7 +19,6 @@ class DetailPage extends Component{
       userID: getUsername(),
       classID: getCourseID(),
       materialID: getMaterialID(),
-      fileURLs: [],
       courseName: "",
       instructor: "",
       assignmentInfo: {

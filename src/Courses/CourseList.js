@@ -73,7 +73,7 @@ class CourseList extends Component {
   getData(data){
     //this.state.courses.push(data);
 
-    fetch(this.targetUrl + "/users/1/classes/", {
+    fetch(targetUrl + '/users/'+ getUsername() +'/classes/', {
       method: "post",
       headers: {
         'Accept': 'application/json',

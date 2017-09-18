@@ -33,7 +33,6 @@ class Assignments extends Component {
 
   constructor(props) {
     super(props);
-    this.targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API';
     this.state = { open: true };
     this.state = {
       userID: getUsername(),
@@ -71,7 +70,7 @@ class Assignments extends Component {
     var yyyy = now.getFullYear();
     var date = (yyyy + "-" + MM + "-" + dd);
 
-    fetch(this.targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.courseID)
+    fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.courseID)
       .then(results => {
         return results.json();
       }).then(data => {
@@ -376,7 +375,7 @@ class Assignments extends Component {
                     closeFormModal={this.closeExamModal}
                     userID={this.state.userID}
                     courseID={this.state.courseID}
-                    targetUrl={this.targetUrl}
+                    targetUrl={targetUrl}
                     sendData={this.postAssign}
                     parentState = {this.state} />
                   : null
@@ -387,16 +386,9 @@ class Assignments extends Component {
                   ? <AddAssignmentModal
                       style = {modalStyle}
                       closeFormModal={this.closeFormModal}
-<<<<<<< HEAD
-                      targetUrl = {this.targetUrl}
+                      targetUrl = {targetUrl}
                       sendData={this.postAssign} 
                       parentState={this.state}/>
-=======
-                      userID = {this.state.userID}
-                      courseID={this.state.courseID}
-                      targetUrl = {targetUrl}
-                      sendData={this.getData} />
->>>>>>> upstream/master
                   : null
               }
               <MenuItem primaryText="Add Note" leftIcon={<ContentCopy />} onClick={() => this.addNote()} />
@@ -407,7 +399,7 @@ class Assignments extends Component {
                     closeFormModal={this.closeNoteModal}
                     userID={this.state.userID}
                     courseID={this.state.courseID}
-                    targetUrl={this.targetUrl}
+                    targetUrl={targetUrl}
                     sendData={this.postAssign} />
                   : null
               }

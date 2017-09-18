@@ -3,6 +3,8 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 const styles = {
     buttonStyle: {
@@ -20,18 +22,18 @@ class AssignmentForm extends Component {
 
     constructor(props) {
         super(props);
-        this.targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
         console.log("Exams", this.props.parentState.exams[0].props.data.name);
         const items = [];
-        items.push(<MenuItem value={0} key={0} primaryText={`-------`} />);
+        items.push(<MenuItem value={0} key={'null'} primaryText={`-------`} />);
         for (let i = 1; i <= this.props.parentState.exams.length; i++) {
-            items.push(<MenuItem value={i} key={i} primaryText={this.props.parentState.exams[i-1].props.data.name} />);
+            items.push(<MenuItem value={i} key={this.props.parentState.exams[i - 1].props.data.examID} primaryText={this.props.parentState.exams[i-1].props.data.name} />);
         }
         console.log("Menu", items);
         this.state = {
             name: '',
             date: '',
             value: 0,
+            assocExamID : 'null',
             menu: items,
         }
         this.handleChange = this.handleChange.bind(this);
@@ -41,7 +43,12 @@ class AssignmentForm extends Component {
         this.setState({ [name]: e.target.value });
     }
 
-    handleDropChange = (event, index, value) => this.setState({ value });
+    handleDropChange = (event, index, value) => {
+
+        this.setState({ value });
+        this.setState({ value });
+
+    }
 
     submit() {
         var formData = {
@@ -50,6 +57,7 @@ class AssignmentForm extends Component {
             userID: this.props.parentState.userID,
             courseID: this.props.parentState.courseID,
             targetUrl: this.props.targetUrl,
+            assocExamID : test,
         }
         
         this.props.sendData(formData);

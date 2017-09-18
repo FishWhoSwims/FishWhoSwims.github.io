@@ -6,6 +6,8 @@ import { Card, CardTitle, CardText } from 'material-ui/Card';
 import AddAssignmentModal from './AddAssignment/Modal';
 import AddNoteModal from './AddAssignment/NoteModal';
 import AddExamModal from './AddAssignment/ExamModal';
+import { getUsername, setUsername } from '../util/username.js';
+import { getCourseID, setCourseID } from '../util/courseInfo.js';
 
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
@@ -31,12 +33,11 @@ class Assignments extends Component {
 
   constructor(props) {
     super(props);
-    // this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    // this.getNotes();
     this.state = { open: true };
     this.state = {
-      userID: '1',
-      courseID: this.props.match.params.courseId,
+      userID: getUsername(),
+      // courseID: this.props.location.state.courseID,
+      courseID: getCourseID(),
       assignments: [],
       notes: [],
       exams: [],
@@ -49,99 +50,18 @@ class Assignments extends Component {
       showExamForm: false,
     };
 
-    console.log("testing props",this.props);
     this.closeFormModal = this.closeFormModal.bind(this);
     this.closeNoteModal = this.closeNoteModal.bind(this);
     this.closeExamModal = this.closeExamModal.bind(this);
     this.addAssign = this.addAssign.bind(this);
     this.addNote = this.addNote.bind(this);
     this.addExam = this.addExam.bind(this);
+    this.postAssign = this.postAssign.bind(this);
 
-  }
-
-  addAssign() {
-    console.log("Reached AddAssign()");
-    console.log("userID", this.state.userID);
-    this.setState({
-      showAssignForm: true,
-    });
-    this.forceUpdate();
-  }
-
-  addNote() {
-    console.log("Reached AddAssign()");
-    console.log("userID", this.state.userID);
-    this.setState({
-      showNoteForm: true,
-    });
-    this.forceUpdate();
-  }
-
-  closeNoteModal() {
-    this.setState({
-      showNoteForm: false
-    });
-    this.forceUpdate();
-  }
-
-  addExam() {
-    console.log("Reached AddAssign()");
-    console.log("userID", this.state.userID);
-    this.setState({
-      showExamForm: true,
-    });
-    this.forceUpdate();
-  }
-
-  closeExamModal() {
-    this.setState({
-      showExamForm: false
-    });
-    this.forceUpdate();
-  }
-
-  closeFormModal() {
-    this.setState({
-      showAssignForm: false
-    });
-    this.forceUpdate();
-  }
-
-  handleChange = (value) => {
-    this.setState({
-      value: value,
-    });
-    console.log('value:', value);
-  };
-
-  getData(data) {
-    fetch(data.targetUrl + '/users/' + data.userID + '/classes/' + data.courseID + '/assignments', {
-      method: "post",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then((response) => {
-       //do something awesome that makes the world a better place
-       console.log(response);
-    });
-
-  }
-
-  redirectToDetailPage() {
-
-  }
-
-  componentWillMount() {
-    var userID = 1;
-    var assignments, exams, notes;
-    var rows = [];
-    var row = [];
+    // Pull data from server
+    var assignments = [], exams = [], notes = [], newAssign = [], newNotes = [];
     var final = [];
-    var now =  new Date();
-    console.log("date: ", now);
+    var now = new Date();
     // 01, 02, 03, ... 29, 30, 31
     var dd = (now.getDate() < 10 ? '0' : '') + now.getDate();
     // 01, 02, 03, ... 10, 11, 12
@@ -149,21 +69,97 @@ class Assignments extends Component {
     // 1970, 1971, ... 2015, 2016, ...
     var yyyy = now.getFullYear();
     var date = (yyyy + "-" + MM + "-" + dd);
-    console.log("date: ", date);
 
-    fetch(targetUrl + '/users/' + userID + '/classes/' + this.state.courseID)
+    fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.courseID)
       .then(results => {
         return results.json();
       }).then(data => {
-        exams = data.exams.map((assignment) => {
+        exams = data.exams.map((exam) => {
+          var eName = exam.name;
+          newAssign = exam.assignments.map((assignment) => {
+            return (
+              <Assignment
+                data={assignment} type='assignment' name = {eName} key={assignmentNumber++} />
+            )
+          })
+          // Add assignments to array
+          assignments = newAssign.concat(assignments);
+
+          newNotes = exam.notes.map((note) => {
+            return (
+              <Assignment
+                data={note} type='note' name={eName} key={assignmentNumber++} />
+            )
+          })
+          // Add notes to array
+          notes = newNotes.concat(notes);
           return (
             <Assignment
-              data={assignment} type='exam' key={assignmentNumber++} />
+              data={exam} type='exam' name='' key={assignmentNumber++} />
           )
         })
+        newAssign = data.materialWithoutExam.map((exam) => {
+          if(exam.type == "assignment"){
+            return (
+              <Assignment
+                data={exam} type='assignment' name='' key={assignmentNumber++} />
+            )
+          }
+        })
 
-        // console.log('success exams:', exams);
-        // console.log('success row:', row);
+        newAssign = data.materialWithoutExam.filter(function (exam) {
+          if (exam.type == "note") {
+            return false; // skip
+          }
+          return true;
+        }).map((exam) => { 
+          return (
+            <Assignment
+              data={exam} type='assignment' name='' key={assignmentNumber++} />
+          ) 
+        });
+
+        newNotes = data.materialWithoutExam.filter(function (exam) {
+          if (exam.type == "assignment") {
+            return false; // skip
+          }
+          return true;
+        }).map((exam) => {
+          return (
+            <Assignment
+              data={exam} type='note' name='' key={assignmentNumber++} />
+          )
+        });
+
+        assignments = newAssign.concat(assignments);
+        notes = newNotes.concat(notes);
+
+        final = exams.concat(assignments);
+        final = final.concat(notes);
+
+        assignments.sort(function (a, b) {
+          a = new Date(a.props.data.date);
+          b = new Date(b.props.data.date);
+          return a < b ? -1 : a > b ? 1 : 0;
+        });
+
+        notes.sort(function (a, b) {
+          a = new Date(a.props.data.date);
+          b = new Date(b.props.data.date);
+          return a < b ? -1 : a > b ? 1 : 0;
+        });
+
+        exams.sort(function (a, b) {
+          a = new Date(a.props.data.date);
+          b = new Date(b.props.data.date);
+          return a < b ? -1 : a > b ? 1 : 0;
+        });
+
+        final.sort(function (a, b) {
+          a = new Date(a.props.data.date);
+          b = new Date(b.props.data.date);
+          return a < b ? -1 : a > b ? 1 : 0;
+        });
 
         this.setState({
           exams: exams,
@@ -173,62 +169,95 @@ class Assignments extends Component {
           courseColor: data.color,
           courseNumber: data.courseNumber,
           date: date,
-        });
-        console.log('course name:', this.state.courseName);
-      })
-      .then(result => console.log('success:', result))
-      .catch(error => console.log('error:', error));
-
-    fetch(targetUrl + '/users/' + userID + '/classes/' + this.state.courseID + '/assignments')
-      .then(results => {
-        return results.json();
-      }).then(data => {
-        console.log('success:', data);
-        assignments = data.map((assignment) => {
-          return (
-            <Assignment
-              data={assignment} type='assignment' key={assignmentNumber++} />
-          )
-        })
-
-        // console.log('success row:', row);
-
-        this.setState({
-          assignments: assignments
-        });
-      })
-      .then(result => console.log('success:', result))
-      .catch(error => console.log('error:', error));
-
-    fetch(targetUrl + '/users/' + userID + '/classes/' + this.state.courseID + '/notes')
-      .then(results => {
-        return results.json();
-      }).then(data => {
-        console.log('success:', data);
-        notes = data.map((assignment) => {
-          return (
-            <Assignment
-              data={assignment} type='note' key={assignmentNumber++} />
-          )
-        })
-
-        row = this.state.exams;
-        rows = row.concat(this.state.assignments);
-        final = rows.concat(notes);
-
-        this.setState({
           notes: notes,
-          tempRows: final,
+          assignments: assignments,
           all: final,
+          tempRows: final,
         });
       })
-      .then(result => console.log('success:', result))
       .catch(error => console.log('error:', error));
 
   }
 
+  componentDidMount() {
+    
+  }
+
+  addAssign() {
+    this.setState({
+      showAssignForm: true,
+    });
+  }
+
+  addNote() {
+    this.setState({
+      showNoteForm: true,
+    });
+  }
+
+  closeNoteModal() {
+    this.setState({
+      showNoteForm: false
+    });
+  }
+
+  addExam() {
+    this.setState({
+      showExamForm: true,
+    });
+  }
+
+  closeExamModal() {
+    this.setState({
+      showExamForm: false
+    });
+  }
+
+  closeFormModal() {
+    this.setState({
+      showAssignForm: false
+    });
+  }
+
+  handleChange = (value) => {
+    this.setState({
+      value: value,
+    });
+  };
+
+  postAssign(data) {
+
+    var formData = {
+      name: data.name,
+      date: data.date,
+    }
+
+    fetch(data.targetUrl + '/users/' + data.userID + '/classes/' + data.courseID + '/assignments/', {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((response) => {
+       //do something awesome that makes the world a better place
+      //  console.log(response.json());
+    });
+
+    this.forceUpdate();
+
+  }
+
+  redirectToDetailPage() {
+
+  }
+
+  updateAssignmentPost() {
+    
+  }
+
   handleClick = (value) => {
-    console.log('value:', value);
     if (value === "a") {
       this.setState({
         value: value,
@@ -266,13 +295,11 @@ class Assignments extends Component {
       return redirect;
     }
 
-    // this.getNotes();
-      // console.log('success:', assignment);
     const AllRow = this.state.tempRows.map((assignment) => {
       if (assignment.props.data.date >= this.state.date){
         return (
           <Assignment
-            type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
+            type={assignment.props.type} name= {assignment.props.name} data={assignment.props.data} key={assignmentNumber++} />
         );
       }
       return null;
@@ -282,13 +309,12 @@ class Assignments extends Component {
       if (assignment.props.data.date < this.state.date) {
         return (
           <Assignment
-            type={assignment.props.type} data={assignment.props.data} key={assignmentNumber++} />
+            type={assignment.props.type} name={assignment.props.name} data={assignment.props.data} key={assignmentNumber++} />
         );
       }
       return null;
     });
     const title = this.state.tableTitle;
-    console.log("title: ", title)
 
     let forceNavDown = { 'top': '64px' };
 
@@ -300,6 +326,7 @@ class Assignments extends Component {
     };
     let titleStyle = {
       'marginLeft': '280px',
+      'paddingTop': '60px'
     };
     let cardStyle = {
       'background': '#'+this.state.courseColor,
@@ -337,7 +364,7 @@ class Assignments extends Component {
               </Card>
               <MenuItem primaryText="All" leftIcon={<RemoveRedEye />} onClick={() => this.handleClick("a")}/>
               <MenuItem primaryText="Exams" leftIcon={<ExamIcon />} onClick={() => this.handleClick("b")}/>
-              <MenuItem primaryText="Assigments" leftIcon={<AssignIcon />} onClick={() => this.handleClick("c")}/>
+              <MenuItem primaryText="Assignments" leftIcon={<AssignIcon />} onClick={() => this.handleClick("c")}/>
               <MenuItem primaryText="Notes" leftIcon={<ContentCopy />} onClick={() => this.handleClick("d")}/>
               <Divider />
               <MenuItem primaryText="Add Exam" leftIcon={<ExamIcon />} onClick={() => this.addExam()} />
@@ -349,7 +376,8 @@ class Assignments extends Component {
                     userID={this.state.userID}
                     courseID={this.state.courseID}
                     targetUrl={targetUrl}
-                    sendData={this.getData} />
+                    sendData={this.postAssign}
+                    parentState = {this.state} />
                   : null
               }
               <MenuItem primaryText="Add Assignment" leftIcon={<AssignIcon />} onClick={() => this.addAssign()} />
@@ -358,10 +386,9 @@ class Assignments extends Component {
                   ? <AddAssignmentModal
                       style = {modalStyle}
                       closeFormModal={this.closeFormModal}
-                      userID = {this.state.userID}
-                      courseID={this.state.courseID}
                       targetUrl = {targetUrl}
-                      sendData={this.getData} />
+                      sendData={this.postAssign} 
+                      parentState={this.state}/>
                   : null
               }
               <MenuItem primaryText="Add Note" leftIcon={<ContentCopy />} onClick={() => this.addNote()} />
@@ -373,12 +400,12 @@ class Assignments extends Component {
                     userID={this.state.userID}
                     courseID={this.state.courseID}
                     targetUrl={targetUrl}
-                    sendData={this.getData} />
+                    sendData={this.postAssign} />
                   : null
               }
               <MenuItem primaryText="Create Study Guide" leftIcon={<SGIcon />} onClick={() => this.handleClick("d")} />
             </Drawer>
-            <h2 style = {titleStyle}> {title} </h2>
+            <h2 style = {titleStyle}> {this.state.tableTitle} </h2>
             <Paper style = {paperStyle}>
               <h2 style={paperTitle}>Upcoming</h2>
             <Table
@@ -397,7 +424,7 @@ class Assignments extends Component {
                 <TableRow>
                   <TableHeaderColumn>Title</TableHeaderColumn>
                   <TableHeaderColumn>Due Date</TableHeaderColumn>
-                  <TableHeaderColumn>Associated Exam ID</TableHeaderColumn>
+                  <TableHeaderColumn>Associated Exam</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody
@@ -429,7 +456,7 @@ class Assignments extends Component {
                 <TableRow>
                   <TableHeaderColumn>Title</TableHeaderColumn>
                   <TableHeaderColumn>Due Date</TableHeaderColumn>
-                  <TableHeaderColumn>Associated Exam ID</TableHeaderColumn>
+                  <TableHeaderColumn>Associated Exam</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody

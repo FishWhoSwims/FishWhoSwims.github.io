@@ -39,6 +39,7 @@ class CourseList extends Component {
   constructor (props) {
     super(props);
     this.state = {
+      userID: getUsername(),
       courses: [],
       classCells: [],
       showCourseForm: false
@@ -47,7 +48,7 @@ class CourseList extends Component {
     this.addCourse = this.addCourse.bind(this);
     this.getData = this.getData.bind(this);
 
-    fetch(targetUrl + '/users/'+ getUsername() +'/classes/')
+    fetch(targetUrl + '/users/' + this.state.userID +'/classes/')
       .then(response => response.json())
       .then(response => this.setState({courses: response}));
   }

@@ -65,7 +65,7 @@ class App extends Component {
             <Route exact path='/' component={SignIn}/>
             <Route path='/signup' component={SignUp} />
             <Route path='/courses' component={CourseList}/>
-            <Route path='/assignments/:courseId' component={Assignments}/>
+            <Route path='/assignments' component={Assignments}/>
             <Route path='/detailpage/notedetail' component={NoteDetail}/>
             <Route path='/detailpage/assignmentdetail' component={AssignmentDetail}/>
             <Route path='/detailpage/examdetail' component={ExamDetail}/>

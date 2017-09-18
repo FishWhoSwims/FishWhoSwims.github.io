@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 const styles = {
     buttonStyle: {
         marginBottom: 12,
         marginTop: 12
+    },
+    dropStyle: {
+        width: '100%',
+        paddingLeft: '-15px',
+        paddingRight: '15px',
     }
 };
 
@@ -14,36 +22,44 @@ class AssignmentForm extends Component {
 
     constructor(props) {
         super(props);
-        this.targetUrl = 'http://52.35.1.78/API';
+        console.log("Exams", this.props.parentState.exams[0].props.data.name);
+        const items = [];
+        items.push(<MenuItem value={0} key={'null'} primaryText={`-------`} />);
+        for (let i = 1; i <= this.props.parentState.exams.length; i++) {
+            items.push(<MenuItem value={i} key={this.props.parentState.exams[i - 1].props.data.examID} primaryText={this.props.parentState.exams[i-1].props.data.name} />);
+        }
+        console.log("Menu", items);
         this.state = {
             name: '',
             date: '',
+            value: 0,
+            assocExamID : 'null',
+            menu: items,
         }
         this.handleChange = this.handleChange.bind(this);
-        // console.log(this.targetUrl + '/users/'+ this.state.userID + '/classes/'+ this.state.courseID +'/assignments')
     }
 
     handleChange(e, name) {
         this.setState({ [name]: e.target.value });
     }
 
+    handleDropChange = (event, index, value) => {
+
+        this.setState({ value });
+        this.setState({ value });
+
+    }
+
     submit() {
-        console.log(this.props);
         var formData = {
             name: this.state.name,
             date: this.state.date,
-            userID: this.props.userID,
-            courseID: this.props.courseID,
+            userID: this.props.parentState.userID,
+            courseID: this.props.parentState.courseID,
             targetUrl: this.props.targetUrl,
+            assocExamID : test,
         }
-
-        // fetch(this.targetUrl + '/users/1/classes/1/assignments', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         name: 'this.state.name',
-        //         date: 'this.state.date',
-        //     })
-        // })
+        
         this.props.sendData(formData);
         this.props.closeFormModal();
     }
@@ -55,7 +71,6 @@ class AssignmentForm extends Component {
         // 1970, 1971, ... 2015, 2016, ...
         var yyyy = event.getFullYear();
         var date = (yyyy + "-" + MM + "-" + dd);
-        // console.log("event",JSON.stringify(event));
         this.setState({ date: date });
     }
 
@@ -77,13 +92,15 @@ class AssignmentForm extends Component {
                         hintText="Due Date"
                         onChange={(x, event) => this.setDate(x, event)}
                         defaultDate={new Date()}
-                    /><br /><br />
-                    {/* <TextField
-                        floatingLabelText="What is your assignment due?"
+                    />
+                    <SelectField 
+                        floatingLabelText="Associated Exam"
                         floatingLabelFixed={true}
-                        onChange={(e) => this.handleChange(e, 'number')}
-                        value={this.state.date}
-                    /><br /><br /> */}
+                        value={this.state.value} 
+                        onChange={this.handleDropChange}>
+                        {this.state.menu}
+                    </SelectField>
+                    <br /><br />
 
                 </form>
                 <RaisedButton label="Add" primary={true} style={styles.buttonStyle}

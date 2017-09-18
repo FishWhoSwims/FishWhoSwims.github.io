@@ -52,7 +52,7 @@ class DetailPage extends Component{
   constructor(){
     super();
     this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://52.35.1.78/API';
+    this.targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
     this.state = {
       examTable: tableInfo,
       redirect: null,

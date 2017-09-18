@@ -20,6 +20,8 @@ class DetailPage extends Component{
       classID: getCourseID(),
       materialID: getMaterialID(),
       fileURLs: [],
+      courseName: "",
+      instructor: "",
       assignmentInfo: {
         courseMaterialID: 0,
         type: "",
@@ -41,6 +43,26 @@ class DetailPage extends Component{
 
 
   componentWillMount(){
+    fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID)
+    .then(
+      (response) => {
+        if (response.status !== 200) {
+          console.log('Looks like there was a problem. Status Code: ' +  
+            response.status);  
+          return;  
+        }
+  
+        // Examine the text in the response  
+        response.json().then((data) => {
+          this.setState({
+            courseName: data.courseName +" "+ data.courseNumber,
+            instructor: data.instructor
+          });
+          console.log(data);
+        });
+      }  
+    );
+
     fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID)
     .then(
       (response) => {
@@ -75,7 +97,7 @@ class DetailPage extends Component{
 
     let paperStyle = {
       'width' : '75%',
-      'marginTop': '200px',
+      'marginTop': '70px',
       'marginLeft': '280px',
       'marginBottom' : '20px'
     };
@@ -98,7 +120,7 @@ class DetailPage extends Component{
             <Paper style={paperStyle}>
               <Card>
                 <CardMedia
-                  overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
+                  overlay={<CardTitle title={this.state.courseName} subtitle={this.state.instructor} />}
                 >
                 <img src="https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAA1SAAAAJGFmZGM2NWY2LWM2ZjYtNDZhNy05OGM0LWU3NTExMjY1NDlkMw.jpg"/>
                 </CardMedia>
@@ -106,17 +128,18 @@ class DetailPage extends Component{
 
                 <List>
                   <ListItem primaryText={"DUE DATE: " + this.state.assignmentInfo.date}/>
-                </List>
-                {
+                  {
                     this.state.assignmentInfo.files.map( (row, index) => (
-                      <a key={index} href= {targetUrl + row.location.substring(4)}
-                      download="image_2017-09-18T18:48:27.767Z.pdf">
+                      <ListItem key={index}><a key={index} href= {targetUrl + row.location.substring(4)}
+                      download={row.filename}>
                         {"Download "+row.filename}
-                      </a>
+                      </a></ListItem>
                     ))
-                }
+                  }
+                </List>
+
                 <CardActions>
-                  <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
+                  {/* <RaisedButton label="EDIT" backgroundColor='#00BCD4'/> */}
                   <RaisedButton onClick={this.openModal.bind(this)} label="BACK" backgroundColor='#FF5722'/>
                   
                 </CardActions>

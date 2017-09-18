@@ -56,6 +56,7 @@ class DetailPage extends Component{
   }
 
   componentWillMount(){
+    var newAssign = [];
     fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/exams/' + this.state.examID)
     .then(
       (response) => {
@@ -67,10 +68,20 @@ class DetailPage extends Component{
   
         // Examine the text in the response  
         response.json().then((data) => {
-          this.setState({
-            examTable: data
+          newAssign = this.state.examTable.assignments.map( (row, index) => {
+            return(
+            <TableRow key={index}>
+              <TableRowColumn>{row.name}</TableRowColumn>
+              <TableRowColumn>{row.date}</TableRowColumn>
+            </TableRow>
+            )
           });
-          console.log(data);
+          this.setState({
+            examTable: data,
+            myAssignments: newAssign
+          });
+
+          console.log(newAssign);
         });
       }  
     )  
@@ -145,14 +156,7 @@ class DetailPage extends Component{
                   showRowHover={this.state.showRowHover}
                   stripedRows={this.state.stripedRows}
                 >
-                  {this.state.examTable.assignments.map( (row, index) => {
-                    return(
-                    <TableRow key={index}>
-                      <TableRowColumn>{row.name}</TableRowColumn>
-                      <TableRowColumn>{row.date}</TableRowColumn>
-                    </TableRow>
-                    )
-                  })}
+                  {this.state.myAssignments}
                 </TableBody>
               </Table>
             </Paper>

@@ -19,17 +19,19 @@ class DetailPage extends Component{
       userID: getUsername(),
       classID: getCourseID(),
       materialID: getMaterialID(),
+      fileURLs: [],
       assignmentInfo: {
         courseMaterialID: 0,
         type: "",
         name: "",
         date: "",
+        files: [],
         assocExamID: 0,
         courseID: 0
       },
       redirect: null,
     };
-
+    // this.getFiles = this.getFiles.bind(this);
   }
 
 
@@ -62,6 +64,11 @@ class DetailPage extends Component{
     });
   }
 
+  getFiles(){
+    this.state.assignmentInfo.files.map( (row, index) => (
+      <a href= {targetUrl + row.location} download="image_2017-09-18T18:48:27.767Z.pdf">Download file</a>                    
+    ))
+  }
 
 
   render(){
@@ -100,10 +107,18 @@ class DetailPage extends Component{
                 <List>
                   <ListItem primaryText={"DUE DATE: " + this.state.assignmentInfo.date}/>
                 </List>
-
+                {
+                    this.state.assignmentInfo.files.map( (row, index) => (
+                      <a key={index} href= {targetUrl + row.location.substring(4)}
+                      download="image_2017-09-18T18:48:27.767Z.pdf">
+                        {"Download "+row.filename}
+                      </a>
+                    ))
+                }
                 <CardActions>
                   <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
                   <RaisedButton onClick={this.openModal.bind(this)} label="BACK" backgroundColor='#FF5722'/>
+                  
                 </CardActions>
               </Card>
             </Paper>

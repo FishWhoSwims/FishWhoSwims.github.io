@@ -12,6 +12,7 @@ import {
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router';
+import targetUrl from '../../util/targetUrl.js';
 
 const tableInfo =   {
   examID: 1,
@@ -51,8 +52,6 @@ const tableInfo =   {
 class DetailPage extends Component{
   constructor(){
     super();
-    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
     this.state = {
       examTable: tableInfo,
       redirect: null,
@@ -70,7 +69,7 @@ class DetailPage extends Component{
 
 
   openModal() {
-    this.setState({redirect: '/assignments'});
+    this.setState({redirect: '/'});
   }
 
   render(){
@@ -92,7 +91,7 @@ class DetailPage extends Component{
       return (<Redirect to={this.state.redirect}/>);
     }
     return (
-      (<div>
+      <div>
         <MuiThemeProvider>
           <Card style={forceDown}>
             <CardMedia
@@ -173,7 +172,7 @@ class DetailPage extends Component{
           </Card>
 
         </MuiThemeProvider>
-      </div>)
+      </div>
     );
   }
 }

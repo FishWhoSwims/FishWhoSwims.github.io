@@ -19,13 +19,7 @@ var styles = {
     width: 300,
     height: 300
   },
-  alertOptions: {
-    offset: 14,
-    position: 'bottom left',
-    theme: 'dark',
-    time: 5000,
-    transition: 'scale'
-  }, buttonStyle: {
+  buttonStyle: {
     marginBottom: 12,
     marginTop: 12
   }, text: {
@@ -41,6 +35,7 @@ class SignIn extends Component {
     this.state = {
       open: false,
       username: getUsername(),
+      signUpRedirect: false,
       fieldName: '',
       fieldPassword: ''
     };
@@ -85,7 +80,8 @@ class SignIn extends Component {
   }
 
   signUp(){
-
+    this.setState({signUpRedirect: true});
+    this.forceUpdate();
   }
 
   handleNameChange(e) {
@@ -110,11 +106,14 @@ class SignIn extends Component {
     this.setState({
       open: false
     });
-  }
+  };
 
   render(){
     if (this.state.username != null) {
       return <Redirect to='/courses'/>;
+    }
+    if(this.state.signUpRedirect == true){
+      return <Redirect to='/signup' />
     }
     return (
       <div style={styles.root}>
@@ -122,6 +121,7 @@ class SignIn extends Component {
           <h1 style={styles.text}>SIGN IN</h1><br/>
           <TextField
             hintText="Your name here"
+            hintStyle={{color: '#fff'}}
             floatingLabelText="Name: "
             type="text"
             onChange={this.handleNameChange.bind(this)}
@@ -141,7 +141,7 @@ class SignIn extends Component {
             value={this.state.fieldPassword}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
-                this.signUp();
+                this.checkUser();
                 ev.preventDefault();
               }
             }}

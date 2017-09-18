@@ -7,7 +7,6 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 import {getUsername, setUsername} from '../util/username.js';
 import requireUsername from '../util/requireUsername.js';
-import { getUsername, setUsername } from '../util/username.js';
 import AddCourseModal from './AddCourse/Modal';
 import targetUrl from '../util/targetUrl.js';
 

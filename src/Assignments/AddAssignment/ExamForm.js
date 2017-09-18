@@ -14,13 +14,22 @@ class ExamForm extends Component {
 
     constructor(props) {
         super(props);
-        this.targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
+
+        //Default date
+        var temp = new Date();
+        var dd = (temp.getDate() < 10 ? '0' : '') + temp.getDate();
+        // 01, 02, 03, ... 10, 11, 12
+        var MM = ((temp.getMonth() + 1) < 10 ? '0' : '') + (temp.getMonth() + 1);
+        // 1970, 1971, ... 2015, 2016, ...
+        var yyyy = temp.getFullYear();
+        var date = (yyyy + "-" + MM + "-" + dd);
+
+
         this.state = {
             name: '',
-            date: '',
+            date: date,
         }
         this.handleChange = this.handleChange.bind(this);
-        // console.log(this.targetUrl + '/users/'+ this.state.userID + '/classes/'+ this.state.courseID +'/assignments')
     }
 
     handleChange(e, name) {
@@ -29,20 +38,13 @@ class ExamForm extends Component {
 
     submit() {
         var formData = {
-            assignName: this.state.name,
-            dueDate: this.state.date,
-            userID: this.props.userID,
-            courseID: this.props.courseID,
+            name: this.state.name,
+            date: this.state.date,
+            userID: this.props.parentState.userID,
+            courseID: this.props.parentState.courseID,
             targetUrl: this.props.targetUrl,
         }
 
-        // fetch(this.targetUrl + '/users/1/classes/1/assignments', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         name: 'this.state.name',
-        //         date: 'this.state.date',
-        //     })
-        // })
         this.props.sendData(formData);
         this.props.closeFormModal();
     }

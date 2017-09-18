@@ -33,7 +33,6 @@ class CourseForm extends Component{
     }
     this.props.sendData(formData);
     this.props.closeFormModal();
-    window.location.reload();
   }
 
   render() {

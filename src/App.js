@@ -55,7 +55,7 @@ class App extends Component {
             iconElementRight=
             {
               this.state.username
-              ? <p style={{cursor: 'pointer', color: 'white'}}>Logout</p>
+              ? <p style={{cursor: 'pointer', color: 'white', marginRight: '10px'}}>Logout</p>
               : null
             }
             />

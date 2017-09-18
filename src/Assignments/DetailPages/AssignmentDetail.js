@@ -29,10 +29,18 @@ class DetailPage extends Component{
     this.state = {
       userID: getUsername(),
       classID: getCourseID(),
-      materialID: '6',
-      assignmentInfo: cardInfo,
+      materialID: '13',
+      assignmentInfo: {
+        courseMaterialID: 5,
+        type: "assignment",
+        name: "Assembly Lab Quiz",
+        date: "2017-09-18",
+        assocExamID: 1,
+        courseID: 1
+      },
       redirect: null,
     };
+
   }
 
 
@@ -40,10 +48,13 @@ class DetailPage extends Component{
     this.setState({redirect: '/assignments'});
   }
 
+
+
+
   componentWillMount(){
     fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID)
     .then(
-      function(response) {
+      (response) => {
         if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +  
             response.status);  
@@ -51,12 +62,15 @@ class DetailPage extends Component{
         }
   
         // Examine the text in the response  
-        response.json().then(function(data) {  
+        response.json().then((data) => {
+          this.setState({
+            assignmentInfo: data
+          });
           console.log(data);
         });
       }  
     )  
-    .catch(function(err) {  
+    .catch((err) => {  
       console.log('Fetch Error :-S', err);  
     });
   }

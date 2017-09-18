@@ -60,6 +60,7 @@ class Assignments extends Component {
     this.addExam = this.addExam.bind(this);
     this.postAssign = this.postAssign.bind(this);
     this.postNote = this.postNote.bind(this);
+    this.postExam = this.postExam.bind(this);
 
     // Pull data from server
     var assignments = [], exams = [], notes = [], newAssign = [], newNotes = [];
@@ -290,6 +291,30 @@ class Assignments extends Component {
 
   }
 
+  postExam(data) {
+
+    var formData = {
+      name: data.name,
+      date: data.date,
+    }
+
+    fetch(data.targetUrl + '/users/' + data.userID + '/classes/' + data.courseID + '/exams/', {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+      .then((response) => {
+        //do something awesome that makes the world a better place
+        //  console.log(response.json());
+      });
+
+    this.forceUpdate();
+
+  }
+
   handleClick = (value) => {
     if (value === "a") {
       this.setState({
@@ -406,10 +431,8 @@ class Assignments extends Component {
                   ? <AddExamModal
                     style={modalStyle}
                     closeFormModal={this.closeExamModal}
-                    userID={this.state.userID}
-                    courseID={this.state.courseID}
                     targetUrl={targetUrl}
-                    sendData={this.postAssign}
+                    sendData={this.postExam}
                     parentState = {this.state} />
                   : null
               }
@@ -430,8 +453,6 @@ class Assignments extends Component {
                   ? <AddNoteModal
                     style={modalStyle}
                     closeFormModal={this.closeNoteModal}
-                    userID={this.state.userID}
-                    courseID={this.state.courseID}
                     targetUrl={targetUrl}
                     sendData={this.postNote}
                     parentState={this.state} />

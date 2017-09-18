@@ -12,6 +12,7 @@ import {
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router';
+
 import targetUrl from '../../util/targetUrl.js';
 import {getUsername, setUsername} from '../../util/username.js';
 import {getCourseID, setCourseID } from '../../util/courseInfo.js';
@@ -56,6 +57,9 @@ class DetailPage extends Component{
   constructor(){
     super();
     this.state = {
+      userID: getUsername(),
+      classID: getCourseID(),
+      examID: '1',
       examTable: tableInfo,
       redirect: null,
       fixedHeader: true,
@@ -73,6 +77,27 @@ class DetailPage extends Component{
 
   openModal() {
     this.setState({redirect: '/'});
+  }
+
+  componentWillMount(){
+    fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/exams/' + this.state.examID)
+    .then(
+      function(response) {
+        if (response.status !== 200) {
+          console.log('Looks like there was a problem. Status Code: ' +  
+            response.status);  
+          return;  
+        }
+  
+        // Examine the text in the response  
+        response.json().then(function(data) {  
+          console.log(data);
+        });
+      }  
+    )  
+    .catch(function(err) {  
+      console.log('Fetch Error :-S', err);  
+    });
   }
 
   render(){

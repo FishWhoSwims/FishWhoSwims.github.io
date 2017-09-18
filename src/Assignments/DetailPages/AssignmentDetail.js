@@ -5,6 +5,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
+
 import targetUrl from '../../util/targetUrl.js';
 import {getUsername, setUsername} from '../../util/username.js';
 import {getCourseID, setCourseID } from '../../util/courseInfo.js';
@@ -28,7 +29,7 @@ class DetailPage extends Component{
     this.state = {
       userID: getUsername(),
       classID: getCourseID(),
-      materialID: '4',
+      materialID: '6',
       assignmentInfo: cardInfo,
       redirect: null,
     };
@@ -43,7 +44,7 @@ class DetailPage extends Component{
     fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID)
     .then(
       function(response) {
-        if (response.status !== 200) {  
+        if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +  
             response.status);  
           return;  
@@ -91,12 +92,14 @@ class DetailPage extends Component{
                 <CardMedia
                   overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
                 >
+                <img src="pdfsub.jpg"/>
                 </CardMedia>
                 <CardTitle title={this.state.assignmentInfo.name} subtitle={this.state.assignmentInfo.type} />
 
                 <List>
                   <ListItem primaryText={"DUE DATE: " + this.state.assignmentInfo.date}/>
                 </List>
+
                 <CardActions>
                   <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
                   <RaisedButton onClick={this.openModal.bind(this)} label="CANCEL" backgroundColor='#FF5722'/>

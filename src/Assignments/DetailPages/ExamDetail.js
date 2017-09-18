@@ -57,6 +57,7 @@ class DetailPage extends Component{
 
   componentWillMount(){
     var newAssign = [];
+    var newNote = [];
     fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/exams/' + this.state.examID)
     .then(
       (response) => {
@@ -66,9 +67,9 @@ class DetailPage extends Component{
           return;  
         }
   
-        // Examine the text in the response  
+        // Examine the text in the response
         response.json().then((data) => {
-          newAssign = this.state.examTable.assignments.map( (row, index) => {
+          newAssign = data.assignments.map( (row, index) => {
             return(
             <TableRow key={index}>
               <TableRowColumn>{row.name}</TableRowColumn>
@@ -79,6 +80,20 @@ class DetailPage extends Component{
           this.setState({
             examTable: data,
             myAssignments: newAssign
+          });
+
+          newNote = data.notes.map( (row, index) => {
+            return(
+            <TableRow key={index}>
+              <TableRowColumn>{row.name}</TableRowColumn>
+              <TableRowColumn>{row.date}</TableRowColumn>
+            </TableRow>
+            )
+          });
+          this.setState({
+            examTable: data,
+            myAssignments: newAssign,
+            myNotes: newNote
           });
 
           console.log(newAssign);
@@ -184,12 +199,7 @@ class DetailPage extends Component{
                   showRowHover={this.state.showRowHover}
                   stripedRows={this.state.stripedRows}
                 >
-                  {this.state.examTable.notes.map( (row, index) => (
-                    <TableRow key={index}>
-                      <TableRowColumn>{row.name}</TableRowColumn>
-                      <TableRowColumn>{row.date}</TableRowColumn>
-                    </TableRow>
-                  ))}
+                  {this.state.myNotes}
                 </TableBody>
               </Table>
             </Paper>

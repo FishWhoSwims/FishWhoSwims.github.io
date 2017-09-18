@@ -18,6 +18,8 @@ import SGIcon from 'material-ui/svg-icons/content/add-box';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 import targetUrl from '../util/targetUrl.js';
 
+import { List, ListItem } from 'material-ui/List';
+
 import {
   Table,
   TableBody,
@@ -57,6 +59,7 @@ class Assignments extends Component {
     this.addNote = this.addNote.bind(this);
     this.addExam = this.addExam.bind(this);
     this.postAssign = this.postAssign.bind(this);
+    this.postNote = this.postNote.bind(this);
 
     // Pull data from server
     var assignments = [], exams = [], notes = [], newAssign = [], newNotes = [];
@@ -231,6 +234,13 @@ class Assignments extends Component {
       name: data.name,
       date: data.date,
     }
+    if (data.assocExamID != 'null') {
+      formData = {
+        name: data.name,
+        date: data.date,
+        assocExamID: data.assocExamID,
+      }
+    }
 
     fetch(data.targetUrl + '/users/' + data.userID + '/classes/' + data.courseID + '/assignments/', {
       method: "post",
@@ -238,7 +248,7 @@ class Assignments extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(formData)
     })
     .then((response) => {
        //do something awesome that makes the world a better place
@@ -249,12 +259,35 @@ class Assignments extends Component {
 
   }
 
-  redirectToDetailPage() {
+  postNote(data) {
 
-  }
+    var formData = {
+      name: data.name,
+      date: data.date,
+    }
+    if (data.assocExamID != 'null') {
+      formData = {
+        name: data.name,
+        date: data.date,
+        assocExamID: data.assocExamID,
+      }
+    }
 
-  updateAssignmentPost() {
-    
+    fetch(data.targetUrl + '/users/' + data.userID + '/classes/' + data.courseID + '/notes/', {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+      .then((response) => {
+        //do something awesome that makes the world a better place
+        //  console.log(response.json());
+      });
+
+    this.forceUpdate();
+
   }
 
   handleClick = (value) => {
@@ -400,7 +433,8 @@ class Assignments extends Component {
                     userID={this.state.userID}
                     courseID={this.state.courseID}
                     targetUrl={targetUrl}
-                    sendData={this.postAssign} />
+                    sendData={this.postNote}
+                    parentState={this.state} />
                   : null
               }
               <MenuItem primaryText="Create Study Guide" leftIcon={<SGIcon />} onClick={() => this.handleClick("d")} />
@@ -425,6 +459,7 @@ class Assignments extends Component {
                   <TableHeaderColumn>Title</TableHeaderColumn>
                   <TableHeaderColumn>Due Date</TableHeaderColumn>
                   <TableHeaderColumn>Associated Exam</TableHeaderColumn>
+                  <TableHeaderColumn></TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody
@@ -457,12 +492,13 @@ class Assignments extends Component {
                   <TableHeaderColumn>Title</TableHeaderColumn>
                   <TableHeaderColumn>Due Date</TableHeaderColumn>
                   <TableHeaderColumn>Associated Exam</TableHeaderColumn>
+                  <TableHeaderColumn></TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody
                 displayRowCheckbox={false}
                 deselectOnClickaway={this.state.deselectOnClickaway}
-                showRowHover={this.state.showRowHover}
+                showRowHover={true}
                 stripedRows={this.state.stripedRows}
               >
                 {PastAllRow}

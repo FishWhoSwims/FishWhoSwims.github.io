@@ -29,14 +29,26 @@ class AssignmentForm extends Component {
             items.push(<MenuItem value={i} key={this.props.parentState.exams[i - 1].props.data.examID} primaryText={this.props.parentState.exams[i-1].props.data.name} />);
         }
         console.log("Menu", items);
+
+        //Default date
+        var temp = new Date();
+        var dd = (temp.getDate() < 10 ? '0' : '') + temp.getDate();
+        // 01, 02, 03, ... 10, 11, 12
+        var MM = ((temp.getMonth() + 1) < 10 ? '0' : '') + (temp.getMonth() + 1);
+        // 1970, 1971, ... 2015, 2016, ...
+        var yyyy = temp.getFullYear();
+        var date = (yyyy + "-" + MM + "-" + dd);
+
+
         this.state = {
             name: '',
-            date: '',
+            date: date,
             value: 0,
             assocExamID : 'null',
             menu: items,
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleDropChange = this.handleDropChange.bind(this);
     }
 
     handleChange(e, name) {
@@ -45,8 +57,10 @@ class AssignmentForm extends Component {
 
     handleDropChange = (event, index, value) => {
 
-        this.setState({ value });
-        this.setState({ value });
+        this.setState({ 
+            value,
+            assocExamID: this.state.menu[value].key,
+         });
 
     }
 
@@ -57,7 +71,7 @@ class AssignmentForm extends Component {
             userID: this.props.parentState.userID,
             courseID: this.props.parentState.courseID,
             targetUrl: this.props.targetUrl,
-            assocExamID : test,
+            assocExamID : this.state.assocExamID,
         }
         
         this.props.sendData(formData);

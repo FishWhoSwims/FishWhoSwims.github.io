@@ -92,7 +92,7 @@ class NoteForm extends Component {
     render() {
         return (
             <div>
-                <label>Add a new assignment</label>
+                <label>Add a new note</label>
                 <form id="myForm">
                     <TextField
                         floatingLabelText="What is your note name?"

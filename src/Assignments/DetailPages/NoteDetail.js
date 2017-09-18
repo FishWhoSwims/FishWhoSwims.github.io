@@ -18,7 +18,7 @@ class DetailPage extends Component{
     this.state = {
       userID: getUsername(),
       classID: getCourseID(),
-      materialID: '13',
+      materialID: getMaterialID(),
       noteInfo:{
         courseMaterialID: 0,
         type: "",

@@ -26,7 +26,7 @@ class DetailPage extends Component{
     this.state = {
       userID: getUsername(),
       classID: getCourseID(),
-      examID: '11',
+      examID: getMaterialID(),
       examTable: {
         examID: 0,
         name: "",

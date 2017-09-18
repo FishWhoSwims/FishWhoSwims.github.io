@@ -6,6 +6,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
 import targetUrl from '../../util/targetUrl.js';
+import {getUsername, setUsername} from '../../util/username.js';
+import {getCourseID, setCourseID } from '../../util/courseInfo.js';
+import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
 
 const cardInfo = {
   courseMaterialID: 6,

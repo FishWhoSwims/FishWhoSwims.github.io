@@ -13,6 +13,9 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router';
 import targetUrl from '../../util/targetUrl.js';
+import {getUsername, setUsername} from '../../util/username.js';
+import {getCourseID, setCourseID } from '../../util/courseInfo.js';
+import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
 
 const tableInfo =   {
   examID: 1,

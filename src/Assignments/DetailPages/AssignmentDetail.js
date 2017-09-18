@@ -7,6 +7,8 @@ import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
 import targetUrl from '../../util/targetUrl.js';
 import {getUsername, setUsername} from '../../util/username.js';
+import {getCourseID, setCourseID } from '../../util/courseInfo.js';
+import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
 
 const cardInfo = {
   courseMaterialID: 5,
@@ -24,6 +26,9 @@ class DetailPage extends Component{
   constructor(props){
     super(props);
     this.state = {
+      userID: getUsername(),
+      classID: getCourseID(),
+      materialID: '4',
       assignmentInfo: cardInfo,
       redirect: null,
     };
@@ -31,12 +36,12 @@ class DetailPage extends Component{
 
 
   openModal() {
-    this.setState({redirect: ''});
+    this.setState({redirect: '/assignments'});
   }
 
   componentWillMount(){
-    fetch(targetUrl + '/users/' + getUsername() + '/classes/' + '7' + '/assignments/' + '2')
-    .then(  
+    fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID)
+    .then(
       function(response) {
         if (response.status !== 200) {  
           console.log('Looks like there was a problem. Status Code: ' +  
@@ -46,8 +51,8 @@ class DetailPage extends Component{
   
         // Examine the text in the response  
         response.json().then(function(data) {  
-          console.log(data);  
-        });  
+          console.log(data);
+        });
       }  
     )  
     .catch(function(err) {  
@@ -95,7 +100,6 @@ class DetailPage extends Component{
                 <CardActions>
                   <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
                   <RaisedButton onClick={this.openModal.bind(this)} label="CANCEL" backgroundColor='#FF5722'/>
-
                 </CardActions>
               </Card>
             </Paper>

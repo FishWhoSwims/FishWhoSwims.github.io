@@ -86,11 +86,6 @@ class DetailPage extends Component{
     });
   }
 
-  getFiles(){
-    this.state.assignmentInfo.files.map( (row, index) => (
-      <a href= {targetUrl + row.location} download="image_2017-09-18T18:48:27.767Z.pdf">Download file</a>                    
-    ))
-  }
 
 
   render(){

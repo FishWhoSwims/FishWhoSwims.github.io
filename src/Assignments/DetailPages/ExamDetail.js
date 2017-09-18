@@ -68,7 +68,7 @@ class DetailPage extends Component{
           this.setState({
             examTable: data
           });
-          console.log(this.state.examTable);
+          console.log(data);
         });
       }  
     )  

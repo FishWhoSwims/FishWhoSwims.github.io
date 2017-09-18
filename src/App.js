@@ -37,7 +37,7 @@ class App extends Component {
     })
     .then((response) => {
       window.localStorage.removeItem('username');
-      window.location = '/SwimmingFishWeb/';
+      window.location = '/';
     })
   }
 
@@ -48,7 +48,7 @@ class App extends Component {
           <AppBar
             style={styles.navbarStyle}
             onLeftIconButtonTouchTap={() => {
-              window.location = '/SwimmingFishWeb/courses';
+              window.location = '/courses';
             }}
             onRightIconButtonTouchTap={this.logout.bind(this)}
             iconElementLeft={<img style={{cursor: 'pointer', width:50}} alt='swimming fish' src='img/swimmingfish.jpeg'/>}

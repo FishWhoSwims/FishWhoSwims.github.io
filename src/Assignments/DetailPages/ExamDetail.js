@@ -123,7 +123,7 @@ class DetailPage extends Component{
       'width' : '75%',
       'marginLeft': '280px',
       'marginBottom' : '20px',
-      'marginTop': '64px'
+      'marginTop': '90px'
     };
 
     let paperTitle = {

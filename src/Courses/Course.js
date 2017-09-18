@@ -5,6 +5,7 @@ import { getCourseID, setCourseID } from '../util/courseInfo.js';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import IconButton from 'material-ui/IconButton';
 import DeleteModal from './DeleteCourse/DeleteModal.js';
+import {grey50} from 'material-ui/styles/colors';
 import {getUsername} from '../util/username.js';
 import targetUrl from '../util/targetUrl.js';
 
@@ -16,9 +17,8 @@ const modalStyle = {
   'top': '50%',
   'left': '50%',
 };
-
 const buttonStyle = {
-  'zIndex': 0
+  'zIndex': 0,
 }
 
 class Course extends Component {
@@ -83,7 +83,7 @@ class Course extends Component {
         key={this.props.courseID}
         actionIcon={
           <IconButton onClick={this.addDelete} style={buttonStyle}>
-            <DeleteIcon />{
+            <DeleteIcon color={grey50}/>{
               this.state.showDeleteCourse
                 ? <DeleteModal
                   style={modalStyle}

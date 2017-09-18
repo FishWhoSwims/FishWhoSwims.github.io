@@ -5,6 +5,8 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
+import targetUrl from '../../util/targetUrl.js';
+import {getUsername, setUsername} from '../../util/username.js';
 
 const cardInfo = {
   courseMaterialID: 5,
@@ -19,10 +21,8 @@ const cardInfo = {
 
 
 class DetailPage extends Component{
-  constructor(){
-    super();
-    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://52.35.1.78/API';
+  constructor(props){
+    super(props);
     this.state = {
       assignmentInfo: cardInfo,
       redirect: null,
@@ -31,14 +31,45 @@ class DetailPage extends Component{
 
 
   openModal() {
-    this.setState({redirect: '/assignments'});
+    this.setState({redirect: ''});
   }
+
+  componentWillMount(){
+    fetch(targetUrl + '/users/' + getUsername() + '/classes/' + '7' + '/assignments/' + '2')
+    .then(  
+      function(response) {
+        if (response.status !== 200) {  
+          console.log('Looks like there was a problem. Status Code: ' +  
+            response.status);  
+          return;  
+        }
+  
+        // Examine the text in the response  
+        response.json().then(function(data) {  
+          console.log(data);  
+        });  
+      }  
+    )  
+    .catch(function(err) {  
+      console.log('Fetch Error :-S', err);  
+    });
+  }
+
+
 
   render(){
 
     let paperStyle = {
       'width' : '75%',
+      'marginTop': '200px',
       'marginLeft': '280px',
+      'marginBottom' : '20px'
+    };
+
+    let paperFileStyle = {
+      'width' : '20%',
+      'marginTop': '10px',
+      'marginLeft': '1030px',
       'marginBottom' : '20px'
     };
 
@@ -68,8 +99,8 @@ class DetailPage extends Component{
                 </CardActions>
               </Card>
             </Paper>
-            <Paper style={paperStyle}>
-              <form enctype="multipart/form-data" action="/upload/file" method="post">
+            <Paper style={paperFileStyle}>
+              <form action="/upload/file" method="post">
                 <input id="file" type="file" />
               </form>
               <RaisedButton label="UPLOAD" backgroundColor='#00BCD4'/>

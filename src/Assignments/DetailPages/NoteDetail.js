@@ -6,22 +6,27 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
 import {Redirect} from 'react-router';
 
-const cardInfo = {
-  courseMaterialID: 6,
-  type: "note",
-  name: "ARM In-Class Notes",
-  date: "2017-09-18",
-  assocExamID: 1,
-  courseID: 1
-};
+import targetUrl from '../../util/targetUrl.js';
+import {getUsername, setUsername} from '../../util/username.js';
+import {getCourseID, setCourseID } from '../../util/courseInfo.js';
+import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
+
 
 class DetailPage extends Component{
   constructor(){
     super();
-    this.proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    this.targetUrl = 'http://52.35.1.78/API';
     this.state = {
-      noteInfo: cardInfo,
+      userID: getUsername(),
+      classID: getCourseID(),
+      materialID: '13',
+      noteInfo:{
+        courseMaterialID: 0,
+        type: "",
+        name: "",
+        date: "",
+        assocExamID: 0,
+        courseID: 0
+      },
       redirect: null,
     };
   }
@@ -30,11 +35,43 @@ class DetailPage extends Component{
     this.setState({redirect: '/assignments'});
   }
 
+  componentWillMount(){
+    fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID)
+    .then(
+      (response) => {
+        if (response.status !== 200) {
+          console.log('Looks like there was a problem. Status Code: ' +  
+            response.status);  
+          return;
+        }
+  
+        // Examine the text in the response  
+        response.json().then((data) => {
+          this.setState({
+            noteInfo: data
+          });
+          console.log(data);
+        });
+      }  
+    )  
+    .catch((err) => {  
+      console.log('Fetch Error :-S', err);  
+    });
+  }
+
   render(){
 
     let paperStyle = {
       'width' : '75%',
+      'marginTop': '200px',
       'marginLeft': '280px',
+      'marginBottom' : '20px'
+    };
+
+    let paperFileStyle = {
+      'width' : '20%',
+      'marginTop': '10px',
+      'marginLeft': '1030px',
       'marginBottom' : '20px'
     };
 
@@ -42,7 +79,7 @@ class DetailPage extends Component{
       return (<Redirect to={this.state.redirect}/>);
     }
     return (
-      (<div>
+      <div>
         <MuiThemeProvider>
           <div>
             <Paper style={paperStyle}>
@@ -58,19 +95,19 @@ class DetailPage extends Component{
               </List>
               <CardActions>
                 <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
-                <RaisedButton onClick={this.openModal.bind(this)} label="CANCEL" backgroundColor='#FF5722'/>
+                <RaisedButton onClick={this.openModal.bind(this)} label="BACK" backgroundColor='#FF5722'/>
               </CardActions>
             </Card>
             </Paper>
-            <Paper style={paperStyle}>
-              <form enctype="multipart/form-data" action="/upload/file" method="post">
+            <Paper style={paperFileStyle}>
+              <form action="/upload/file" method="post">
                 <input id="file" type="file" />
               </form>
               <RaisedButton label="UPLOAD" backgroundColor='#00BCD4'/>
             </Paper>
           </div>
         </MuiThemeProvider>
-      </div>)
+      </div>
     );
   }
 }

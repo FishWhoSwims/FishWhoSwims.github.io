@@ -11,17 +11,6 @@ import {getUsername, setUsername} from '../../util/username.js';
 import {getCourseID, setCourseID } from '../../util/courseInfo.js';
 import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
 
-const cardInfo = {
-  courseMaterialID: 5,
-  type: "assignment",
-  name: "Assembly Lab Quiz",
-  date: "2017-09-18",
-  assocExamID: 1,
-  courseID: 1
-};
-
-
-
 
 class DetailPage extends Component{
   constructor(props){
@@ -31,12 +20,12 @@ class DetailPage extends Component{
       classID: getCourseID(),
       materialID: '13',
       assignmentInfo: {
-        courseMaterialID: 5,
-        type: "assignment",
-        name: "Assembly Lab Quiz",
-        date: "2017-09-18",
-        assocExamID: 1,
-        courseID: 1
+        courseMaterialID: 0,
+        type: "",
+        name: "",
+        date: "",
+        assocExamID: 0,
+        courseID: 0
       },
       redirect: null,
     };
@@ -47,8 +36,6 @@ class DetailPage extends Component{
   openModal() {
     this.setState({redirect: '/assignments'});
   }
-
-
 
 
   componentWillMount(){
@@ -116,7 +103,7 @@ class DetailPage extends Component{
 
                 <CardActions>
                   <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
-                  <RaisedButton onClick={this.openModal.bind(this)} label="CANCEL" backgroundColor='#FF5722'/>
+                  <RaisedButton onClick={this.openModal.bind(this)} label="BACK" backgroundColor='#FF5722'/>
                 </CardActions>
               </Card>
             </Paper>

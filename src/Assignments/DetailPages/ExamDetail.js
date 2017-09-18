@@ -10,6 +10,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
+import Drawer from 'material-ui/Drawer';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router';
 
@@ -18,40 +19,6 @@ import {getUsername, setUsername} from '../../util/username.js';
 import {getCourseID, setCourseID } from '../../util/courseInfo.js';
 import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
 
-const tableInfo =   {
-  examID: 1,
-  name: "Test 1: ARM Basics",
-  date: "2017-09-21",
-  courseID: 1,
-  assignments: [
-    {
-      courseMaterialID: 4,
-      type: "assignment",
-      name: "Assembly Homework #1",
-      date: "2017-09-15",
-      assocExamID: 1,
-      courseID: 1
-    },
-    {
-      courseMaterialID: 5,
-      type: "assignment",
-      name: "Assembly Lab Quiz",
-      date: "2017-09-18",
-      assocExamID: 1,
-      courseID: 1
-    }
-  ],
-  notes: [
-    {
-      courseMaterialID: 6,
-      type: "note",
-      name: "ARM In-Class Notes",
-      date: "2017-09-18",
-      assocExamID: 1,
-      courseID: 1
-    }
-  ]
-};
 
 class DetailPage extends Component{
   constructor(){
@@ -59,13 +26,20 @@ class DetailPage extends Component{
     this.state = {
       userID: getUsername(),
       classID: getCourseID(),
-      examID: '1',
-      examTable: tableInfo,
+      examID: '11',
+      examTable: {
+        examID: 0,
+        name: "",
+        date: "",
+        courseID: 0,
+        assignments: [],
+        notes: []
+      },
       redirect: null,
       fixedHeader: true,
       stripedRows: false,
       showRowHover: true,
-      selectable: true,
+      selectable: false,
       multiSelectable: true,
       enableSelectAll: true,
       deselectOnClickaway: true,
@@ -76,13 +50,13 @@ class DetailPage extends Component{
 
 
   openModal() {
-    this.setState({redirect: '/'});
+    this.setState({redirect: '/assignments'});
   }
 
   componentWillMount(){
     fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/exams/' + this.state.examID)
     .then(
-      function(response) {
+      (response) => {
         if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +  
             response.status);  
@@ -90,12 +64,15 @@ class DetailPage extends Component{
         }
   
         // Examine the text in the response  
-        response.json().then(function(data) {  
-          console.log(data);
+        response.json().then((data) => {
+          this.setState({
+            examTable: data
+          });
+          console.log(this.state.examTable);
         });
       }  
     )  
-    .catch(function(err) {  
+    .catch((err) => {  
       console.log('Fetch Error :-S', err);  
     });
   }
@@ -122,10 +99,6 @@ class DetailPage extends Component{
       <div>
         <MuiThemeProvider>
           <Card style={forceDown}>
-            <CardMedia
-              overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
-            >
-            </CardMedia>
             <CardTitle title={this.state.examTable.name} subtitle={"Exam Date: " + this.state.examTable.date} />
             <Paper style={paperStyle}>
               <h2 style={paperTitle}>Assignments</h2>
@@ -151,7 +124,7 @@ class DetailPage extends Component{
                   showRowHover={this.state.showRowHover}
                   stripedRows={this.state.stripedRows}
                 >
-                  {tableInfo.assignments.map( (row, index) => (
+                  {this.state.examTable.assignments.map( (row, index) => (
                     <TableRow key={index}>
                       <TableRowColumn>{row.name}</TableRowColumn>
                       <TableRowColumn>{row.date}</TableRowColumn>
@@ -184,7 +157,7 @@ class DetailPage extends Component{
                   showRowHover={this.state.showRowHover}
                   stripedRows={this.state.stripedRows}
                 >
-                  {tableInfo.notes.map( (row, index) => (
+                  {this.state.examTable.notes.map( (row, index) => (
                     <TableRow key={index}>
                       <TableRowColumn>{row.name}</TableRowColumn>
                       <TableRowColumn>{row.date}</TableRowColumn>
@@ -195,7 +168,7 @@ class DetailPage extends Component{
             </Paper>
             <CardActions>
               <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
-              <RaisedButton onClick={this.openModal.bind(this)} label="CANCEL" backgroundColor='#FF5722'/>
+              <RaisedButton onClick={this.openModal.bind(this)} label="BACK" backgroundColor='#FF5722'/>
             </CardActions>
           </Card>
 

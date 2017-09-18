@@ -11,14 +11,6 @@ import {getUsername, setUsername} from '../../util/username.js';
 import {getCourseID, setCourseID } from '../../util/courseInfo.js';
 import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
 
-const cardInfo = {
-  courseMaterialID: 6,
-  type: "note",
-  name: "ARM In-Class Notes",
-  date: "2017-09-18",
-  assocExamID: 1,
-  courseID: 1
-};
 
 class DetailPage extends Component{
   constructor(){
@@ -26,33 +18,43 @@ class DetailPage extends Component{
     this.state = {
       userID: getUsername(),
       classID: getCourseID(),
-      materialID: '6',
-      noteInfo: cardInfo,
+      materialID: '13',
+      noteInfo:{
+        courseMaterialID: 0,
+        type: "",
+        name: "",
+        date: "",
+        assocExamID: 0,
+        courseID: 0
+      },
       redirect: null,
     };
   }
 
   openModal() {
-    this.setState({redirect: ''});
+    this.setState({redirect: '/assignments'});
   }
 
   componentWillMount(){
     fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID)
     .then(
-      function(response) {
+      (response) => {
         if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +  
             response.status);  
-          return;  
+          return;
         }
   
         // Examine the text in the response  
-        response.json().then(function(data) {  
+        response.json().then((data) => {
+          this.setState({
+            noteInfo: data
+          });
           console.log(data);
         });
       }  
     )  
-    .catch(function(err) {  
+    .catch((err) => {  
       console.log('Fetch Error :-S', err);  
     });
   }
@@ -93,7 +95,7 @@ class DetailPage extends Component{
               </List>
               <CardActions>
                 <RaisedButton label="EDIT" backgroundColor='#00BCD4'/>
-                <RaisedButton onClick={this.openModal.bind(this)} label="CANCEL" backgroundColor='#FF5722'/>
+                <RaisedButton onClick={this.openModal.bind(this)} label="BACK" backgroundColor='#FF5722'/>
               </CardActions>
             </Card>
             </Paper>

@@ -43,7 +43,7 @@ class FormModal extends React.Component {
                     onClick={this.props.closeFormModal}
                     style={closeButton}
                 />
-                <ExamForm courseID={this.props.courseID} userID={this.props.userID} targetUrl={this.props.targetUrl} sendData={this.props.sendData} closeFormModal={this.props.closeFormModal} />
+                <ExamForm parentState={this.props.parentState} targetUrl={this.props.targetUrl} sendData={this.props.sendData} closeFormModal={this.props.closeFormModal}  />
             </Modal>
         );
     }

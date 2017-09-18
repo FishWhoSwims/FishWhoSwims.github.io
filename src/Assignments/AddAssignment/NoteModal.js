@@ -8,7 +8,7 @@ const styles = {
         top: '50%',
         left: '50%',
         right: 'auto',
-        // bottom: '-20%',
+        bottom: '-20%',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
         backgroundColor: '#E3F2FD'
@@ -42,7 +42,7 @@ class FormModal extends React.Component {
                     onClick={this.props.closeFormModal}
                     style={closeButton}
                 />
-                <NoteForm courseID={this.props.courseID} userID={this.props.userID} targetUrl={this.props.targetUrl} sendData={this.props.sendData} closeFormModal={this.props.closeFormModal} />
+                <NoteForm parentState={this.props.parentState} targetUrl={this.props.targetUrl} sendData={this.props.sendData} closeFormModal={this.props.closeFormModal} />
             </Modal>
         );
     }

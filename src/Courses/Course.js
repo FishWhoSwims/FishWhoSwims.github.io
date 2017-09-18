@@ -2,22 +2,67 @@ import React, {Component} from 'react';
 import {GridTile} from 'material-ui/GridList';
 import {Redirect} from 'react-router';
 import { getCourseID, setCourseID } from '../util/courseInfo.js';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import IconButton from 'material-ui/IconButton';
+import DeleteModal from './DeleteCourse/DeleteModal.js';
+import {getUsername} from '../util/username.js';
+import targetUrl from '../util/targetUrl.js';
 
 const courseStyle = {
   cursor: 'pointer',
 };
 
+const modalStyle = {
+  'top': '50%',
+  'left': '50%',
+};
+
+const buttonStyle = {
+  'zIndex': 0
+}
+
 class Course extends Component {
   constructor() {
     super();
     this.state = {
-      redirect: null
+      redirect: null,
+      showDeleteCourse: false
     };
+    this.deleteCourse = this.deleteCourse.bind(this);
+    this.closeDeleteModal= this.closeDeleteModal.bind(this);
+    this.addDelete = this.addDelete.bind(this);
   }
 
   openModal() {
     setCourseID(this.props.courseID);
     this.setState({redirect: '/assignments'});
+  }
+
+  deleteCourse(wantDelete){
+    if(wantDelete){
+      fetch(targetUrl + '/users/' + getUsername() + '/classes/' + this.props.courseID + '/', {
+        method: "delete",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      }).then((response) => {
+        console.log("Sucessfully delete a a course");
+      });
+    }
+  }
+
+  addDelete(e) {
+    e.stopPropagation();
+    this.setState({
+      showDeleteCourse: true,
+    });
+  }
+
+  closeDeleteModal(){
+    this.setState({
+      showDeleteCourse: false
+    });
   }
 
   render() {
@@ -36,6 +81,19 @@ class Course extends Component {
     return (
       <GridTile
         key={this.props.courseID}
+        actionIcon={
+          <IconButton onClick={this.addDelete} style={buttonStyle}>
+            <DeleteIcon />{
+              this.state.showDeleteCourse
+                ? <DeleteModal
+                  style={modalStyle}
+                  closeFormModal={this.closeDeleteModal}
+                  sendData={this.deleteCourse}
+                  parentState={this.props} />
+                : null
+            }
+          </IconButton>
+        }
         title={this.props.courseName + ' ' + this.props.courseNumber}
         style={tileStyles}
         onClick={this.openModal.bind(this)}

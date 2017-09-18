@@ -21,8 +21,8 @@ import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
 
 
 class DetailPage extends Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       userID: getUsername(),
       classID: getCourseID(),
@@ -35,11 +35,13 @@ class DetailPage extends Component{
         assignments: [],
         notes: []
       },
+      myAssignments: [],
+      myNotes: [],
       redirect: null,
       fixedHeader: true,
       stripedRows: false,
       showRowHover: true,
-      selectable: false,
+      selectable: true,
       multiSelectable: true,
       enableSelectAll: true,
       deselectOnClickaway: true,
@@ -75,6 +77,11 @@ class DetailPage extends Component{
     .catch((err) => {  
       console.log('Fetch Error :-S', err);  
     });
+  }
+
+  openAssignmentPage(){
+    setMaterialID(14);
+    this.setState({ redirect: '/detailpage/assignmentdetail' });
   }
 
   render(){
@@ -138,12 +145,14 @@ class DetailPage extends Component{
                   showRowHover={this.state.showRowHover}
                   stripedRows={this.state.stripedRows}
                 >
-                  {this.state.examTable.assignments.map( (row, index) => (
+                  {this.state.examTable.assignments.map( (row, index) => {
+                    return(
                     <TableRow key={index}>
                       <TableRowColumn>{row.name}</TableRowColumn>
                       <TableRowColumn>{row.date}</TableRowColumn>
                     </TableRow>
-                    ))}
+                    )
+                  })}
                 </TableBody>
               </Table>
             </Paper>
@@ -176,7 +185,7 @@ class DetailPage extends Component{
                       <TableRowColumn>{row.name}</TableRowColumn>
                       <TableRowColumn>{row.date}</TableRowColumn>
                     </TableRow>
-                    ))}
+                  ))}
                 </TableBody>
               </Table>
             </Paper>

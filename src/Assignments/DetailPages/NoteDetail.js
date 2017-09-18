@@ -87,6 +87,7 @@ class DetailPage extends Component{
               <CardMedia
                 overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
               >
+                <img src="https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAA1SAAAAJGFmZGM2NWY2LWM2ZjYtNDZhNy05OGM0LWU3NTExMjY1NDlkMw.jpg"/>
               </CardMedia>
               <CardTitle title={this.state.noteInfo.name} subtitle={this.state.noteInfo.type}/>
 

@@ -115,7 +115,7 @@ class Assignments extends Component {
   };
 
   getData(data) {
-    fetch(data.targetUrl + 'users/' + data.userID + '/classes/' + data.courseID + '/assignments', {
+    fetch(data.targetUrl + '/users/' + data.userID + '/classes/' + data.courseID + '/assignments', {
       method: "post",
       headers: {
         'Accept': 'application/json',

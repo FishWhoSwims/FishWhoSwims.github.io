@@ -22,13 +22,11 @@ class AssignmentForm extends Component {
 
     constructor(props) {
         super(props);
-        console.log("Exams", this.props.parentState.exams[0].props.data.name);
         const items = [];
         items.push(<MenuItem value={0} key={'null'} primaryText={`-------`} />);
         for (let i = 1; i <= this.props.parentState.exams.length; i++) {
             items.push(<MenuItem value={i} key={this.props.parentState.exams[i - 1].props.data.examID} primaryText={this.props.parentState.exams[i-1].props.data.name} />);
         }
-        console.log("Menu", items);
 
         //Default date
         var temp = new Date();

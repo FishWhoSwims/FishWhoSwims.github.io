@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router';
+import { getMaterialID, setMaterialID } from '../util/materialInfo.js';
 
 import {
   TableRowColumn,
@@ -11,12 +12,21 @@ class Assignment extends Component{
   constructor() {
     super();
     this.state = {
-      redirect: null
+      redirect: null,
     };
   }
 
   goToSpecifics() {
-    this.setState({ redirect: '/detailpage/examdetail' });
+    if(this.props.type === 'assignment'){
+      this.setState({ redirect: '/detailpage/assignmentdetail' });
+    }
+    else if (this.props.type === 'note'){
+      this.setState({ redirect: '/detailpage/notedetail' });
+    }
+    else if (this.props.type === 'exam') {
+      this.setState({ redirect: '/detailpage/examdetail' });
+    }
+    setMaterialID(this.props.data.courseMaterialID);
   };
   render(){
     if (this.state.redirect != null) {

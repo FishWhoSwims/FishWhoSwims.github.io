@@ -46,13 +46,15 @@ class AddFile extends Component {
       fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID + '/files/', {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+        //   'Content-Type': 'application/json',
+        //   'Accept': 'application/json'
         },
         body: data
       })
       .then((response) => {
         console.log(response.json());
       });
+      this.forceUpdate();
     }
   
     _handleChange(e) {

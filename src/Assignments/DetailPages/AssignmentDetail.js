@@ -10,7 +10,7 @@ import targetUrl from '../../util/targetUrl.js';
 import {getUsername, setUsername} from '../../util/username.js';
 import {getCourseID, setCourseID } from '../../util/courseInfo.js';
 import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
-
+import AddFile from './AddFile.js';
 
 class DetailPage extends Component{
   constructor(props){
@@ -35,7 +35,7 @@ class DetailPage extends Component{
       redirect: null,
     };
 
-    this.uploadFile = this.uploadFile.bind(this);
+    // this.uploadFile = this.uploadFile.bind(this);
     // this.getFiles = this.getFiles.bind(this);
   }
 
@@ -89,33 +89,14 @@ class DetailPage extends Component{
     });
   }
 
-  uploadFile() { 
-    var data = new FormData();
-    var doc = document.getElementById("file").files[0];
-    
-    var key = doc.name;
-    var value = doc;
-    data.set(key, doc);
-
-    for(var pair of data.entries()){
-      console.log(pair[0]+', '+pair[1]);
-    }
-
-    fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID + '/files/', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: data
-    })
-    .then((response) => {
-       console.log(response.json());
-    });
-    // this.forceUpdate();
-  }
-
+  
   render(){
 
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      // Great success! All the File APIs are supported.
+    } else {
+      alert('The File APIs are not fully supported in this browser.');
+    }
     let paperStyle = {
       'width' : '75%',
       'marginTop': '70px',
@@ -167,12 +148,7 @@ class DetailPage extends Component{
               </Card>
             </Paper>
             <Paper style={paperFileStyle}>
-              <form encType="multipart/form-data">
-                <input id="file" type="file"/>
-                {/* <input type="submit" value="Upload"/> */}
-                <RaisedButton onClick={this.uploadFile} label="UPLOAD" backgroundColor='#00BCD4'/>
-              </form>
-              
+              <AddFile/>
             </Paper>
           </div>
         </MuiThemeProvider>

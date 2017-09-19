@@ -58,6 +58,7 @@ class AssignmentForm extends Component {
         this.setState({ 
             value,
             assocExamID: this.state.menu[value].key,
+            examName: this.state.menu[value].primaryText,
          });
 
     }
@@ -70,6 +71,7 @@ class AssignmentForm extends Component {
             courseID: this.props.parentState.courseID,
             targetUrl: this.props.targetUrl,
             assocExamID : this.state.assocExamID,
+            examName: this.state.examName,
         }
         
         this.props.sendData(formData);

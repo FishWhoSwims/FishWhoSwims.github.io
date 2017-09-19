@@ -19,20 +19,12 @@ class DeleteForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            name: this.props.parentState.data.name,
-            courseMaterialID: this.props.parentState.data.courseMaterialID,
-        }
+        this.state = {}
     }
 
     submit() {
-        var formData = {
-            name: this.state.name,
-            courseMaterialID: this.state.courseMaterialID,
-        }
-        console.log(formData);
-        this.props.sendData(formData);
-        this.props.closeFormModal();
+      this.props.sendData(true);
+      this.props.closeFormModal();
     }
 
     render() {
@@ -40,7 +32,7 @@ class DeleteForm extends Component {
             <div>
                 <form id="myForm">
                     <br/>
-                    <h3> Are you sure you want to delete {this.state.name}?</h3>
+                    <h3> Are you sure you want to delete this course?</h3>
                 </form>
                 <RaisedButton label="Delete" primary={true} style={styles.buttonStyle}
                     onClick={() => this.submit()} />

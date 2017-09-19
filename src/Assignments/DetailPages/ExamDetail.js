@@ -21,12 +21,12 @@ import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
 
 
 class DetailPage extends Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       userID: getUsername(),
       classID: getCourseID(),
-      examID: '11',
+      examID: getMaterialID(),
       examTable: {
         examID: 0,
         name: "",
@@ -35,11 +35,13 @@ class DetailPage extends Component{
         assignments: [],
         notes: []
       },
+      myAssignments: [],
+      myNotes: [],
       redirect: null,
       fixedHeader: true,
       stripedRows: false,
       showRowHover: true,
-      selectable: false,
+      selectable: true,
       multiSelectable: true,
       enableSelectAll: true,
       deselectOnClickaway: true,
@@ -54,6 +56,8 @@ class DetailPage extends Component{
   }
 
   componentWillMount(){
+    var newAssign = [];
+    var newNote = [];
     fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/exams/' + this.state.examID)
     .then(
       (response) => {
@@ -63,18 +67,47 @@ class DetailPage extends Component{
           return;  
         }
   
-        // Examine the text in the response  
+        // Examine the text in the response
         response.json().then((data) => {
-          this.setState({
-            examTable: data
+          newAssign = data.assignments.map( (row, index) => {
+            return(
+            <TableRow key={index}>
+              <TableRowColumn>{row.name}</TableRowColumn>
+              <TableRowColumn>{row.date}</TableRowColumn>
+            </TableRow>
+            )
           });
-          console.log(data);
+          this.setState({
+            examTable: data,
+            myAssignments: newAssign
+          });
+
+          newNote = data.notes.map( (row, index) => {
+            return(
+            <TableRow key={index}>
+              <TableRowColumn>{row.name}</TableRowColumn>
+              <TableRowColumn>{row.date}</TableRowColumn>
+            </TableRow>
+            )
+          });
+          this.setState({
+            examTable: data,
+            myAssignments: newAssign,
+            myNotes: newNote
+          });
+
+          console.log(newAssign);
         });
       }  
     )  
     .catch((err) => {  
       console.log('Fetch Error :-S', err);  
     });
+  }
+
+  openAssignmentPage(){
+    setMaterialID(14);
+    this.setState({ redirect: '/detailpage/assignmentdetail' });
   }
 
   render(){
@@ -90,7 +123,7 @@ class DetailPage extends Component{
       'width' : '75%',
       'marginLeft': '280px',
       'marginBottom' : '20px',
-      'marginTop': '64px'
+      'marginTop': '90px'
     };
 
     let paperTitle = {
@@ -138,12 +171,7 @@ class DetailPage extends Component{
                   showRowHover={this.state.showRowHover}
                   stripedRows={this.state.stripedRows}
                 >
-                  {this.state.examTable.assignments.map( (row, index) => (
-                    <TableRow key={index}>
-                      <TableRowColumn>{row.name}</TableRowColumn>
-                      <TableRowColumn>{row.date}</TableRowColumn>
-                    </TableRow>
-                    ))}
+                  {this.state.myAssignments}
                 </TableBody>
               </Table>
             </Paper>
@@ -171,12 +199,7 @@ class DetailPage extends Component{
                   showRowHover={this.state.showRowHover}
                   stripedRows={this.state.stripedRows}
                 >
-                  {this.state.examTable.notes.map( (row, index) => (
-                    <TableRow key={index}>
-                      <TableRowColumn>{row.name}</TableRowColumn>
-                      <TableRowColumn>{row.date}</TableRowColumn>
-                    </TableRow>
-                    ))}
+                  {this.state.myNotes}
                 </TableBody>
               </Table>
             </Paper>

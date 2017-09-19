@@ -21,6 +21,8 @@ class DetailPage extends Component{
       materialID: getMaterialID(),
       courseName: "",
       instructor: "",
+      fileName: "",
+      filePath: "",
       assignmentInfo: {
         courseMaterialID: 0,
         type: "",
@@ -87,9 +89,20 @@ class DetailPage extends Component{
     });
   }
 
-  uploadFile(data) {
+  uploadFile() { 
+    var data = new FormData();
+    var doc = document.getElementById("file").files[0];
+    
+    var key = doc.name;
+    var value = doc;
+    data.set(key, doc);
+
+    for(var pair of data.entries()){
+      console.log(pair[0]+', '+pair[1]);
+    }
+
     fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID + '/files/', {
-      method: "post",
+      method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
@@ -98,8 +111,7 @@ class DetailPage extends Component{
     .then((response) => {
        console.log(response.json());
     });
-
-    this.forceUpdate();
+    // this.forceUpdate();
   }
 
   render(){
@@ -155,11 +167,12 @@ class DetailPage extends Component{
               </Card>
             </Paper>
             <Paper style={paperFileStyle}>
-              <form encType="multipart/form-data" action={targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID + '/files/'} method="post">
+              <form encType="multipart/form-data">
                 <input id="file" type="file"/>
-                <input type="submit" value="Upload"/>
+                {/* <input type="submit" value="Upload"/> */}
+                <RaisedButton onClick={this.uploadFile} label="UPLOAD" backgroundColor='#00BCD4'/>
               </form>
-              {/* <RaisedButton label="UPLOAD" backgroundColor='#00BCD4'/> */}
+              
             </Paper>
           </div>
         </MuiThemeProvider>

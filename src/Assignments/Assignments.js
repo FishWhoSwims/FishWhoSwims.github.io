@@ -563,6 +563,9 @@ class Assignments extends Component {
     let cardStyle = {
       'background': '#'+this.state.courseColor,
     };
+    let cardText = {
+      'textColor': '#fff',
+    };
     let paperStyle = {
       'width' : '75%',
       'marginLeft': '280px',
@@ -589,8 +592,8 @@ class Assignments extends Component {
               open={this.state.open}
               containerStyle={forceNavDown}>
               <Card style= {cardStyle}>
-                <CardTitle title={this.state.courseName} subtitle={this.state.courseInstructor} />
-                <CardText>
+                <CardTitle subtitleColor={'#fff'} titleColor={'#fff'} title={this.state.courseName} subtitle={this.state.courseInstructor} />
+                <CardText color={'#fff'}>
                   Course Number: {this.state.courseNumber}
                 </CardText>
               </Card>

@@ -10,7 +10,7 @@ import targetUrl from '../../util/targetUrl.js';
 import {getUsername, setUsername} from '../../util/username.js';
 import {getCourseID, setCourseID } from '../../util/courseInfo.js';
 import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
-
+import AddFile from './AddFile.js';
 
 class DetailPage extends Component{
   constructor(){
@@ -94,9 +94,9 @@ class DetailPage extends Component{
     };
 
     let paperFileStyle = {
-      'width' : '20%',
+      'width' : '16%',
       'marginTop': '10px',
-      'marginLeft': '1030px',
+      'marginLeft': '280px',
       'marginBottom' : '20px'
     };
 
@@ -134,10 +134,7 @@ class DetailPage extends Component{
             </Card>
             </Paper>
             <Paper style={paperFileStyle}>
-              <form action="/upload/file" method="post">
-                <input id="file" type="file" />
-              </form>
-              <RaisedButton label="UPLOAD" backgroundColor='#00BCD4'/>
+              <AddFile/>
             </Paper>
           </div>
         </MuiThemeProvider>

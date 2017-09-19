@@ -29,5 +29,6 @@
     "eslint": "^4.5.0",
     "eslint-plugin-react": "^7.3.0",
     "gh-pages": "^1.0.0"
-  }
+  },
+  "homepage": "http://swimfish.org"
 }

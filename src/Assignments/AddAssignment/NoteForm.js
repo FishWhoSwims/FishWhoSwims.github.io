@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 const styles = {
     buttonStyle: {
         marginBottom: 12,
         marginTop: 12
+    },
+    dropStyle: {
+        width: '100%',
+        paddingLeft: '-15px',
+        paddingRight: '15px',
     }
 };
 
@@ -14,35 +22,58 @@ class NoteForm extends Component {
 
     constructor(props) {
         super(props);
-        this.targetUrl = 'http://ec2-34-209-20-30.us-west-2.compute.amazonaws.com/API/';
+        console.log("Exams", this.props.parentState.exams[0].props.data.name);
+        const items = [];
+        items.push(<MenuItem value={0} key={'null'} primaryText={`-------`} />);
+        for (let i = 1; i <= this.props.parentState.exams.length; i++) {
+            items.push(<MenuItem value={i} key={this.props.parentState.exams[i - 1].props.data.examID} primaryText={this.props.parentState.exams[i - 1].props.data.name} />);
+        }
+        console.log("Menu", items);
+
+        //Default date
+        var temp = new Date();
+        var dd = (temp.getDate() < 10 ? '0' : '') + temp.getDate();
+        // 01, 02, 03, ... 10, 11, 12
+        var MM = ((temp.getMonth() + 1) < 10 ? '0' : '') + (temp.getMonth() + 1);
+        // 1970, 1971, ... 2015, 2016, ...
+        var yyyy = temp.getFullYear();
+        var date = (yyyy + "-" + MM + "-" + dd);
+
+
         this.state = {
             name: '',
-            date: '',
+            date: date,
+            value: 0,
+            assocExamID: 'null',
+            menu: items,
         }
         this.handleChange = this.handleChange.bind(this);
-        // console.log(this.targetUrl + '/users/'+ this.state.userID + '/classes/'+ this.state.courseID +'/assignments')
+        this.handleDropChange = this.handleDropChange.bind(this);
     }
 
     handleChange(e, name) {
         this.setState({ [name]: e.target.value });
     }
 
+    handleDropChange = (event, index, value) => {
+
+        this.setState({
+            value,
+            assocExamID: this.state.menu[value].key,
+        });
+
+    }
+
     submit() {
         var formData = {
-            assignName: this.state.name,
-            dueDate: this.state.date,
-            userID: this.props.userID,
-            courseID: this.props.courseID,
+            name: this.state.name,
+            date: this.state.date,
+            userID: this.props.parentState.userID,
+            courseID: this.props.parentState.courseID,
             targetUrl: this.props.targetUrl,
+            assocExamID: this.state.assocExamID,
         }
 
-        // fetch(this.targetUrl + '/users/1/classes/1/assignments', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         name: 'this.state.name',
-        //         date: 'this.state.date',
-        //     })
-        // })
         this.props.sendData(formData);
         this.props.closeFormModal();
     }
@@ -54,7 +85,6 @@ class NoteForm extends Component {
         // 1970, 1971, ... 2015, 2016, ...
         var yyyy = event.getFullYear();
         var date = (yyyy + "-" + MM + "-" + dd);
-        // console.log("event",JSON.stringify(event));
         this.setState({ date: date });
     }
 
@@ -71,12 +101,20 @@ class NoteForm extends Component {
                         value={this.state.name}
                     />
                     <DatePicker
-                        floatingLabelText="When was this note taken?"
+                        floatingLabelText="When were you notes taken?"
                         floatingLabelFixed={true}
                         hintText="Due Date"
                         onChange={(x, event) => this.setDate(x, event)}
                         defaultDate={new Date()}
-                    /><br /><br />
+                    />
+                    <SelectField
+                        floatingLabelText="Associated Exam"
+                        floatingLabelFixed={true}
+                        value={this.state.value}
+                        onChange={this.handleDropChange}>
+                        {this.state.menu}
+                    </SelectField>
+                    <br /><br />
 
                 </form>
                 <RaisedButton label="Add" primary={true} style={styles.buttonStyle}

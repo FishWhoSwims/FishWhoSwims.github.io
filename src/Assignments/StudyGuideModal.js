@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
-import ExamForm from './ExamForm';
+import StudyGuideForm from './StudyGuideForm';
 import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
@@ -8,13 +8,11 @@ const styles = {
         top: '50%',
         left: '50%',
         right: 'auto',
-        // bottom: '-20%',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
         backgroundColor: '#E3F2FD'
     }
 };
-
 const closeButton = {
     position: 'absolute',
     top: '5px',
@@ -43,7 +41,7 @@ class FormModal extends React.Component {
                     onClick={this.props.closeFormModal}
                     style={closeButton}
                 />
-                <ExamForm parentState={this.props.parentState} targetUrl={this.props.targetUrl} sendData={this.props.sendData} closeFormModal={this.props.closeFormModal}  />
+                <StudyGuideForm parentState={this.props.parentState} sendData={this.props.sendData} closeFormModal={this.props.closeFormModal} />
             </Modal>
         );
     }

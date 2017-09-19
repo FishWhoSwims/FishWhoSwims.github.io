@@ -6,6 +6,7 @@ import { Card, CardTitle, CardText } from 'material-ui/Card';
 import AddAssignmentModal from './AddAssignment/Modal';
 import AddNoteModal from './AddAssignment/NoteModal';
 import AddExamModal from './AddAssignment/ExamModal';
+import StudyGuideModal from './StudyGuideModal';
 import { getUsername, setUsername } from '../util/username.js';
 import { getCourseID, setCourseID } from '../util/courseInfo.js';
 
@@ -50,6 +51,8 @@ class Assignments extends Component {
       showAssignForm: false,
       showNoteForm: false,
       showExamForm: false,
+      showSGForm: false,
+      refreshPage: false,
     };
 
     this.closeFormModal = this.closeFormModal.bind(this);
@@ -60,6 +63,14 @@ class Assignments extends Component {
     this.addExam = this.addExam.bind(this);
     this.postAssign = this.postAssign.bind(this);
     this.postNote = this.postNote.bind(this);
+    this.postExam = this.postExam.bind(this);
+    this.getStudyGuide = this.getStudyGuide.bind(this);
+    this.download = this.download.bind(this);
+
+    this.closeSGModal = this.closeSGModal.bind(this);
+    this.createSG = this.createSG.bind(this);
+
+    this.rerenderData = this.rerenderData.bind(this);
 
     // Pull data from server
     var assignments = [], exams = [], notes = [], newAssign = [], newNotes = [];
@@ -186,15 +197,158 @@ class Assignments extends Component {
     
   }
 
+  rerenderData(e) {
+    console.log("Reaching rerend");
+    // Pull data from server
+    var assignments = [], exams = [], notes = [], newAssign = [], newNotes = [];
+    var final = [];
+    var now = new Date();
+    // 01, 02, 03, ... 29, 30, 31
+    var dd = (now.getDate() < 10 ? '0' : '') + now.getDate();
+    // 01, 02, 03, ... 10, 11, 12
+    var MM = ((now.getMonth() + 1) < 10 ? '0' : '') + (now.getMonth() + 1);
+    // 1970, 1971, ... 2015, 2016, ...
+    var yyyy = now.getFullYear();
+    var date = (yyyy + "-" + MM + "-" + dd);
+
+    fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.courseID)
+      .then(results => {
+        return results.json();
+      }).then(data => {
+        exams = data.exams.map((exam) => {
+          var eName = exam.name;
+          newAssign = exam.assignments.map((assignment) => {
+            return (
+              <Assignment
+                data={assignment} type='assignment' name={eName} key={assignmentNumber++} />
+            )
+          })
+          // Add assignments to array
+          assignments = newAssign.concat(assignments);
+
+          newNotes = exam.notes.map((note) => {
+            return (
+              <Assignment
+                data={note} type='note' name={eName} key={assignmentNumber++} />
+            )
+          })
+          // Add notes to array
+          notes = newNotes.concat(notes);
+          return (
+            <Assignment
+              data={exam} type='exam' name='' key={assignmentNumber++} />
+          )
+        })
+        newAssign = data.materialWithoutExam.map((exam) => {
+          if (exam.type == "assignment") {
+            return (
+              <Assignment
+                data={exam} type='assignment' name='' key={assignmentNumber++} />
+            )
+          }
+        })
+
+        newAssign = data.materialWithoutExam.filter(function (exam) {
+          if (exam.type == "note") {
+            return false; // skip
+          }
+          return true;
+        }).map((exam) => {
+          return (
+            <Assignment
+              data={exam} type='assignment' name='' key={assignmentNumber++} />
+          )
+        });
+
+        newNotes = data.materialWithoutExam.filter(function (exam) {
+          if (exam.type == "assignment") {
+            return false; // skip
+          }
+          return true;
+        }).map((exam) => {
+          return (
+            <Assignment
+              data={exam} type='note' name='' key={assignmentNumber++} />
+          )
+        });
+
+        assignments = newAssign.concat(assignments);
+        notes = newNotes.concat(notes);
+
+        final = exams.concat(assignments);
+        final = final.concat(notes);
+
+        assignments.sort(function (a, b) {
+          a = new Date(a.props.data.date);
+          b = new Date(b.props.data.date);
+          return a < b ? -1 : a > b ? 1 : 0;
+        });
+
+        notes.sort(function (a, b) {
+          a = new Date(a.props.data.date);
+          b = new Date(b.props.data.date);
+          return a < b ? -1 : a > b ? 1 : 0;
+        });
+
+        exams.sort(function (a, b) {
+          a = new Date(a.props.data.date);
+          b = new Date(b.props.data.date);
+          return a < b ? -1 : a > b ? 1 : 0;
+        });
+
+        final.sort(function (a, b) {
+          a = new Date(a.props.data.date);
+          b = new Date(b.props.data.date);
+          return a < b ? -1 : a > b ? 1 : 0;
+        });
+
+        this.setState({
+          exams: exams,
+          courseName: data.courseName,
+          courseInstructor: data.instructor,
+          courseID: data.courseID,
+          courseColor: data.color,
+          courseNumber: data.courseNumber,
+          date: date,
+          notes: notes,
+          assignments: assignments,
+          all: final,
+          tempRows: final,
+        });
+      })
+      .catch(error => console.log('error:', error));
+  }
+
   addAssign() {
     this.setState({
       showAssignForm: true,
+      showNoteForm: false,
+      showExamForm: false,
+      showSGForm: false,
+    });
+  }
+
+  createSG() {
+    this.setState({
+      showSGForm: true,
+      showAssignForm: false,
+      showNoteForm: false,
+      showExamForm: false,
+    });
+  }
+
+  closeSGModal() {
+    this.setState({
+      showSGForm: false,
     });
   }
 
   addNote() {
     this.setState({
       showNoteForm: true,
+      showAssignForm: false,
+      showExamForm: false,
+      showSGForm: false,
     });
   }
 
@@ -207,6 +361,9 @@ class Assignments extends Component {
   addExam() {
     this.setState({
       showExamForm: true,
+      showAssignForm: false,
+      showNoteForm: false,
+      showSGForm: false,
     });
   }
 
@@ -251,12 +408,8 @@ class Assignments extends Component {
       body: JSON.stringify(formData)
     })
     .then((response) => {
-       //do something awesome that makes the world a better place
-      //  console.log(response.json());
-    });
-
-    this.forceUpdate();
-
+    })
+    this.rerenderData();
   }
 
   postNote(data) {
@@ -286,8 +439,54 @@ class Assignments extends Component {
         //  console.log(response.json());
       });
 
-    this.forceUpdate();
+    this.rerenderData();
 
+  }
+
+  postExam(data) {
+
+    var formData = {
+      name: data.name,
+      date: data.date,
+    }
+
+    fetch(data.targetUrl + '/users/' + data.userID + '/classes/' + data.courseID + '/exams/', {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+      .then((response) => {
+        //do something awesome that makes the world a better place
+        //  console.log(response.json());
+      });
+
+    this.rerenderData();
+
+  }
+
+  getStudyGuide(data) {
+    fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.courseID + '/exams/' + data.examID + '/studyguide/', {
+      headers: {
+        'Content-Type': 'application/pdf'
+      },
+    })
+  }
+
+  download(data) {
+    // fake server request, getting the file url as response
+    setTimeout(() => {
+      const response = {
+        file: targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.courseID + '/exams/' + data.examID + '/studyguide/',
+      };
+      // server sent the url to the file!
+      // now, let's download:
+      window.open(response.file);
+      // you could also do:
+      // window.location.href = response.file;
+    }, 100);
   }
 
   handleClick = (value) => {
@@ -332,7 +531,7 @@ class Assignments extends Component {
       if (assignment.props.data.date >= this.state.date){
         return (
           <Assignment
-            type={assignment.props.type} name= {assignment.props.name} data={assignment.props.data} key={assignmentNumber++} />
+            type={assignment.props.type} updateState={this.rerenderData} name={assignment.props.name} data={assignment.props.data} key={assignmentNumber++} />
         );
       }
       return null;
@@ -342,7 +541,7 @@ class Assignments extends Component {
       if (assignment.props.data.date < this.state.date) {
         return (
           <Assignment
-            type={assignment.props.type} name={assignment.props.name} data={assignment.props.data} key={assignmentNumber++} />
+            type={assignment.props.type} updateState={this.rerenderData} name={assignment.props.name} data={assignment.props.data} key={assignmentNumber++} />
         );
       }
       return null;
@@ -406,10 +605,8 @@ class Assignments extends Component {
                   ? <AddExamModal
                     style={modalStyle}
                     closeFormModal={this.closeExamModal}
-                    userID={this.state.userID}
-                    courseID={this.state.courseID}
                     targetUrl={targetUrl}
-                    sendData={this.postAssign}
+                    sendData={this.postExam}
                     parentState = {this.state} />
                   : null
               }
@@ -430,14 +627,22 @@ class Assignments extends Component {
                   ? <AddNoteModal
                     style={modalStyle}
                     closeFormModal={this.closeNoteModal}
-                    userID={this.state.userID}
-                    courseID={this.state.courseID}
                     targetUrl={targetUrl}
                     sendData={this.postNote}
                     parentState={this.state} />
                   : null
               }
-              <MenuItem primaryText="Create Study Guide" leftIcon={<SGIcon />} onClick={() => this.handleClick("d")} />
+              <MenuItem primaryText="Create Study Guide" leftIcon={<SGIcon />} onClick={() => this.createSG()} />
+              {
+                this.state.showSGForm
+                  ? <StudyGuideModal
+                    style={modalStyle}
+                    closeFormModal={this.closeSGModal}
+                    targetUrl={targetUrl}
+                    sendData={this.download}
+                    parentState={this.state} />
+                  : null
+              }
             </Drawer>
             <h2 style = {titleStyle}> {this.state.tableTitle} </h2>
             <Paper style = {paperStyle}>

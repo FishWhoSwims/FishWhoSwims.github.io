@@ -73,9 +73,7 @@ class Assignment extends Component{
 
       });
     }
-
-    this.forceUpdate();
-    
+    this.props.updateState(data);
   }
 
   addDelete(e) {
@@ -95,7 +93,7 @@ class Assignment extends Component{
     if (this.state.redirect != null) {
       return <Redirect to={`${this.state.redirect}`} />;
     }
-    const { data, type, name, ...other } = this.props;
+    const { data, type, name, updateState, ...other } = this.props;
     if(type === 'assignment' || type === 'note'){
       return (
         // <TableBody>

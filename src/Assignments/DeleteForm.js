@@ -21,7 +21,7 @@ class DeleteForm extends Component {
         super(props);
         this.state = {
             name: this.props.parentState.data.name,
-            courseMaterialID: this.props.parentState.courseMaterialID,
+            courseMaterialID: this.props.parentState.data.courseMaterialID,
         }
     }
 

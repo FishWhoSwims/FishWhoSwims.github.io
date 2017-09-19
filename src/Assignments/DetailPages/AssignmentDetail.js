@@ -10,7 +10,7 @@ import targetUrl from '../../util/targetUrl.js';
 import {getUsername, setUsername} from '../../util/username.js';
 import {getCourseID, setCourseID } from '../../util/courseInfo.js';
 import {getMaterialID, setMaterialID} from '../../util/materialInfo.js';
-
+import AddFile from './AddFile.js';
 
 class DetailPage extends Component{
   constructor(props){
@@ -21,6 +21,8 @@ class DetailPage extends Component{
       materialID: getMaterialID(),
       courseName: "",
       instructor: "",
+      fileName: "",
+      filePath: "",
       assignmentInfo: {
         courseMaterialID: 0,
         type: "",
@@ -32,6 +34,8 @@ class DetailPage extends Component{
       },
       redirect: null,
     };
+
+    // this.uploadFile = this.uploadFile.bind(this);
     // this.getFiles = this.getFiles.bind(this);
   }
 
@@ -80,15 +84,19 @@ class DetailPage extends Component{
         });
       }  
     )  
-    .catch((err) => {  
-      console.log('Fetch Error :-S', err);  
+    .catch((err) => {
+      console.log('Fetch Error :-S', err);
     });
   }
 
-
-
+  
   render(){
 
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      // Great success! All the File APIs are supported.
+    } else {
+      alert('The File APIs are not fully supported in this browser.');
+    }
     let paperStyle = {
       'width' : '75%',
       'marginTop': '70px',
@@ -97,9 +105,9 @@ class DetailPage extends Component{
     };
 
     let paperFileStyle = {
-      'width' : '20%',
+      'width' : '16%',
       'marginTop': '10px',
-      'marginLeft': '1030px',
+      'marginLeft': '280px',
       'marginBottom' : '20px'
     };
 
@@ -140,10 +148,7 @@ class DetailPage extends Component{
               </Card>
             </Paper>
             <Paper style={paperFileStyle}>
-              <form action="/upload/file" method="post">
-                <input id="file" type="file" />
-              </form>
-              <RaisedButton label="UPLOAD" backgroundColor='#00BCD4'/>
+              <AddFile/>
             </Paper>
           </div>
         </MuiThemeProvider>

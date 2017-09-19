@@ -32,6 +32,8 @@ class DetailPage extends Component{
       },
       redirect: null,
     };
+
+    this.uploadFile = this.uploadFile.bind(this);
     // this.getFiles = this.getFiles.bind(this);
   }
 
@@ -80,12 +82,25 @@ class DetailPage extends Component{
         });
       }  
     )  
-    .catch((err) => {  
-      console.log('Fetch Error :-S', err);  
+    .catch((err) => {
+      console.log('Fetch Error :-S', err);
     });
   }
 
+  uploadFile(data) {
+    fetch(targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID + '/files/', {
+      method: "post",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: data
+    })
+    .then((response) => {
+       console.log(response.json());
+    });
 
+    this.forceUpdate();
+  }
 
   render(){
 
@@ -97,9 +112,9 @@ class DetailPage extends Component{
     };
 
     let paperFileStyle = {
-      'width' : '20%',
+      'width' : '16%',
       'marginTop': '10px',
-      'marginLeft': '1030px',
+      'marginLeft': '280px',
       'marginBottom' : '20px'
     };
 
@@ -140,10 +155,11 @@ class DetailPage extends Component{
               </Card>
             </Paper>
             <Paper style={paperFileStyle}>
-              <form action="/upload/file" method="post">
-                <input id="file" type="file" />
+              <form encType="multipart/form-data" action={targetUrl + '/users/' + this.state.userID + '/classes/' + this.state.classID + '/assignments/' + this.state.materialID + '/files/'} method="post">
+                <input id="file" type="file"/>
+                <input type="submit" value="Upload"/>
               </form>
-              <RaisedButton label="UPLOAD" backgroundColor='#00BCD4'/>
+              {/* <RaisedButton label="UPLOAD" backgroundColor='#00BCD4'/> */}
             </Paper>
           </div>
         </MuiThemeProvider>
